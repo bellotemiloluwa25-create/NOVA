@@ -1397,31 +1397,27 @@ document.getElementById('brief-form').addEventListener('submit', async function 
   };
 
   try {
-    if (!BRIEF_ENDPOINT || BRIEF_ENDPOINT.includes('https://script.google.com/macros/s/AKfycbwzp-THAG04MyDw0HkeQtaHYMHOvQL6SNYsPwYpPrWQjARhLPJm2vT9cn1')) {
-      throw new Error('Brief endpoint not configured yet.');
-    }
-
-    const response = await fetch(BRIEF_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'text/plain;charset=utf-8'
-      },
-      body: JSON.stringify(payload)
-    });
-
-    const result = await response.json().catch(() => ({}));
-
-    if (!response.ok || (result && result.result === 'error')) {
-      throw new Error((result && result.message) || 'Submission failed.');
-    }
-
-    showToast("✦ Brief received — we'll be in touch within 24 hours.");
-    this.reset();
-    closePg('pg-brief');
-  } catch (error) {
-    console.error('Brief submission error:', error);
-    showToast('Submission setup still needs to be connected.');
-  } finally {
+ if (!BRIEF_ENDPOINT || !BRIEF_ENDPOINT.startsWith('https://script.google.com/')) {
+    throw new Error('Brief endpoint not configured yet.');
+  }
+  const response = await fetch(BRIEF_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'text/plain;charset=utf-8'
+    },
+    body: JSON.stringify(payload)
+  });
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok || (result && result.result === 'error')) {
+    throw new Error((result && result.message) || 'Submission failed.');
+  }
+  showToast("✦ Brief received — we'll be in touch within 24 hours.");
+  this.reset();
+  closePg('pg-brief');
+} catch (error) {
+  console.error('Brief submission error:', error);
+  showToast('Submission setup still needs to be connected.');
+} finally {
     if (submitBtn) {
       submitBtn.disabled = false;
       submitBtn.textContent = originalBtnText;
@@ -1430,7 +1426,6 @@ document.getElementById('brief-form').addEventListener('submit', async function 
     }
   }
 });
-
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', function (e) {
     const tgt = document.querySelector(this.getAttribute('href'));
