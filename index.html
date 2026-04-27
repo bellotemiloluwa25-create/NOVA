@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NOVA | Managed Professional Services</title>
 <meta name="description" content="NOVA delivers finished work for small businesses. Marketing, design, development, data. Vetted professionals, managed end-to-end.">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon.svg">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon.svg">
-<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="apple-touch-icon" href="./favicon.svg">
+<link rel="shortcut icon" href="./favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
@@ -53,7 +53,6 @@ body{font-family:var(--sans);background:var(--bg);color:var(--fg);line-height:1.
 .sd{color:var(--fg2);max-width:540px;font-size:1.05rem;line-height:1.75}
 h2.sub{font-family:var(--serif);font-size:1.35rem;font-weight:400;margin:44px 0 14px}
 .sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:32px}
-.sv{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 22px;transition:all .35s;cursor:pointer;position:relative;overflow:hidden}
 .sv::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--fg);transform:scaleX(0);transition:transform .35s}
 .sv:hover{border-color:var(--border-h);transform:translateY(-3px)}.sv:hover::after{transform:scaleX(1)}
 .si2{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:18px}
@@ -111,7 +110,39 @@ h2.sub{font-family:var(--serif);font-size:1.35rem;font-weight:400;margin:44px 0 
 .fte{font-size:.7rem;color:var(--fg3)}.ftm{font-size:.73rem;color:var(--fg2)}.ftm a{color:var(--fg2);text-decoration:none}.ftm a:hover{color:var(--fg)}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border-h);border-radius:3px}
 @keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.fa{opacity:0;animation:fu .6s ease forwards}.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}
+.fa{opacity:0;animation:fu .6s ease forwards}.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}.d5{animation-delay:.5s}
+
+/* How It Works (on hero) */
+.hiw{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border)}
+@media(max-width:700px){.hiw{grid-template-columns:1fr}}
+.hiw-card{padding:20px 18px;border:1px solid var(--border);border-radius:10px;transition:border-color .3s}
+.hiw-card:hover{border-color:var(--border-h)}
+.hiw-n{font-family:var(--serif);font-size:1.4rem;color:var(--fg3);opacity:.4;margin-bottom:6px}
+.hiw-card h4{font-size:.92rem;font-weight:600;margin-bottom:4px}
+.hiw-card p{font-size:.85rem;color:var(--fg2);line-height:1.5}
+
+/* Scroll indicator */
+.scroll-hint{text-align:center;margin-top:40px;opacity:0;animation:fu .6s .7s ease forwards}
+.scroll-arrow{display:inline-block;animation:bounce 2s infinite}
+.scroll-arrow svg{width:20px;height:20px;stroke:var(--fg3);fill:none;stroke-width:1.5}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.scroll-hint span{display:block;font-size:.7rem;color:var(--fg3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+
+/* FAQ */
+.faq{margin-top:48px;border-top:1px solid var(--border);padding-top:32px}
+.faq-item{border-bottom:1px solid var(--border);overflow:hidden}
+.faq-q{width:100%;text-align:left;padding:18px 0;background:none;border:none;color:var(--fg);font-family:var(--sans);font-size:.95rem;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:color .3s}
+.faq-q:hover{color:var(--fg2)}
+.faq-q .faq-icon{font-size:1.2rem;color:var(--fg3);transition:transform .3s}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;padding:0 0}
+.faq-item.open .faq-a{max-height:200px;padding:0 0 18px 0}
+.faq-a p{color:var(--fg2);font-size:.9rem;line-height:1.7}
+
+/* Fix service card clicks */
+.sv{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 22px;transition:all .35s;cursor:pointer;position:relative;overflow:hidden}
+.sv *{pointer-events:none}
+
 </style>
 </head>
 <body>
@@ -131,6 +162,12 @@ h2.sub{font-family:var(--serif);font-size:1.35rem;font-weight:400;margin:44px 0 
 <p class="hs fa d2">Stop chasing freelancers. Tell us what your business needs, and we handle the rest. NOVA manages a vetted team of professionals who deliver finished work in marketing, design, development, and data, at 40 to 70% less than a traditional agency.</p>
 <div class="hb2 fa d3"><button class="btn ba" onclick="go('brief')">Submit a brief &rarr;</button><button class="btn bg" onclick="go('services')">Explore services</button></div>
 <div class="hst fa d4"><div><h3>40-70%</h3><p>Cost Savings</p></div><div><h3>24 hrs</h3><p>Response Time</p></div><div><h3>End-to-end</h3><p>Managed Delivery</p></div><div><h3>4 verticals</h3><p>Of Services</p></div></div>
+<div class="hiw fa d5">
+<div class="hiw-card"><div class="hiw-n">1</div><h4>Submit a brief</h4><p>Tell us what you need. We respond within 24 hours with a plan.</p></div>
+<div class="hiw-card"><div class="hiw-n">2</div><h4>We handle everything</h4><p>NOVA assigns the right professionals, manages the work, and reviews every deliverable.</p></div>
+<div class="hiw-card"><div class="hiw-n">3</div><h4>You receive finished work</h4><p>Quality deliverables on time, with clear reporting. No managing, no chasing.</p></div>
+</div>
+<div class="scroll-hint"><span>Explore</span><div class="scroll-arrow"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
 </div></section>
 
 <div class="sec" id="s-services"><span class="sl">What We Deliver</span><h1 class="st">Services that scale with you.</h1><p class="sd">Professional work, managed end-to-end. We handle talent, quality, and delivery.</p>
@@ -193,7 +230,16 @@ h2.sub{font-family:var(--serif);font-size:1.35rem;font-weight:400;margin:44px 0 
 <tr><td>Brand identity</td><td>$1,500 to $2,500</td><td>2 to 3 weeks</td></tr>
 <tr><td>Website redesign (up to 5 pages)</td><td>$2,500 to $4,000</td><td>3 to 4 weeks</td></tr>
 <tr><td>Pitch deck design</td><td>$800 to $1,500</td><td>1 to 2 weeks</td></tr>
-</tbody></table></div>
+</tbody></table>
+<div class="faq">
+<h2 class="sub" style="margin-top:0">Common questions</h2>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How quickly can you start? <span class="faq-icon">+</span></button><div class="faq-a"><p>Most engagements begin within 3 to 5 business days of signing. We respond to every brief within 24 hours, and scoping is usually completed in one call.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What if I am not happy with the work? <span class="faq-icon">+</span></button><div class="faq-a"><p>We revise until you are satisfied. If the deliverable does not meet the agreed scope, we redo it at no additional cost. We stand behind every engagement.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I cancel anytime? <span class="faq-icon">+</span></button><div class="faq-a"><p>Yes. Retainers are month-to-month with no long-term contracts. You can cancel at the end of any billing cycle with no penalties.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Who will be doing the actual work? <span class="faq-icon">+</span></button><div class="faq-a"><p>Vetted professionals managed by NOVA. You work with NOVA as a company. We assign the right people, oversee quality, and deliver finished work under the NOVA brand.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Do I need to manage anyone? <span class="faq-icon">+</span></button><div class="faq-a"><p>No. That is the entire point. You describe what you need, we handle execution, and you receive finished deliverables with monthly reporting.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How do you keep costs 40 to 70% lower? <span class="faq-icon">+</span></button><div class="faq-a"><p>We work with exceptional professionals in markets where the cost of living is lower, which means the same caliber of work costs less. Our professionals are well-compensated locally. The savings come from purchasing power parity, not cutting corners.</p></div></div>
+</div></div>
 
 <div class="sec" id="s-brief"><div class="bw"><h1 class="st">Tell us what you need.</h1><p class="sd">Fill out the form. We respond within 24 hours. No commitment required.</p>
 <form id="bf" onsubmit="send(event)">
@@ -212,7 +258,8 @@ h2.sub{font-family:var(--serif);font-size:1.35rem;font-weight:400;margin:44px 0 
 </div></div><div class="ftb"><div class="fte">&copy; 2025 Nova Limited Liability Co. All rights reserved.</div><div class="ftm"><a href="mailto:thinknova.co@gmail.com">thinknova.co@gmail.com</a></div></div></div></footer>
 
 <script>
-function go(id){document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('show')});document.querySelectorAll('.nl[data-t]').forEach(function(l){l.classList.remove('on')});if(id==='home'){window.scrollTo({top:0,behavior:'smooth'});cl();return}var el=document.getElementById('s-'+id);if(el){el.classList.add('show');el.scrollIntoView({behavior:'smooth',block:'start'})}var nl=document.querySelector('[data-t="'+id+'"]');if(nl)nl.classList.add('on');if(id==='marketing'){var sn=document.querySelector('[data-t="services"]');if(sn)sn.classList.add('on')}cl()}
+function go(id){document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('show')});document.querySelectorAll('.nl[data-t]').forEach(function(l){l.classList.remove('on')});if(id==='home'){window.scrollTo({top:0,behavior:'smooth'});cl();return}var el=document.getElementById('s-'+id);if(el){el.classList.add('show');var offset=document.querySelector('.hero').offsetHeight;window.scrollTo({top:offset-60,behavior:'smooth'})}var nl=document.querySelector('[data-t="'+id+'"]');if(nl)nl.classList.add('on');if(id==='marketing'){var sn=document.querySelector('[data-t="services"]');if(sn)sn.classList.add('on')}cl()}
+function toggleFaq(btn){var item=btn.parentElement;item.classList.toggle('open')}
 function cl(){document.getElementById('nr').classList.remove('open')}
 function flip(){var n=document.body.getAttribute('data-theme')==='light'?'dark':'light';document.body.setAttribute('data-theme',n);try{localStorage.setItem('nova-theme',n)}catch(e){}}
 (function(){try{if(localStorage.getItem('nova-theme')==='light')document.body.setAttribute('data-theme','light')}catch(e){}})();
