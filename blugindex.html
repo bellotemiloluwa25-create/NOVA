@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOVA Insights | Marketing Clarity for Colorado Small Businesses</title>
+<meta name="description" content="Practical, honest writing on local SEO, Google Business Profile, and what actually moves the needle for owner-operated businesses in Colorado. No jargon. No filler.">
+<link rel="canonical" href="https://www.novaonline.net/blog/">
+<meta property="og:title" content="NOVA Insights | Marketing Clarity for Colorado Small Businesses">
+<meta property="og:description" content="Practical, honest writing on local SEO, Google Business Profile, and content strategy for Colorado small businesses.">
+<meta property="og:url" content="https://www.novaonline.net/blog/">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0A;--bg2:#111;--card:#161616;--card2:#1c1c1c;--fg:#F5F0EB;
+  --fg2:rgba(245,240,235,.65);--fg3:rgba(245,240,235,.38);
+  --border:rgba(255,255,255,.08);--border-h:rgba(255,255,255,.15);
+  --accent:#E8572A;--accent-glow:rgba(232,87,42,.20);--accent-soft:rgba(232,87,42,.10);
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',-apple-system,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--fg);line-height:1.65;min-height:100vh;display:flex;flex-direction:column}
+::selection{background:var(--accent);color:#fff}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,.90);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-weight:700;font-size:1.42rem;letter-spacing:.18em;color:var(--fg);text-decoration:none}
+.nav-right{display:flex;gap:28px;align-items:center}
+.nav-link{color:var(--fg3);font-size:.86rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:color .25s;white-space:nowrap}
+.nav-link:hover,.nav-link.active{color:var(--fg)}
+.nav-cta{background:var(--accent);color:#fff;padding:10px 22px;border-radius:7px;font-weight:600;font-size:.86rem;text-decoration:none;transition:opacity .25s,transform .25s;box-shadow:0 4px 16px var(--accent-glow);white-space:nowrap}
+.nav-cta:hover{opacity:.88;transform:translateY(-1px)}
+
+/* HERO */
+.hero{padding:152px 48px 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(232,87,42,.07),transparent 65%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--border)}
+.hero-inner{max-width:1080px;margin:0 auto;position:relative;display:grid;grid-template-columns:1.15fr 1fr;gap:72px;align-items:end}
+.hero-badge{display:inline-flex;align-items:center;gap:9px;padding:7px 16px;background:rgba(232,87,42,.1);border:1px solid rgba(232,87,42,.25);border-radius:100px;font-size:.75rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:26px}
+.hero-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex-shrink:0}
+.hero h1{font-family:var(--serif);font-size:clamp(2.8rem,5.2vw,4.6rem);font-weight:400;line-height:1.04;letter-spacing:-.018em;margin-bottom:0}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-right{padding-bottom:8px}
+.hero-rule{width:36px;height:1.5px;background:var(--accent);margin-bottom:20px}
+.hero-desc{color:var(--fg2);font-size:1.08rem;line-height:1.72;margin-bottom:28px}
+.hero-sub{font-size:.86rem;color:var(--fg3);line-height:1.6;border-left:1.5px solid var(--border-h);padding-left:16px}
+
+/* EDITORIAL STRIP */
+.editorial{padding:52px 48px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.editorial-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.ed-item{display:flex;align-items:flex-start;gap:16px}
+.ed-num{font-family:var(--serif);font-size:2rem;color:var(--accent);opacity:.4;font-style:italic;line-height:1;flex-shrink:0;padding-top:2px}
+.ed-label{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg3);margin-bottom:5px}
+.ed-text{font-size:.98rem;color:var(--fg2);line-height:1.58}
+
+/* POSTS */
+.posts-wrap{padding:64px 48px 96px;max-width:1080px;margin:0 auto;width:100%;flex:1}
+.section-label{font-size:.75rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--fg3);margin-bottom:28px;display:flex;align-items:center;gap:14px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* FEATURED CARD */
+.featured-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:44px 40px;text-decoration:none;color:var(--fg);display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;margin-bottom:20px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.featured-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),#FF8B5C);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.featured-card:hover{border-color:var(--border-h);transform:translateY(-3px)}
+.featured-card:hover::before{transform:scaleX(1)}
+.fc-tag{display:inline-flex;align-items:center;gap:7px;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:16px}
+.fc-tag svg{width:10px;height:10px;fill:var(--accent)}
+.featured-card h2{font-family:var(--serif);font-size:clamp(1.75rem,3vw,2.4rem);font-weight:400;line-height:1.12;margin-bottom:16px;letter-spacing:-.008em}
+.featured-card p{color:var(--fg2);font-size:1.04rem;line-height:1.68;max-width:580px}
+.fc-meta{font-size:.82rem;color:var(--fg3);margin-top:24px;padding-top:20px;border-top:1px solid var(--border)}
+.fc-action{display:flex;align-items:center;gap:10px;color:var(--accent);font-size:.88rem;font-weight:600;letter-spacing:.04em;white-space:nowrap;padding-bottom:4px}
+.fc-action svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+.featured-card:hover .fc-action svg{transform:translateX(4px)}
+.featured-label{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border:1px solid rgba(232,87,42,.2);padding:4px 10px;border-radius:4px;margin-bottom:20px;display:inline-block}
+
+/* REGULAR CARD */
+.post-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.post-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px 28px;text-decoration:none;color:var(--fg);display:flex;flex-direction:column;transition:border-color .3s,transform .3s;position:relative;overflow:hidden}
+.post-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .35s;transform-origin:left}
+.post-card:hover{border-color:var(--border-h);transform:translateY(-3px)}
+.post-card:hover::after{transform:scaleX(1)}
+.pc-tag{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px}
+.post-card h2{font-family:var(--serif);font-size:1.5rem;font-weight:500;line-height:1.2;margin-bottom:12px;flex:0}
+.post-card p{color:var(--fg2);font-size:.98rem;line-height:1.64;margin-bottom:auto;flex:1;padding-bottom:20px}
+.pc-footer{display:flex;justify-content:space-between;align-items:center;padding-top:18px;border-top:1px solid var(--border);margin-top:auto}
+.pc-meta{font-size:.8rem;color:var(--fg3)}
+.pc-arrow{width:30px;height:30px;border-radius:50%;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;transition:background .25s;flex-shrink:0}
+.post-card:hover .pc-arrow{background:var(--accent)}
+.pc-arrow svg{width:12px;height:12px;stroke:var(--accent);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke .25s}
+.post-card:hover .pc-arrow svg{stroke:#fff}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:36px 48px;margin-top:auto}
+.footer-inner{max-width:1080px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:18px}
+.footer-logo{font-weight:700;letter-spacing:.18em;font-size:1.1rem;color:var(--fg)}
+.footer-links{display:flex;gap:22px;flex-wrap:wrap}
+.footer-links a{color:var(--fg3);font-size:.86rem;text-decoration:none;transition:color .25s}
+.footer-links a:hover{color:var(--fg)}
+.footer-copy{font-size:.82rem;color:var(--fg3);padding-top:16px;border-top:1px solid var(--border)}
+
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;gap:36px}
+  .hero-right{padding-bottom:0}
+  .editorial-inner{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+  .nav{padding:14px 20px}
+  .nav-right{gap:16px}
+  .hero{padding:110px 22px 56px}
+  .editorial{padding:36px 22px}
+  .editorial-inner{grid-template-columns:1fr}
+  .posts-wrap{padding:44px 22px 72px}
+  .featured-card{grid-template-columns:1fr;padding:30px 24px}
+  .fc-action{margin-top:20px}
+  footer{padding:28px 22px}
+  .post-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="/">N&#10022;VA</a>
+  <div class="nav-right">
+    <a class="nav-link" href="/">Home</a>
+    <a class="nav-link active" href="/blog/">Insights</a>
+    <a class="nav-link" href="/contact.html">Contact</a>
+    <a class="nav-cta" href="https://calendly.com/thinknova-co/30min" target="_blank" rel="noopener">Schedule a call</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge"><span class="hero-badge-dot"></span>NOVA Insights</div>
+      <h1>Marketing is not<br>complicated. <em>It is just<br>misunderstood.</em></h1>
+    </div>
+    <div class="hero-right">
+      <div class="hero-rule"></div>
+      <p class="hero-desc">Writing for owner-operated businesses in Colorado that are tired of vague advice and expensive promises. We write about what we actually do, what we actually see, and what actually works.</p>
+      <p class="hero-sub">No guest posts. No sponsored content. No affiliate links. Just honest writing from the team building NOVA.</p>
+    </div>
+  </div>
+</section>
+
+<div class="editorial">
+  <div class="editorial-inner">
+    <div class="ed-item">
+      <div class="ed-num">I.</div>
+      <div>
+        <div class="ed-label">What we cover</div>
+        <div class="ed-text">Local SEO, Google Business Profile, content strategy, and AI search visibility for Colorado small businesses.</div>
+      </div>
+    </div>
+    <div class="ed-item">
+      <div class="ed-num">II.</div>
+      <div>
+        <div class="ed-label">Who we write for</div>
+        <div class="ed-text">Owners who have built real businesses through real relationships and are ready to be found by the next wave of customers.</div>
+      </div>
+    </div>
+    <div class="ed-item">
+      <div class="ed-num">III.</div>
+      <div>
+        <div class="ed-label">Our standard</div>
+        <div class="ed-text">Every claim verifiable. Every recommendation specific. Nothing published unless we would stake a client relationship on it.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="posts-wrap">
+  <div class="section-label">Latest articles</div>
+
+  <a class="featured-card" href="/blog/local-seo-small-business-colorado.html">
+    <div>
+      <div class="featured-label">Featured</div>
+      <div class="fc-tag">
+        <svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="5"/></svg>
+        Local SEO
+      </div>
+      <h2>Local SEO for Colorado Small Businesses: What Actually Works in 2026</h2>
+      <p>Search "chiropractor Greeley Colorado" and the first three results are practices that opened within the last six years. The business that Greeley voted its favorite three times is not on the first page. This is the gap local SEO is designed to close.</p>
+      <div class="fc-meta">Temiloluwa Bello &nbsp;&middot;&nbsp; June 2026 &nbsp;&middot;&nbsp; 7 min read</div>
+    </div>
+    <div class="fc-action">
+      Read article
+      <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </a>
+
+  <div class="post-grid">
+    <a class="post-card" href="/blog/google-business-profile-colorado.html">
+      <div class="pc-tag">Google Business Profile</div>
+      <h2>Why Your Colorado Business Is Not Showing Up on Google (And How to Fix It)</h2>
+      <p>Before you read further, try something: search for your business the way a new customer would -- not by name, but by what you do and where you are. Does your business appear? What most owners see surprises them.</p>
+      <div class="pc-footer">
+        <span class="pc-meta">June 2026 &nbsp;&middot;&nbsp; 6 min read</span>
+        <div class="pc-arrow">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">N&#10022;VA</div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/blog/">Insights</a>
+        <a href="/contact.html">Contact</a>
+        <a href="https://www.linkedin.com/company/thinknova-co" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://calendly.com/thinknova-co/30min" target="_blank" rel="noopener">Schedule a call</a>
+      </div>
+    </div>
+    <div class="footer-copy">&copy; 2026 Nova Limited Liability Co. All rights reserved. &nbsp;&middot;&nbsp; novaonline.net</div>
+  </div>
+</footer>
+
+</body>
+</html>
