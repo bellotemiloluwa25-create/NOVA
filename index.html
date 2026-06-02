@@ -315,6 +315,7 @@ h2.sub{font-family:var(--serif);font-size:1.6rem;font-weight:500;margin:56px 0 2
   "name": "NOVA",
   "description": "A managed marketing firm for small businesses. Marketing, content, design, and growth under one roof and one bill.",
   "url": "https://www.novaonline.net/",
+  "sameAs": ["https://www.linkedin.com/company/thinknova-co"],
   "email": "thinknova.co@gmail.com",
   "slogan": "You describe the work. We deliver it.",
   "areaServed": {
@@ -373,7 +374,7 @@ h2.sub{font-family:var(--serif);font-size:1.6rem;font-weight:500;margin:56px 0 2
       <a class="btn ba" href="https://calendly.com/thinknova-co/30min" target="_blank" rel="noopener">Schedule a 20-minute call &rarr;</a>
       <button class="btn bg" onclick="go('services')">See how it works</button>
     </div>
-    <p class="hnote fa d4" style="margin-top:18px">Currently accepting new clients for the next quarter.</p>
+    <p class="hnote fa d4" style="margin-top:18px">Every client speaks directly with the founder.</p>
 
     <!-- Principle strip -->
     <div class="principle-strip fa d5">
@@ -407,6 +408,7 @@ h2.sub{font-family:var(--serif);font-size:1.6rem;font-weight:500;margin:56px 0 2
     <div class="manifesto-tag">Why we built this</div>
     <h2>The finest work is often happening in places the market still underprices. The businesses that would benefit most are the ones it rarely reaches. <em>We exist to change that.</em></h2>
     <p>You receive work you would normally pay twice for. Our professionals earn well above the local benchmarks of their respective markets. We maintain the standard between them, so quality is never in question. We work with small businesses across Colorado, from Colorado Springs to Fort Collins.</p>
+    <a href="/blog/" style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;color:var(--accent);font-size:.92rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:opacity .25s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">Read our insights &rarr;</a>
   </div>
 </section>
 
@@ -604,6 +606,10 @@ h2.sub{font-family:var(--serif);font-size:1.6rem;font-weight:500;margin:56px 0 2
     <div class="or-divider">or submit a service brief</div>
 
     <form id="bf" onsubmit="send(event)">
+      <input type="hidden" name="access_key" value="cf120aea-0079-49a1-996c-3650cd37c056">
+      <input type="hidden" name="subject" value="New service brief from novaonline.net">
+      <input type="hidden" name="from_name" value="NOVA Website">
+      <input type="checkbox" name="botcheck" style="display:none">
       <div class="fg2"><label class="fl2">Your name</label><input class="fi" type="text" name="name" required placeholder="Jane Smith"></div>
       <div class="fg2"><label class="fl2">Email</label><input class="fi" type="email" name="email" required placeholder="jane@company.com"></div>
       <div class="fg2"><label class="fl2">Company (optional)</label><input class="fi" type="text" name="company" placeholder="Your company name"></div>
@@ -611,6 +617,10 @@ h2.sub{font-family:var(--serif);font-size:1.6rem;font-weight:500;margin:56px 0 2
       <button type="submit" class="fb" id="sb">Submit &rarr;</button>
       <p class="fn">A personal response within 24 hours.</p>
     </form>
+    <div id="form-success" style="display:none;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;text-align:center;margin-top:8px">
+      <div style="font-family:var(--serif);font-size:1.55rem;font-weight:500;margin-bottom:10px">Brief received.</div>
+      <p style="color:var(--fg2);font-size:1.06rem;line-height:1.65">You will hear from Temi personally within 24 hours.</p>
+    </div>
 
     <div class="direct-line">
       <p>Or by email</p>
