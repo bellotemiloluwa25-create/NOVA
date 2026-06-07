@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Growth Audit | NOVA</title>
+<meta name="description" content="See exactly where demand for what you sell is going unmet, in search, in AI, and across the channels you are not running yet. Free audit, back within 48 hours. No call, no commitment.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://novaonline.net/audit">
+<meta property="og:title" content="Free Growth Audit | NOVA">
+<meta property="og:description" content="See where your pipeline is leaking, in search, in AI, and across the channels you are not running yet. Free, back in 48 hours.">
+<meta property="og:url" content="https://novaonline.net/audit">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+<style>
+:root{
+  --bg:#0A0A0A;
+  --bg2:#111;
+  --card:#161616;
+  --fg:#F5F0EB;
+  --fg2:rgba(255,255,255,.62);
+  --fg3:rgba(255,255,255,.42);
+  --border:rgba(255,255,255,.10);
+  --border-h:rgba(255,255,255,.18);
+  --accent:#E8572A;
+  --accent-soft:rgba(232,87,42,.12);
+  --accent-glow:rgba(232,87,42,.22);
+  --green:#10B981;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'DM Sans',-apple-system,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:var(--bg);color:var(--fg);line-height:1.65;font-size:17px;min-height:100vh;display:flex;flex-direction:column}
+
+/* NAV - minimal */
+.nav{padding:20px 44px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.nav-logo{font-weight:700;font-size:1.4rem;letter-spacing:.18em;color:var(--fg);text-decoration:none}
+.nav-link{color:var(--fg2);font-size:.9rem;text-decoration:none;transition:color .25s}
+.nav-link:hover{color:var(--fg)}
+@media(max-width:600px){.nav{padding:16px 22px}}
+
+/* MAIN LAYOUT */
+.page{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:56px 22px 80px;gap:64px;max-width:1080px;margin:0 auto;width:100%}
+@media(max-width:860px){.page{flex-direction:column;gap:40px;padding:44px 22px 64px}}
+
+/* LEFT - pitch */
+.pitch{flex:1;max-width:460px;padding-top:8px}
+.pitch-tag{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:22px}
+.pitch-tag::before{content:'';width:20px;height:1px;background:var(--accent)}
+.pitch h1{font-family:var(--serif);font-size:clamp(2.1rem,4vw,3rem);font-weight:400;line-height:1.1;letter-spacing:-.01em;margin-bottom:20px}
+.pitch h1 em{font-style:italic;color:var(--accent)}
+.pitch .sub{font-size:1.1rem;color:var(--fg2);line-height:1.7;margin-bottom:36px}
+
+/* What you'll get */
+.gets{display:flex;flex-direction:column;gap:16px;margin-bottom:36px}
+.get{display:flex;gap:14px;align-items:flex-start}
+.get-icon{width:32px;height:32px;border-radius:8px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.get-icon svg{width:14px;height:14px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.get-text strong{display:block;font-size:1rem;font-weight:600;margin-bottom:3px}
+.get-text span{font-size:.95rem;color:var(--fg2);line-height:1.55}
+
+/* Trust strip */
+.trust{display:flex;flex-wrap:wrap;gap:20px;padding-top:28px;border-top:1px solid var(--border)}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--fg3)}
+.trust-item svg{width:14px;height:14px;stroke:var(--green);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* RIGHT - form */
+.form-wrap{width:100%;max-width:430px;flex-shrink:0}
+.form-card{background:var(--card);border:1px solid var(--border-h);border-radius:20px;padding:36px 32px;box-shadow:0 12px 48px rgba(0,0,0,.35)}
+@media(max-width:600px){.form-card{padding:28px 22px}}
+
+.form-head{margin-bottom:28px}
+.form-head h2{font-family:var(--serif);font-size:1.5rem;font-weight:500;margin-bottom:6px}
+.form-head p{font-size:.94rem;color:var(--fg2);line-height:1.55}
+
+.fg{margin-bottom:16px}
+.fl{display:block;font-size:.85rem;color:var(--fg2);font-weight:500;margin-bottom:7px;letter-spacing:.02em}
+.fi,.fta{width:100%;padding:13px 15px;background:var(--bg);border:1px solid var(--border-h);border-radius:9px;color:var(--fg);font-family:var(--sans);font-size:.97rem;outline:none;transition:border-color .25s}
+.fi:focus,.fta:focus{border-color:var(--accent)}
+.fi::placeholder,.fta::placeholder{color:var(--fg3)}
+.fta{min-height:90px;resize:vertical}
+.fb{width:100%;padding:15px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-family:var(--sans);font-size:1rem;font-weight:600;cursor:pointer;margin-top:6px;transition:opacity .25s;letter-spacing:.01em}
+.fb:hover{opacity:.92}
+.fb:disabled{opacity:.6;cursor:not-allowed}
+.form-note{text-align:center;font-size:.86rem;color:var(--fg3);margin-top:14px;font-style:italic;font-family:var(--serif)}
+
+/* success */
+.success{display:none;text-align:center;padding:32px 16px}
+.success-mark{width:52px;height:52px;border-radius:50%;background:rgba(16,185,129,.14);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+.success-mark svg{width:24px;height:24px;stroke:#10B981;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.success h3{font-family:var(--serif);font-size:1.55rem;font-weight:500;margin-bottom:10px}
+.success p{font-size:.97rem;color:var(--fg2);line-height:1.6}
+.success a{color:var(--accent);text-decoration:none}
+
+/* FOOTER */
+.foot{padding:28px 44px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.foot-logo{font-weight:700;letter-spacing:.18em;font-size:1.05rem;color:var(--fg);text-decoration:none}
+.foot-right{font-size:.88rem;color:var(--fg3)}
+.foot-right a{color:var(--fg3);text-decoration:none;transition:color .25s}
+.foot-right a:hover{color:var(--fg)}
+@media(max-width:600px){.foot{padding:22px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="/">N&#10022;VA</a>
+  <a class="nav-link" href="/">← Back to site</a>
+</nav>
+
+<div class="page">
+
+  <!-- LEFT: PITCH -->
+  <div class="pitch">
+    <div class="pitch-tag">Free · No commitment</div>
+    <h1>See where your <em>pipeline is leaking.</em></h1>
+    <p class="sub">We will show you exactly where demand for what you sell is going unmet. In search, in the AI tools your buyers now ask, and across the channels you are not running yet. Specific to your company. Back within 48 hours.</p>
+
+    <div class="gets">
+      <div class="get">
+        <div class="get-icon">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </div>
+        <div class="get-text">
+          <strong>Where buyers look and do not find you</strong>
+          <span>The searches and AI prompts your prospects use, and whether your company shows up when they do.</span>
+        </div>
+      </div>
+      <div class="get">
+        <div class="get-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="get-text">
+          <strong>The channels you are leaving idle</strong>
+          <span>The lanes that would be filling your pipeline right now, and what they would take to turn on.</span>
+        </div>
+      </div>
+      <div class="get">
+        <div class="get-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="get-text">
+          <strong>The one move to make first</strong>
+          <span>Not a list of 40 things. One clear priority that moves pipeline, explained in plain language.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="trust">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Personal response, not a bot
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        No sales call required
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Back within 48 hours
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Free, always
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: FORM -->
+  <div class="form-wrap">
+    <div class="form-card">
+      <div id="form-area">
+        <div class="form-head">
+          <h2>Request your free audit</h2>
+          <p>Share your website and we will send back a short, honest look at where your growth is stalling and what to do first.</p>
+        </div>
+        <form id="af" onsubmit="submit(event)">
+          <input type="hidden" name="access_key" value="cf120aea-0079-49a1-996c-3650cd37c056">
+          <input type="hidden" name="subject" value="New free audit request from novaonline.net/audit">
+          <input type="hidden" name="from_name" value="NOVA Audit Page">
+          <input type="checkbox" name="botcheck" style="display:none">
+          <div class="fg">
+            <label class="fl" for="a-name">Your name</label>
+            <input class="fi" id="a-name" type="text" name="name" required placeholder="Jane Smith" autocomplete="name">
+          </div>
+          <div class="fg">
+            <label class="fl" for="a-email">Email address</label>
+            <input class="fi" id="a-email" type="email" name="email" required placeholder="jane@yourbusiness.com" autocomplete="email">
+          </div>
+          <div class="fg">
+            <label class="fl" for="a-site">Your website</label>
+            <input class="fi" id="a-site" type="text" name="website" required placeholder="yourbusiness.com">
+          </div>
+          <div class="fg">
+            <label class="fl" for="a-note">Anything specific on your mind? <span style="color:var(--fg3)">(optional)</span></label>
+            <textarea class="fta" id="a-note" name="details" placeholder="More qualified pipeline, a channel you are not running yet, content that builds authority, or a hire you have been struggling to make. A sentence is plenty."></textarea>
+          </div>
+          <button class="fb" type="submit" id="a-btn">Request my free audit &rarr;</button>
+          <p class="form-note">A personal response within 2 business days.</p>
+        </form>
+      </div>
+      <div class="success" id="a-success">
+        <div class="success-mark">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3>You're on the list.</h3>
+        <p>NOVA will review your site and send back a short, specific audit within 2 business days. Questions in the meantime? <a href="mailto:thinknova.co@gmail.com">thinknova.co@gmail.com</a></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="foot">
+  <a class="foot-logo" href="/">N&#10022;VA</a>
+  <div class="foot-right">
+    <a href="mailto:thinknova.co@gmail.com">thinknova.co@gmail.com</a>
+    &nbsp;&bull;&nbsp;
+    <a href="/">novaonline.net</a>
+  </div>
+</footer>
+
+<script>
+function submit(e){
+  e.preventDefault();
+  var btn=document.getElementById('a-btn');
+  btn.disabled=true;
+  btn.textContent='Sending…';
+  fetch('https://api.web3forms.com/submit',{
+    method:'POST',
+    headers:{'Accept':'application/json'},
+    body:new FormData(e.target)
+  })
+  .then(function(r){return r.json()})
+  .then(function(json){
+    if(json.success){
+      document.getElementById('form-area').style.display='none';
+      document.getElementById('a-success').style.display='block';
+    } else {
+      btn.disabled=false;
+      btn.textContent='Request my free audit →';
+      alert('Something went wrong. Please email thinknova.co@gmail.com directly and we\'ll get right back to you.');
+    }
+  })
+  .catch(function(){
+    btn.disabled=false;
+    btn.textContent='Request my free audit →';
+    alert('Network issue. Please email thinknova.co@gmail.com directly.');
+  });
+}
+</script>
+</body>
+</html>
