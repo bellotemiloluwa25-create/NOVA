@@ -44,16 +44,16 @@
   --sans:'DM Sans',-apple-system,sans-serif;
 }
 [data-theme="light"]{
-  --bg:#FAFAF6;
-  --bg2:#EFEBE3;
+  --bg:#FBF8F2;
+  --bg2:#F2ECE1;
   --card:#FFFFFF;
-  --fg:#0A0A0A;
-  --fg2:rgba(0,0,0,.70);
-  --fg3:rgba(0,0,0,.52);
-  --border:rgba(0,0,0,.18);
-  --border-h:rgba(0,0,0,.32);
+  --fg:#1A1611;
+  --fg2:rgba(26,22,17,.74);
+  --fg3:rgba(26,22,17,.52);
+  --border:rgba(26,22,17,.16);
+  --border-h:rgba(26,22,17,.30);
   --accent-glow:rgba(232,87,42,.18);
-  --accent-soft:rgba(232,87,42,.10);
+  --accent-soft:rgba(232,87,42,.12);
 }
 [data-theme="light"] .pr,
 [data-theme="light"] .qc,
@@ -64,14 +64,11 @@
 [data-theme="light"] .founder,
 [data-theme="light"] .principle,
 [data-theme="light"] .book-call{
-  box-shadow:0 2px 0 rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.03);
+  box-shadow:0 1px 2px rgba(26,22,17,.05),0 8px 24px rgba(26,22,17,.06);
 }
-[data-theme="light"] .nav{
-  background:color-mix(in srgb,var(--bg) 96%,transparent);
-  border-bottom:1px solid var(--border);
-}
+
 [data-theme="light"] .pr.ft{
-  box-shadow:0 6px 24px var(--accent-glow), 0 2px 0 rgba(0,0,0,.04);
+  box-shadow:0 10px 30px var(--accent-glow),0 2px 10px rgba(26,22,17,.07);
 }
 
 /* ===== BASE ===== */
@@ -334,6 +331,20 @@ h2.sub{font-family:var(--serif);font-size:1.6rem;font-weight:500;margin:56px 0 2
 .hero .bg:hover{border-color:rgba(255,255,255,.5);background:rgba(20,20,20,.55)}
 .reassure{margin-top:24px;font-size:1.06rem;color:#F5F0EB;font-style:italic;font-family:var(--serif);text-shadow:0 1px 16px rgba(0,0,0,.8)}
 @media(max-width:700px){.hero{min-height:88vh;padding:104px 20px 60px}}
+
+/* nav: light over the dark hero in both themes, theme colors on scroll */
+.nav .nl,.nav .nav-logo{color:#F5F0EB}
+.nav .nl:hover,.nav .nl.on{color:#fff}
+.nav .tt svg{stroke:rgba(245,240,235,.6)}
+.nav .ttr{background:rgba(245,240,235,.28)}
+.nav .ttk{background:#F5F0EB}
+.nav.scrolled .nl{color:var(--fg2)}
+.nav.scrolled .nl:hover,.nav.scrolled .nl.on{color:var(--fg)}
+.nav.scrolled .nav-logo{color:var(--fg)}
+.nav.scrolled .tt svg{stroke:var(--fg3)}
+.nav.scrolled .ttr{background:var(--border-h)}
+.nav.scrolled .ttk{background:var(--fg)}
+@media(max-width:900px){.nr.open{background:#0A0A0A}.nr.open .nl{color:#F5F0EB}}
 </style>
 <script type="application/ld+json">
 {
@@ -375,6 +386,11 @@ h2.sub{font-family:var(--serif);font-size:1.6rem;font-weight:500;margin:56px 0 2
     <button class="nl" data-t="services" onclick="go('services')">What We Do</button>
     <button class="nl" data-t="about" onclick="go('about')">Our Approach</button>
     <button class="nl" data-t="pricing" onclick="go('pricing')">Pricing</button>
+    <button class="tt" onclick="flip()" aria-label="Toggle light or dark mode">
+      <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.5"/><line x1="8" y1="1.5" x2="8" y2="3" stroke-linecap="round"/><line x1="8" y1="13" x2="8" y2="14.5" stroke-linecap="round"/><line x1="1.5" y1="8" x2="3" y2="8" stroke-linecap="round"/><line x1="13" y1="8" x2="14.5" y2="8" stroke-linecap="round"/><line x1="3.4" y1="3.4" x2="4.5" y2="4.5" stroke-linecap="round"/><line x1="11.5" y1="11.5" x2="12.6" y2="12.6" stroke-linecap="round"/><line x1="3.4" y1="12.6" x2="4.5" y2="11.5" stroke-linecap="round"/><line x1="11.5" y1="4.5" x2="12.6" y2="3.4" stroke-linecap="round"/></svg>
+      <div class="ttr"><div class="ttk"></div></div>
+      <svg viewBox="0 0 16 16"><path d="M13.5 8.5a5.5 5.5 0 01-6-6 5.5 5.5 0 106 6z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
     <a class="nl" href="/blog/" style="text-decoration:none">Insights</a>
     <a class="nl" href="/contact.html" style="text-decoration:none">Contact</a>
     <a class="nc" href="https://calendly.com/thinknova-co/30min" target="_blank" rel="noopener">Schedule a call</a>
@@ -797,6 +813,7 @@ function send(e){
   });
 }
 
+(function(){try{if(localStorage.getItem('nova-theme')==='light')document.body.setAttribute('data-theme','light')}catch(e){}})();
 var navEl=document.querySelector('.nav');
 function navScroll(){navEl.classList.toggle('scrolled',window.scrollY>40)}
 window.addEventListener('scroll',navScroll);navScroll();
