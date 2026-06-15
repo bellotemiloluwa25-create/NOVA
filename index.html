@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOVA | We build and run what your business needs</title>
+<meta name="description" content="NOVA builds the software, dashboards, and automations your business runs on, keeps your books, and grows your marketing. One team we test and manage, for less than hiring.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="shortcut icon" href="favicon.svg">
+<link rel="canonical" href="https://novaonline.net/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NOVA">
+<meta property="og:title" content="NOVA | We build and run what your business needs">
+<meta property="og:description" content="Software, dashboards, automation, bookkeeping, and marketing, delivered by one accountable team. You describe the work. We deliver it.">
+<meta property="og:url" content="https://novaonline.net/">
+<meta property="og:image" content="https://novaonline.net/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NOVA | You describe the work. We deliver it.">
+<meta name="twitter:description" content="One firm that builds your software, shows you your numbers, automates the busywork, keeps your books, and grows your marketing. You manage nothing.">
+<meta name="twitter:image" content="https://novaonline.net/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
+<style>
+/* ===== TOKENS ===== */
+:root{
+  --bg:#0A0A0A;
+  --bg2:#111;
+  --card:#161616;
+  --fg:#F5F0EB;
+  --fg2:rgba(255,255,255,.62);
+  --fg3:rgba(255,255,255,.42);
+  --border:rgba(255,255,255,.10);
+  --border-h:rgba(255,255,255,.18);
+  --accent:#E8572A;
+  --accent-glow:rgba(232,87,42,.20);
+  --accent-soft:rgba(232,87,42,.12);
+  --c-purple:rgba(168,85,247,.12);--c-purple-t:#A855F7;
+  --c-blue:rgba(59,130,246,.12);--c-blue-t:#3B82F6;
+  --c-green:rgba(16,185,129,.12);--c-green-t:#10B981;
+  --c-amber:rgba(245,158,11,.12);--c-amber-t:#F59E0B;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'DM Sans',-apple-system,sans-serif;
+}
+[data-theme="light"]{
+  --bg:#FAFAF6;
+  --bg2:#EFEBE3;
+  --card:#FFFFFF;
+  --fg:#0A0A0A;
+  --fg2:rgba(0,0,0,.70);
+  --fg3:rgba(0,0,0,.52);
+  --border:rgba(0,0,0,.18);
+  --border-h:rgba(0,0,0,.32);
+  --accent-glow:rgba(232,87,42,.18);
+  --accent-soft:rgba(232,87,42,.10);
+}
+[data-theme="light"] .pr,
+[data-theme="light"] .qc,
+[data-theme="light"] .vc,
+[data-theme="light"] .hc,
+[data-theme="light"] .sv,
+[data-theme="light"] .ps,
+[data-theme="light"] .founder,
+[data-theme="light"] .principle,
+[data-theme="light"] .book-call{
+  box-shadow:0 2px 0 rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.03);
+}
+[data-theme="light"] .nav{
+  background:color-mix(in srgb,var(--bg) 96%,transparent);
+  border-bottom:1px solid var(--border);
+}
+[data-theme="light"] .pr.ft{
+  box-shadow:0 6px 24px var(--accent-glow), 0 2px 0 rgba(0,0,0,.04);
+}
+
+/* ===== BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--fg);line-height:1.65;font-size:19px;overflow-x:hidden;transition:background .5s,color .5s;min-height:100vh;display:flex;flex-direction:column}
+::selection{background:var(--accent);color:#fff}
+
+/* ===== NAV ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 44px;display:flex;align-items:center;justify-content:space-between;background:transparent;border-bottom:1px solid transparent;transition:background .3s,border-color .3s}.nav.scrolled{background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.nav-logo{font-weight:700;font-size:1.45rem;letter-spacing:.18em;color:var(--fg);cursor:pointer;background:none;border:none;font-family:inherit}
+.nr{display:flex;gap:30px;align-items:center;list-style:none}
+.nl{color:var(--fg2);font-size:.94rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;padding:10px 6px;position:relative;background:none;border:none;font-family:inherit;transition:color .3s}
+.nl:hover,.nl.on{color:var(--fg)}.nl.on::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1.5px;background:var(--fg);border-radius:1px}
+.nc{background:var(--fg);color:var(--bg);padding:13px 26px;border-radius:7px;font-weight:600;cursor:pointer;border:none;font-family:inherit;font-size:.94rem;transition:opacity .3s,transform .3s;text-decoration:none;display:inline-block}
+.nc:hover{opacity:.88;transform:translateY(-1px)}
+.tt{cursor:pointer;display:flex;align-items:center;gap:6px;padding:8px 4px;background:none;border:none}
+.tt svg{width:16px;height:16px;stroke:var(--fg3);fill:none;stroke-width:1.5}
+.ttr{width:30px;height:16px;border-radius:8px;background:var(--border-h);position:relative}
+.ttk{width:12px;height:12px;border-radius:50%;background:var(--fg);position:absolute;top:2px;left:2px;transition:transform .3s}
+[data-theme="light"] .ttk{transform:translateX(14px)}
+.hb{display:none;cursor:pointer;background:none;border:none;padding:6px}
+.hb span{display:block;width:22px;height:1.5px;background:var(--fg);margin:5px 0}
+@media(max-width:900px){.nav{padding:14px 20px}.hb{display:block;z-index:101}.nr{position:fixed;inset:0;background:var(--bg);flex-direction:column;justify-content:center;align-items:center;gap:24px;transform:translateX(100%);transition:transform .4s}.nr.open{transform:translateX(0)}.nl{font-size:1.1rem}}
+
+/* ===== HERO ===== */
+.hero{position:relative;overflow:hidden;padding:130px 44px 72px}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.5}
+.hero-veil{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,10,10,.5) 0%,rgba(10,10,10,.78) 70%,var(--bg) 100%);pointer-events:none}
+[data-theme="light"] .hero-video{opacity:.32}
+[data-theme="light"] .hero-veil{background:linear-gradient(180deg,rgba(250,250,246,.55) 0%,rgba(250,250,246,.82) 70%,var(--bg) 100%)}
+#sc{position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.55}
+[data-theme="light"] #sc{opacity:.4}
+.hi{max-width:1120px;margin:0 auto;position:relative;z-index:2}
+.ht{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;background:var(--card);border:1px solid var(--border);border-radius:100px;font-size:.9rem;color:var(--fg2);letter-spacing:.08em;text-transform:uppercase;font-weight:500;margin-bottom:30px}
+.ht .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+.hero h1{font-family:var(--serif);font-size:clamp(2.8rem,5.8vw,5.2rem);font-weight:400;line-height:1.04;margin-bottom:28px;letter-spacing:-.015em}
+.hero h1 em{font-style:italic;color:var(--fg)}
+.hero h1 .accent-em{font-style:italic;background:linear-gradient(135deg,var(--accent),#FF8B5C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hs{font-size:1.28rem;color:var(--fg2);max-width:660px;line-height:1.65;margin-bottom:42px}
+.hb2{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:15px 30px;font-family:var(--sans);font-size:.98rem;font-weight:600;border-radius:8px;cursor:pointer;border:none;transition:all .3s;text-decoration:none}
+.ba{background:var(--accent);color:#fff;box-shadow:0 6px 24px var(--accent-glow)}
+.ba:hover{opacity:.92;transform:translateY(-1px);box-shadow:0 8px 32px var(--accent-glow)}
+.bg{background:transparent;color:var(--fg);border:1px solid var(--border-h)}
+.bg:hover{background:var(--card);border-color:var(--fg3)}
+.hnote{font-size:1.04rem;color:var(--fg2);font-style:italic;font-family:var(--serif)}
+
+/* ===== Hero principle strip ===== */
+.principle-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:64px;background:var(--border-h);border-radius:16px;overflow:hidden;border:1px solid var(--border-h)}
+@media(max-width:760px){.principle-strip{grid-template-columns:1fr}}
+.principle{background:var(--bg);padding:30px 28px}
+.principle-n{font-family:var(--serif);font-size:1rem;color:var(--accent);letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;font-weight:600}
+.principle h4{font-family:var(--serif);font-size:1.42rem;font-weight:500;margin-bottom:10px;line-height:1.25}
+.principle p{font-size:1.05rem;color:var(--fg2);line-height:1.55}
+
+@media(max-width:700px){.hero{padding:100px 22px 44px}}
+
+/* ===== MANIFESTO BAND ===== */
+.manifesto{padding:60px 44px 92px;background:transparent}
+.manifesto-i{max-width:950px;margin:0 auto;text-align:center}
+.manifesto-tag{font-size:.92rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:24px}
+.manifesto h2{font-family:var(--serif);font-size:clamp(1.85rem,3.6vw,2.9rem);font-weight:400;line-height:1.25;margin-bottom:28px;letter-spacing:-.01em}
+.manifesto h2 em{font-style:italic;color:var(--accent)}
+.manifesto p{font-size:1.18rem;color:var(--fg2);max-width:740px;margin:0 auto;line-height:1.7}
+@media(max-width:700px){.manifesto{padding:64px 22px}}
+
+/* ===== SECTIONS ===== */
+.sec{display:none;padding:72px 44px 88px;max-width:1120px;margin:0 auto;width:100%;animation:si .4s ease}
+.sec.show{display:block}
+@keyframes si{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){.sec{padding:48px 22px 60px}}
+.sl{display:inline-flex;align-items:center;gap:12px;font-size:.9rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fg3);font-weight:600;margin-bottom:20px}
+.sl::before{content:'';width:24px;height:1px;background:var(--fg3)}
+.st{font-family:var(--serif);font-size:clamp(2rem,4vw,2.9rem);font-weight:400;line-height:1.12;margin-bottom:18px;letter-spacing:-.01em}
+.st em{font-style:italic;color:var(--accent)}
+.sd{color:var(--fg2);max-width:660px;font-size:1.24rem;line-height:1.65}
+h2.sub{font-family:var(--serif);font-size:1.6rem;font-weight:500;margin:56px 0 20px}
+
+/* ===== Service tiles ===== */
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;margin-top:40px}
+.sv{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:32px 26px;transition:all .35s;cursor:pointer;position:relative;overflow:hidden}
+.sv *{pointer-events:none}
+.sv.active{border-color:var(--accent)}
+.sv.roadmap{cursor:default;opacity:.72}
+.sv.roadmap:hover{transform:none}
+.sv::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .35s}
+.sv.active::after{transform:scaleX(1)}
+.sv:not(.roadmap):hover{border-color:var(--border-h);transform:translateY(-3px)}
+.sv:not(.roadmap):hover::after{transform:scaleX(1)}
+.si2{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:22px}
+.sv h3{font-family:var(--serif);font-size:1.55rem;font-weight:500;margin-bottom:12px}
+.sv p{color:var(--fg2);font-size:1.06rem;line-height:1.6;margin-bottom:20px}
+.svt{font-size:1rem;font-weight:600;letter-spacing:.02em}
+.svt.go{color:var(--accent)}
+.svt.w{color:var(--fg3);font-style:italic;font-family:var(--serif);font-weight:500;font-size:1.05rem}
+.roadmap-label{display:inline-block;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:4px 12px;border:1px solid var(--border-h);border-radius:4px;color:var(--fg3);margin-bottom:18px}
+
+/* ===== Process / 5-stage ===== */
+.pg{display:flex;gap:1px;background:var(--border-h);border-radius:18px;overflow:hidden;margin-top:36px;border:1px solid var(--border-h)}
+.ps{flex:1;background:var(--card);padding:36px 22px;text-align:center}
+.pn{font-family:var(--serif);font-size:2.1rem;color:var(--accent);opacity:.55;margin-bottom:12px;font-style:italic}
+.ps h4{font-size:1.1rem;font-weight:600;margin-bottom:8px}
+.ps p{font-size:1rem;color:var(--fg2);line-height:1.5}
+@media(max-width:700px){.pg{flex-direction:column}}
+
+/* ===== Quality grid ===== */
+.qg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+@media(max-width:600px){.qg{grid-template-columns:1fr}}
+.qc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px 24px}
+.qc h4{font-size:1.15rem;font-weight:600;margin-bottom:10px}
+.qc p{font-size:1.05rem;color:var(--fg2);line-height:1.6}
+
+/* ===== About ===== */
+.ag{display:grid;grid-template-columns:1.2fr 1fr;gap:52px;margin-top:40px}
+@media(max-width:800px){.ag{grid-template-columns:1fr;gap:36px}}
+.at p{color:var(--fg2);margin-bottom:18px;font-size:1.14rem;line-height:1.72}
+.aq{border-left:2px solid var(--accent);padding-left:24px;margin-top:28px}
+.aq p{font-family:var(--serif);font-style:italic;font-size:1.28rem;color:var(--fg);line-height:1.5}
+.vg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.vc{padding:26px 24px;border:1px solid var(--border);border-radius:12px;background:var(--card);transition:all .3s}
+.vc:hover{border-color:var(--border-h)}
+.vn{font-family:var(--serif);font-size:1.05rem;color:var(--accent);margin-bottom:10px;font-style:italic;font-weight:500;letter-spacing:.04em}
+.vc h4{font-size:1.12rem;font-weight:600;margin-bottom:8px}
+.vc p{font-size:1.02rem;color:var(--fg2);line-height:1.55}
+
+/* ===== Founder section ===== */
+.founder{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:54px;margin-top:56px;position:relative;overflow:hidden}
+@media(max-width:700px){.founder{padding:36px 26px}}
+.founder-tag{display:inline-flex;align-items:center;gap:10px;font-size:.92rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:24px}
+.founder-tag::before{content:'';width:30px;height:1px;background:var(--accent)}
+.founder h3{font-family:var(--serif);font-size:clamp(1.75rem,2.9vw,2.2rem);font-weight:400;margin-bottom:28px;line-height:1.3;letter-spacing:-.005em}
+.founder h3 em{font-style:italic;color:var(--accent)}
+.founder-text p{font-size:1.14rem;color:var(--fg2);line-height:1.72;margin-bottom:18px}
+.founder-text p:last-of-type{margin-bottom:0}
+.founder-sig{display:flex;align-items:center;gap:18px;margin-top:32px;padding-top:28px;border-top:1px solid var(--border)}
+.founder-avatar{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#FF8B5C);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.65rem;font-weight:500;color:#fff;font-style:italic}
+.founder-name{font-family:var(--serif);font-size:1.26rem;font-weight:500}
+.founder-role{font-size:.94rem;color:var(--fg3);letter-spacing:.04em;text-transform:uppercase;font-weight:500;margin-top:3px}
+
+/* ===== How it works ===== */
+.hw{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+@media(max-width:700px){.hw{grid-template-columns:1fr}}
+.hc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px 24px}
+.hn{font-family:var(--serif);font-size:1.8rem;color:var(--accent);opacity:.55;margin-bottom:10px;font-style:italic}
+.hc h4{font-size:1.15rem;font-weight:600;margin-bottom:8px}
+.hc p{font-size:1.04rem;color:var(--fg2);line-height:1.6}
+
+/* ===== Pricing ===== */
+.prg{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+@media(max-width:700px){.prg{grid-template-columns:1fr}}
+.pr{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:34px 28px;position:relative;transition:all .3s}
+.pr:hover{border-color:var(--border-h)}
+.pr.ft{border-color:var(--accent);box-shadow:0 8px 32px var(--accent-glow)}
+.prb{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:.82rem;font-weight:700;padding:5px 16px;border-radius:5px;letter-spacing:.06em;text-transform:uppercase}
+.prt{font-size:.92rem;color:var(--fg3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;font-weight:700}
+.pra{font-size:2.2rem;font-weight:600;margin-bottom:2px;font-family:var(--serif)}
+.pra span{font-size:1.05rem;font-weight:400;color:var(--fg3);font-family:var(--sans)}
+.prn{font-size:.94rem;color:var(--fg3);margin-bottom:22px;font-style:italic;font-family:var(--serif)}
+.prl{border-top:1px solid var(--border);padding-top:18px;font-size:1.06rem;color:var(--fg2);line-height:1.9}
+.prc{display:block;width:100%;text-align:center;padding:14px;border-radius:8px;font-size:1.02rem;font-weight:600;margin-top:24px;cursor:pointer;border:1px solid var(--border-h);color:var(--fg);background:transparent;font-family:inherit;transition:all .3s;text-decoration:none}
+.prc:hover{background:var(--bg);border-color:var(--fg3)}
+.prc.fl{background:var(--accent);color:#fff;border-color:var(--accent)}
+.prc.fl:hover{opacity:.92;background:var(--accent)}
+
+.pjt{width:100%;border-collapse:collapse;margin-top:26px;font-size:1.04rem}
+.pjt th{text-align:left;padding:14px 20px;background:var(--card);border:1px solid var(--border);font-weight:600;font-size:.9rem;text-transform:uppercase;letter-spacing:.04em;color:var(--fg2)}
+.pjt td{padding:14px 20px;border:1px solid var(--border)}
+.pjt tr:nth-child(even) td{background:var(--card)}
+
+/* ===== Pilot callout ===== */
+.pilot{background:linear-gradient(135deg,var(--accent-soft),transparent);border:1px solid var(--accent);border-radius:16px;padding:32px;margin-top:36px;display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.pilot-content{flex:1;min-width:300px}
+.pilot-tag{font-size:.86rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:12px}
+.pilot h4{font-family:var(--serif);font-size:1.6rem;font-weight:500;margin-bottom:10px}
+.pilot p{font-size:1.06rem;color:var(--fg2);line-height:1.6}
+
+/* ===== Brief / Contact ===== */
+.bw{max-width:580px;margin:0 auto}
+.bw .st,.bw .sd{text-align:center}
+.bw .sd{margin:0 auto 36px}
+.book-call{background:var(--card);border:1px solid var(--accent);border-radius:18px;padding:40px 36px;margin-bottom:40px;text-align:center;box-shadow:0 8px 32px var(--accent-glow)}
+.book-call h3{font-family:var(--serif);font-size:1.72rem;font-weight:500;margin-bottom:14px}
+.book-call p{font-size:1.1rem;color:var(--fg2);line-height:1.65;margin-bottom:26px}
+.book-call .btn{font-size:1.04rem;padding:16px 34px}
+.or-divider{display:flex;align-items:center;gap:18px;margin:32px 0;color:var(--fg3);font-size:.92rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+.or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:var(--border-h)}
+.fg2{margin-bottom:18px}
+.fl2{display:block;font-size:.98rem;color:var(--fg2);margin-bottom:8px;font-weight:500}
+.fi,.ft2,.fs2{width:100%;padding:15px 17px;background:var(--card);border:1px solid var(--border-h);border-radius:8px;color:var(--fg);font-family:var(--sans);font-size:1.04rem;outline:none;transition:border-color .3s}
+.fi:focus,.ft2:focus,.fs2:focus{border-color:var(--accent)}
+.ft2{min-height:110px;resize:vertical}
+.fs2{appearance:none;cursor:pointer}
+.fb{width:100%;padding:16px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:var(--sans);font-size:1.04rem;font-weight:600;cursor:pointer;margin-top:10px;transition:opacity .3s}
+.fb:hover{opacity:.92}
+.fn{text-align:center;font-size:.98rem;color:var(--fg3);margin-top:14px;font-style:italic;font-family:var(--serif)}
+.direct-line{text-align:center;margin-top:32px;padding-top:28px;border-top:1px solid var(--border)}
+.direct-line p{font-size:1.02rem;color:var(--fg3);margin-bottom:6px}
+.direct-line a{color:var(--accent);text-decoration:none;font-weight:500;font-size:1.12rem}
+.direct-line a:hover{text-decoration:underline}
+
+/* ===== Footer ===== */
+.footer{padding:40px 44px;border-top:1px solid var(--border);margin-top:auto}
+.fti{max-width:1120px;margin:0 auto}
+.ftt{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;margin-bottom:20px}
+.ftl{font-weight:700;letter-spacing:.18em;font-size:1.15rem}
+.ftk{display:flex;gap:26px;flex-wrap:wrap}
+.ftk button{color:var(--fg2);font-size:1rem;cursor:pointer;background:none;border:none;font-family:inherit;transition:color .3s}
+.ftk button:hover{color:var(--fg)}
+.ftb{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:20px;border-top:1px solid var(--border)}
+.fte{font-size:.92rem;color:var(--fg3)}
+.ftm{font-size:.96rem;color:var(--fg2)}
+.ftm a{color:var(--fg2);text-decoration:none}
+.ftm a:hover{color:var(--fg)}
+
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-h);border-radius:3px}
+
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.fa{opacity:0;animation:fu .8s ease forwards}
+.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.32s}.d4{animation-delay:.44s}.d5{animation-delay:.56s}.d6{animation-delay:.68s}
+
+/* ===== Scroll indicator ===== */
+.scroll-hint{text-align:center;margin-top:56px;opacity:0;animation:fu .8s .8s ease forwards}
+.scroll-arrow{display:inline-block;animation:bounce 2s infinite}
+.scroll-arrow svg{width:22px;height:22px;stroke:var(--fg3);fill:none;stroke-width:1.5}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+.scroll-hint span{display:block;font-size:.92rem;color:var(--fg3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+
+/* ===== FAQ ===== */
+.faq{margin-top:60px;border-top:1px solid var(--border);padding-top:40px}
+.faq-item{border-bottom:1px solid var(--border);overflow:hidden}
+.faq-q{width:100%;text-align:left;padding:24px 0;background:none;border:none;color:var(--fg);font-family:var(--sans);font-size:1.15rem;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:color .3s;gap:18px}
+.faq-q:hover{color:var(--fg2)}
+.faq-q .faq-icon{font-size:1.6rem;color:var(--accent);transition:transform .3s;flex-shrink:0;font-weight:300}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease;padding:0 0}
+.faq-item.open .faq-a{max-height:340px;padding:0 0 24px 0}
+.faq-a p{color:var(--fg2);font-size:1.08rem;line-height:1.7}
+
+/* ===== NEW VIDEO HERO (build & run) ===== */
+.hero{min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 24px 84px}
+.vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;transition:opacity 1.1s ease}
+.vid.show{opacity:1}
+.veil{position:absolute;inset:0;z-index:1;background:radial-gradient(118% 82% at 50% 42%,rgba(10,10,10,.42),rgba(10,10,10,.76) 60%,rgba(10,10,10,.95) 100%)}
+.veil2{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,10,10,.55),transparent 26%,transparent 62%,var(--bg) 100%)}
+.glowtop{position:absolute;inset:0;z-index:1;background:radial-gradient(56% 40% at 50% 5%,rgba(232,87,42,.2),transparent 60%);pointer-events:none}
+.hin{position:relative;z-index:2;max-width:1040px;margin:0 auto}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.2);background:rgba(20,20,20,.5);backdrop-filter:blur(8px);border-radius:100px;padding:8px 18px;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:#F5F0EB;margin-bottom:30px}
+.pill .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(3rem,7vw,6rem);line-height:1.04;letter-spacing:-.02em;margin-bottom:0;color:#F5F0EB;text-shadow:0 2px 40px rgba(0,0,0,.55)}
+.line2{display:inline-flex;align-items:baseline;justify-content:center;padding-bottom:.06em}
+.rot{font-style:italic;background:linear-gradient(120deg,var(--accent),#FF8B5C);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:.16em;transition:opacity .2s ease}
+.cur{display:inline-block;width:.05em;height:.92em;margin-left:.06em;transform:translateY(.06em);background:var(--accent);border-radius:1px;animation:bl 1.05s step-end infinite}
+@keyframes bl{50%{opacity:0}}
+.hsub{font-size:1.22rem;color:#F5F0EB;max-width:640px;margin:30px auto 0;text-shadow:0 1px 22px rgba(0,0,0,.75)}
+.hero .hb2{margin-top:34px}
+.hero .bg{color:#F5F0EB;border-color:rgba(255,255,255,.28);background:rgba(20,20,20,.4);backdrop-filter:blur(8px)}
+.hero .bg:hover{border-color:rgba(255,255,255,.5);background:rgba(20,20,20,.55)}
+.reassure{margin-top:24px;font-size:1.06rem;color:#F5F0EB;font-style:italic;font-family:var(--serif);text-shadow:0 1px 16px rgba(0,0,0,.8)}
+@media(max-width:700px){.hero{min-height:88vh;padding:104px 20px 60px}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "NOVA",
+  "description": "NOVA builds software, dashboards, and automations, keeps the books, and grows marketing for small businesses. One team we test and manage.",
+  "url": "https://novaonline.net/",
+  "sameAs": ["https://www.linkedin.com/company/thinknova-co"],
+  "email": "thinknova.co@gmail.com",
+  "slogan": "You describe the work. We deliver it.",
+  "areaServed": {
+    "@type": "Country",
+    "name": "United States"
+  },
+  "founder": { "@type": "Person", "name": "Temiloluwa Bello" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Do I pay one subscription, or per service?", "acceptedAnswer": { "@type": "Answer", "text": "Per service, and only for what you need. One-time builds like a website, dashboard, or automation are fixed-price projects you pay for once. Ongoing work like bookkeeping, marketing, or maintenance is a simple monthly retainer you can cancel anytime. Most clients build something first, then keep us on to run it." } },
+    { "@type": "Question", "name": "How does this compare to hiring?", "acceptedAnswer": { "@type": "Answer", "text": "A single full-time hire runs $60,000 to $80,000 a year and covers one job. With NOVA you pay only for the work you actually need, project by project and month by month, from a team that spans software, data, automation, finance, and marketing. No recruiting, no ramp, no overhead." } },
+    { "@type": "Question", "name": "How quickly can you begin?", "acceptedAnswer": { "@type": "Answer", "text": "Most engagements begin within 3 to 5 business days. Every inquiry receives a response within 24 hours, and scoping is generally completed in a single call." } },
+    { "@type": "Question", "name": "Who manages the work, and will we manage anyone?", "acceptedAnswer": { "@type": "Answer", "text": "NOVA does. You describe what you need. We assemble the team, do the work, review every deliverable before it reaches you, and report on it. There are no standups, no shared Slack channels, and nobody for you to manage." } },
+    { "@type": "Question", "name": "Can you do more than one thing for us?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Start with a single project or lane and add others as you grow, all under one firm, with a direct point of contact. Start with the website, then have us run the marketing on it, then hand us the books. You are never locked into open-ended spend." } },
+    { "@type": "Question", "name": "Can we end a retainer at any time?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All retainers are month to month with no long-term commitment. You may conclude at the close of any billing cycle without penalty." } },
+    { "@type": "Question", "name": "Who actually performs the work?", "acceptedAnswer": { "@type": "Answer", "text": "People we have tested and manage directly. You work with NOVA as a single firm. We select the team, oversee the quality, and put our name on the result. The cost advantage comes from where the talent is, not from cutting corners on who it is." } }
+  ]
+}
+</script>
+</head>
+<body>
+<nav class="nav">
+  <button class="nav-logo" onclick="go('home')">N<span style="color:var(--accent)">&#10022;</span>VA</button>
+  <div class="nr" id="nr">
+    <button class="nl" data-t="services" onclick="go('services')">What We Do</button>
+    <button class="nl" data-t="about" onclick="go('about')">Our Approach</button>
+    <button class="nl" data-t="pricing" onclick="go('pricing')">Pricing</button>
+    <a class="nl" href="/blog/" style="text-decoration:none">Insights</a>
+    <a class="nl" href="/contact.html" style="text-decoration:none">Contact</a>
+    <a class="nc" href="https://calendly.com/thinknova-co/30min" target="_blank" rel="noopener">Schedule a call</a>
+  </div>
+  <button class="hb" id="hb" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <video id="va" class="vid show" autoplay muted loop playsinline poster="https://images.pexels.com/videos/20065494/black-woman-business-computer-laptop-data-labelling-20065494.jpeg?auto=compress&cs=tinysrgb&h=900&fit=crop&w=1600"></video>
+  <video id="vb" class="vid" autoplay muted loop playsinline></video>
+  <div class="veil"></div><div class="veil2"></div><div class="glowtop"></div>
+  <div class="hin">
+    <span class="pill"><span class="dot"></span>One accountable team</span>
+    <h1>We build &amp; run your<br><span class="line2"><span class="rot" id="rot">dashboards</span><span class="cur"></span></span></h1>
+    <p class="hsub">The software, data, automations, books, and growth your business depends on, handled by a team you never have to manage.</p>
+    <div class="hb2" style="justify-content:center">
+      <a class="btn ba" href="#" onclick="go('brief');return false;">Start a project &rarr;</a>
+      <a class="btn bg" href="#" onclick="go('services');return false;">See what we do</a>
+    </div>
+    <p class="reassure">One team. Fixed price. Less than a hire.</p>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div class="manifesto-i">
+    <div class="manifesto-tag">Who does the work</div>
+    <h2>We work with experienced developers, designers, analysts, and bookkeepers, many of them in Nigeria and across Africa, who do excellent work at rates a US agency cannot match. <em>You get the work. We handle everyone behind it.</em></h2>
+    <p>Every person on a NOVA project is tested before they touch your work, and we check what they produce before it reaches you. You deal with a single firm and a direct point of contact, not a marketplace of freelancers you have to manage. That is how the quality stays high and the price stays low.</p>
+    <a href="/blog/" style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;color:var(--accent);font-size:.92rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:opacity .25s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">Read our insights &rarr;</a>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<div class="sec" id="s-services">
+  <span class="sl">What We Do</span>
+  <h1 class="st">Five things we do. <em>Pick what you need.</em></h1>
+  <p class="sd">Click any of them to see exactly what is included, what it costs, and how long it takes.</p>
+  <div class="sg">
+    <div class="sv active" onclick="go('software')">
+      <div class="si2" style="background:var(--accent-soft);color:var(--accent)">&#10216;/&#10217;</div>
+      <h3>Software &amp; Web</h3>
+      <p>We create your website, web app, or internal tool, on Webflow, WordPress, Shopify, or custom code, and connect it to the software you already use.</p>
+      <span class="svt go">See what's included &rarr;</span>
+    </div>
+    <div class="sv" onclick="go('data')">
+      <div class="si2" style="background:var(--c-blue);color:var(--c-blue-t)">&#9672;</div>
+      <h3>Data &amp; Dashboards</h3>
+      <p>We pull your numbers from Shopify, Stripe, QuickBooks, and your ad accounts into one dashboard that updates by itself.</p>
+      <span class="svt go">See what's included &rarr;</span>
+    </div>
+    <div class="sv" onclick="go('automation')">
+      <div class="si2" style="background:var(--c-purple);color:var(--c-purple-t)">&#9680;</div>
+      <h3>Automation</h3>
+      <p>We take a manual task you repeat every week, like logging orders or chasing replies, and set up a system (Zapier, Make, or code) that does it for you.</p>
+      <span class="svt go">See what's included &rarr;</span>
+    </div>
+    <div class="sv" onclick="go('bookkeeping')">
+      <div class="si2" style="background:var(--c-green);color:var(--c-green-t)">&#9678;</div>
+      <h3>Bookkeeping &amp; Finance</h3>
+      <p>We keep your books in QuickBooks or Xero: categorize transactions, reconcile accounts, send invoices, and give you a monthly profit-and-loss.</p>
+      <span class="svt go">See what's included &rarr;</span>
+    </div>
+    <div class="sv" onclick="go('marketing')">
+      <div class="si2" style="background:var(--c-amber);color:var(--c-amber-t)">&#9673;</div>
+      <h3>Marketing &amp; Growth</h3>
+      <p>We write your content, run your email and SMS flows, post your social, and manage your Google and Meta ads, then report what it brought in.</p>
+      <span class="svt go">See what's included &rarr;</span>
+    </div>
+  </div>
+</div>
+
+<!-- SOFTWARE & WEB DETAIL -->
+<div class="sec" id="s-software">
+  <button class="nl" onclick="go('services')" style="margin-bottom:24px;font-size:1rem">&larr; All lanes</button>
+  <h1 class="st">Software &amp; Web</h1>
+  <p class="sd">We design and build the website, app, or tool your business runs on, then connect it to what you already use. You own everything we make.</p>
+  <h2 class="sub">What you get</h2>
+  <div class="qg">
+    <div class="qc"><h4>A website</h4><p>A 5 to 7 page site on Webflow, WordPress, or Shopify: your branding, written copy, mobile-responsive, a contact or booking form, and on-page SEO set up. Two rounds of edits, and the login keys are yours.</p></div>
+    <div class="qc"><h4>A web app or internal tool</h4><p>A custom tool shaped to your workflow: a client portal, a booking or quoting system, an inventory or order tracker, a calculator. The thing you cannot buy off the shelf.</p></div>
+    <div class="qc"><h4>Integrations</h4><p>Two of your tools wired together, for example Shopify to QuickBooks, your contact form to a Google Sheet, or your CRM to your email, so data moves without anyone copying it by hand.</p></div>
+    <div class="qc"><h4>Upkeep, if you want it</h4><p>Hosting set up, bug fixes, content changes, and small improvements on a monthly plan, so the site keeps working without landing on your to-do list.</p></div>
+  </div>
+  <p class="sd" style="margin-top:34px;font-size:1.1rem">Landing page from $600. Full website from $1,800. Web app or tool from $4,000. Upkeep from $300 a month.</p>
+  <div class="pilot" style="margin-top:24px">
+    <div class="pilot-content">
+      <div class="pilot-tag">First engagement &middot; from $300</div>
+      <h4>Start with a pilot</h4>
+      <p>Begin with a single defined project, a landing page or a small tool, delivered in two to four weeks. A clear scope, a fixed price, and a working result you keep either way.</p>
+    </div>
+    <a class="btn ba" href="#" onclick="go('brief');return false;">Get a free audit &rarr;</a>
+  </div>
+</div>
+
+<!-- DATA & DASHBOARDS DETAIL -->
+<div class="sec" id="s-data">
+  <button class="nl" onclick="go('services')" style="margin-bottom:24px;font-size:1rem">&larr; All lanes</button>
+  <h1 class="st">Data &amp; Dashboards</h1>
+  <p class="sd">We connect the places your numbers live and turn them into a single dashboard you check each morning, so you stop pulling reports by hand.</p>
+  <h2 class="sub">What you get</h2>
+  <div class="qg">
+    <div class="qc"><h4>One dashboard for the whole business</h4><p>We connect Shopify, Stripe, QuickBooks, Google and Meta Ads, and your spreadsheets into a single dashboard, in Looker Studio, Power BI, or a custom build, showing revenue, orders, ad spend, and profit, refreshed daily.</p></div>
+    <div class="qc"><h4>Reports that send themselves</h4><p>The weekly or monthly report you build by hand, set up to generate and email itself to you and your team on a schedule.</p></div>
+    <div class="qc"><h4>Clean data</h4><p>Your messy or scattered spreadsheets turned into one organized, reliable file or database you can actually trust.</p></div>
+    <div class="qc"><h4>Your key numbers, tracked</h4><p>We set up the three to five numbers you really run on, repeat customers, margin, cash, whatever yours are, and flag them when they move.</p></div>
+  </div>
+  <p class="sd" style="margin-top:34px;font-size:1.1rem">Dashboard build from $1,200. Ongoing updates and new reports from $300 a month.</p>
+  <div class="pilot" style="margin-top:24px">
+    <div class="pilot-content">
+      <div class="pilot-tag">First engagement &middot; from $300</div>
+      <h4>Start with a pilot</h4>
+      <p>Hand us a messy dataset or a question you cannot answer, and we will turn it into a clean, simple dashboard you can keep. See the value before you commit to more.</p>
+    </div>
+    <a class="btn ba" href="#" onclick="go('brief');return false;">Get a free audit &rarr;</a>
+  </div>
+</div>
+
+<!-- AUTOMATION DETAIL -->
+<div class="sec" id="s-automation">
+  <button class="nl" onclick="go('services')" style="margin-bottom:24px;font-size:1rem">&larr; All lanes</button>
+  <h1 class="st">Automation</h1>
+  <p class="sd">You tell us a task you do the same way every week. We set up a system that does it for you, with Zapier, Make, or code, and we keep it running.</p>
+  <h2 class="sub">What you get</h2>
+  <div class="qg">
+    <div class="qc"><h4>A workflow that runs itself</h4><p>For example: a new order logs to your spreadsheet, sends the customer a confirmation, and pings your team in Slack, all automatically the moment it comes in.</p></div>
+    <div class="qc"><h4>Your apps connected</h4><p>Your store, CRM, email, and accounting passing information to each other, so nobody re-types the same thing into three places.</p></div>
+    <div class="qc"><h4>AI doing the repetitive part</h4><p>Drafting replies, sorting and tagging inquiries, summarizing, all on rules you set and control, with a human check where it matters.</p></div>
+    <div class="qc"><h4>A small internal tool</h4><p>A tracker, a calculator, or a form-to-spreadsheet setup that removes a recurring headache for good.</p></div>
+  </div>
+  <p class="sd" style="margin-top:34px;font-size:1.1rem">A single automation from $500. Keeping a set of them running from $300 a month.</p>
+  <div class="pilot" style="margin-top:24px">
+    <div class="pilot-content">
+      <div class="pilot-tag">First engagement &middot; from $300</div>
+      <h4>Start with a pilot</h4>
+      <p>Point us at the repetitive task you hate most. We will automate it in a couple of weeks so you can feel what it is like to have it simply gone.</p>
+    </div>
+    <a class="btn ba" href="#" onclick="go('brief');return false;">Schedule a call &rarr;</a>
+  </div>
+</div>
+
+<!-- BOOKKEEPING & FINANCE DETAIL -->
+<div class="sec" id="s-bookkeeping">
+  <button class="nl" onclick="go('services')" style="margin-bottom:24px;font-size:1rem">&larr; All lanes</button>
+  <h1 class="st">Bookkeeping &amp; Finance</h1>
+  <p class="sd">We keep your books current in QuickBooks or Xero and hand you clear financials every month. No more shoebox of receipts or year-end scramble.</p>
+  <h2 class="sub">What you get</h2>
+  <div class="qg">
+    <div class="qc"><h4>Monthly bookkeeping</h4><p>We categorize every transaction and keep your books up to date in QuickBooks or Xero, so they are always ready for you or your accountant.</p></div>
+    <div class="qc"><h4>Bank and card reconciliation</h4><p>Every account matched to your statements each month, so the numbers are real and nothing slips through.</p></div>
+    <div class="qc"><h4>Invoicing and follow-up</h4><p>We send your invoices and chase the unpaid ones, so you actually get paid on time.</p></div>
+    <div class="qc"><h4>A monthly profit-and-loss</h4><p>A clean P&amp;L and balance sheet each month, with a short note in plain English on what changed.</p></div>
+  </div>
+  <p class="sd" style="margin-top:34px;font-size:1.1rem">From $400 a month, based on how many transactions you run. Catch-up of past months priced separately.</p>
+  <div class="pilot" style="margin-top:24px">
+    <div class="pilot-content">
+      <div class="pilot-tag">First engagement &middot; from $300</div>
+      <h4>Start with a clean-up</h4>
+      <p>Behind on the books? We will get a few months current and organized as a one-time project, then keep them that way each month if you want us to.</p>
+    </div>
+    <a class="btn ba" href="#" onclick="go('brief');return false;">Schedule a call &rarr;</a>
+  </div>
+</div>
+
+<!-- MARKETING & GROWTH DETAIL -->
+<div class="sec" id="s-marketing">
+  <button class="nl" onclick="go('services')" style="margin-bottom:24px;font-size:1rem">&larr; All lanes</button>
+  <h1 class="st">Marketing &amp; Growth</h1>
+  <p class="sd">We run your marketing channels for you and send a monthly report of what we did and what it brought back. You pick the channels; we do the work.</p>
+  <h2 class="sub">What you get</h2>
+  <div class="qg">
+    <div class="qc"><h4>Content and SEO</h4><p>We write and publish blog posts and product or service pages written to rank on Google, and fix the on-page SEO that is holding you back. Usually two to four pieces a month.</p></div>
+    <div class="qc"><h4>Email and SMS</h4><p>We set up and run your flows, welcome, abandoned cart, post-purchase, and your regular campaigns, in Klaviyo or Mailchimp.</p></div>
+    <div class="qc"><h4>Social media</h4><p>We plan, design, and post to your Instagram, TikTok, or LinkedIn on a set schedule, so the feed stays alive without you touching it.</p></div>
+    <div class="qc"><h4>Google and Meta ads</h4><p>We set up, run, and adjust your paid campaigns, and the monthly report shows what each dollar brought back, not just clicks.</p></div>
+  </div>
+  <p class="sd" style="margin-top:34px;font-size:1.1rem">From $1,000 a month for a channel or two. One-off projects, like a single campaign or a brand kit, priced separately.</p>
+  <div class="pilot" style="margin-top:24px">
+    <div class="pilot-content">
+      <div class="pilot-tag">First engagement &middot; from $300</div>
+      <h4>Start with a pilot</h4>
+      <p>Begin with a bounded project, a campaign, a content set, or a brand refresh, delivered in two to four weeks. Prove the work, then move to a retainer if it earns it.</p>
+    </div>
+    <a class="btn ba" href="#" onclick="go('brief');return false;">Get a free audit &rarr;</a>
+  </div>
+</div>
+
+<!-- ABOUT / APPROACH -->
+<div class="sec" id="s-about">
+  <span class="sl">Our Approach</span>
+  <h1 class="st">Not a marketplace.<br><em>Accountable.</em></h1>
+
+  <div class="ag">
+    <div class="at">
+      <p>The traditional alternatives put the heaviest work on the buyer. Freelance platforms require you to write briefs, sort proposals, supervise the work, and intervene when quality slips. Agencies ask you to fit your business into their process, often at a price meant for companies twice your size.</p>
+      <p>Our model removes both burdens. You bring us the objective. We assemble the team, run the project, and review every piece of work before it reaches your desk. If something falls short of the agreed scope, we make it right on our time, not yours.</p>
+      <div class="aq"><p>"Great developers, designers, and bookkeepers exist everywhere, not just in the cities that charge the most. We find them, test them, and manage them, so you get the work without the overhead."</p></div>
+    </div>
+    <div class="vg">
+      <div class="vc"><div class="vn">I.</div><h4>Quality over volume</h4><p>A small bench of exceptional professionals. The bar for admission is deliberately high.</p></div>
+      <div class="vc"><div class="vn">II.</div><h4>Full accountability</h4><p>When something goes wrong, we own it and make it right at our cost.</p></div>
+      <div class="vc"><div class="vn">III.</div><h4>Transparency</h4><p>Clear pricing. Clear timelines. No hidden fees, ever.</p></div>
+      <div class="vc"><div class="vn">IV.</div><h4>Mutual uplift</h4><p>Our professionals are paid fairly. Both sides of the relationship come out ahead.</p></div>
+    </div>
+  </div>
+
+  <!-- FOUNDER SECTION -->
+  <div class="founder">
+    <div class="founder-tag">From the founder</div>
+    <h3>I built NOVA because <em>I have spent my life in the middle of this problem.</em></h3>
+    <div class="founder-text">
+      <p>My name is Temiloluwa Bello. I grew up between Nigeria and the United States, in the strange middle space where two markets meet but rarely connect. I have spent years watching excellent professionals on one side go underpaid, and the companies that needed their work on the other pay far too much for it, or go without. I have also worked in management consulting, which taught me what businesses actually require to succeed and why most providers miss it.</p>
+      <p>NOVA exists to close that distance. I am, by background, one of the few people positioned to build the bridge between these two worlds with the cultural fluency, the operational training, and the conviction it requires.</p>
+      <p>Here is my promise to you: Every client we take on will be treated as if they are the only client we have. The work will meet our standards before it ever meets your table, and the relationship will be guided personally from the top. If you choose NOVA, you are hiring a partner who has thought carefully about your problem, and who is accountable for the result.</p>
+    </div>
+    <div class="founder-sig">
+      <div class="founder-avatar">T</div>
+      <div>
+        <div class="founder-name">Temiloluwa Bello</div>
+        <div class="founder-role">Founder</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sub">How it works</h2>
+  <div class="hw">
+    <div class="hc"><div class="hn">i.</div><h4>Submit a service brief or schedule a call</h4><p>A short intake form, or a 20-minute conversation, captures your scope of work, goals, and timeline. We reply within 24 hours with a written plan.</p></div>
+    <div class="hc"><div class="hn">ii.</div><h4>We handle the execution</h4><p>The appropriate team is assembled. We run the project and review every piece of work before it reaches you.</p></div>
+    <div class="hc"><div class="hn">iii.</div><h4>You receive the result</h4><p>On time, in your voice, with a monthly report that is clear, candid, and easy to act on.</p></div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="sec" id="s-pricing">
+  <span class="sl">Pricing</span>
+  <h1 class="st">Clear prices. <em>Exactly what you get.</em></h1>
+  <p class="sd">Fixed prices for things we build once. Monthly plans for things we run for you. Every price below is a starting point; you get an exact quote after a short call.</p>
+
+  <h2 class="sub">Build it &middot; one-time projects</h2>
+  <table class="pjt">
+    <thead><tr><th>Project</th><th>What's included</th><th>From</th><th>Time</th></tr></thead>
+    <tbody>
+      <tr><td>Landing page</td><td>A single page, your branding, copy written for you, mobile-ready, a contact or signup form, basic SEO</td><td>$600</td><td>1 to 2 weeks</td></tr>
+      <tr><td>Website</td><td>5 to 7 pages, copy, forms, on-page SEO, two rounds of edits, and the logins are yours</td><td>$1,800</td><td>2 to 4 weeks</td></tr>
+      <tr><td>Web app or tool</td><td>A custom tool scoped to you: client portal, booking, quoting, inventory, or order tracker</td><td>$4,000</td><td>3 to 8 weeks</td></tr>
+      <tr><td>Dashboard</td><td>Your sources connected, a live dashboard of your key numbers, refreshed daily</td><td>$1,200</td><td>2 to 3 weeks</td></tr>
+      <tr><td>Automation</td><td>One workflow wired across your tools, tested, and documented so it keeps running</td><td>$500</td><td>1 to 2 weeks</td></tr>
+      <tr><td>Brand kit</td><td>Logo, colours, fonts, and a one-page guide you can hand to anyone</td><td>$1,200</td><td>2 to 3 weeks</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub">Run it &middot; monthly plans</h2>
+  <p class="sd">Ongoing work we do for you each month. Cancel at the end of any month.</p>
+  <div class="prg">
+    <div class="pr">
+      <div class="prt">Bookkeeping &amp; Finance</div>
+      <div class="pra">$400+<span>/mo</span></div>
+      <div class="prn">Starting at</div>
+      <div class="prl">Transactions categorized<br>Accounts reconciled monthly<br>Invoices sent and chased<br>Monthly P&amp;L and balance sheet</div>
+      <a class="prc" href="https://calendly.com/thinknova-co/30min" target="_blank" rel="noopener">Schedule a call</a>
+    </div>
+    <div class="pr ft">
+      <div class="prb">Most popular</div>
+      <div class="prt">Marketing &amp; Growth</div>
+      <div class="pra">$1,000+<span>/mo</span></div>
+      <div class="prn">Starting at</div>
+      <div class="prl">2 to 4 content pieces a month<br>Email and SMS flows run<br>Social posted on schedule<br>Google and Meta ads managed</div>
+      <a class="prc fl" href="https://calendly.com/thinknova-co/30min" target="_blank" rel="noopener">Schedule a call</a>
+    </div>
+    <div class="pr">
+      <div class="prt">Support &amp; Maintenance</div>
+      <div class="pra">$300+<span>/mo</span></div>
+      <div class="prn">Starting at</div>
+      <div class="prl">Hosting and uptime watched<br>Bugs fixed<br>Content and small changes<br>Someone you can reach</div>
+      <a class="prc" href="https://calendly.com/thinknova-co/30min" target="_blank" rel="noopener">Schedule a call</a>
+    </div>
+  </div>
+
+  <div class="pilot">
+    <div class="pilot-content">
+      <div class="pilot-tag">New to NOVA &middot; $300 to $500</div>
+      <h4>Try us with a small project</h4>
+      <p>Pick a single thing: a landing page, a dashboard, an automation, or a books clean-up, and we deliver it in two to four weeks. You see exactly how we work before committing to anything bigger.</p>
+    </div>
+    <a class="btn ba" href="#" onclick="go('brief');return false;">Start small &rarr;</a>
+  </div>
+
+  <p class="sd" style="margin-top:36px">For comparison, a single full-time hire runs $60,000 to $80,000 a year and does one job. With NOVA you pay only for the work you need, a build or a month at a time.</p>
+
+  <div class="faq">
+    <h2 class="sub" style="margin-top:0">Common questions</h2>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Do I pay one subscription, or per service? <span class="faq-icon">+</span></button><div class="faq-a"><p>Per service, and only for what you need. One-time builds, a website, a dashboard, an automation, are fixed-price projects you pay for once. Ongoing work, bookkeeping, marketing, or maintenance, is a simple monthly retainer you can cancel anytime. Most clients build something first, then keep us on to run it. There is no all-in-one subscription you have to buy to get started.</p></div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How does this compare to hiring? <span class="faq-icon">+</span></button><div class="faq-a"><p>A single full-time hire runs $60,000 to $80,000 a year and covers one job. With NOVA you pay only for the work you actually need, project by project and month by month, from a team that spans software, data, automation, finance, and marketing. No recruiting, no ramp, no overhead.</p></div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Who manages the work, and will we manage anyone? <span class="faq-icon">+</span></button><div class="faq-a"><p>NOVA does. You describe what you need. We assemble the team, do the work, review every deliverable before it reaches you, and report on it. There are no standups, no shared Slack channels, and nobody for you to manage.</p></div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can you do more than one thing for us? <span class="faq-icon">+</span></button><div class="faq-a"><p>Yes, and that is the point. Start with a single project or lane, and add others as you grow, all under one firm, with a direct point of contact. Start with the website, then have us run the marketing on it, then hand us the books. You are never locked into open-ended spend.</p></div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What if we are not satisfied with the work? <span class="faq-icon">+</span></button><div class="faq-a"><p>We revise it until you are. If the work falls short of the agreed scope, we redo it at our cost. That commitment is part of our standard terms.</p></div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can we end the retainer at any time? <span class="faq-icon">+</span></button><div class="faq-a"><p>Yes. All retainers are month to month with no long-term commitment. You may conclude at the close of any billing cycle without penalty.</p></div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Who actually performs the work? <span class="faq-icon">+</span></button><div class="faq-a"><p>People we have tested and manage directly. You work with NOVA as a single firm. We select the team, oversee the quality, and put our name on the result. The cost advantage comes from where the talent is, not from cutting corners on who it is.</p></div></div>
+  </div>
+</div>
+
+<!-- BOOK A CALL / BRIEF -->
+<div class="sec" id="s-brief">
+  <div class="bw">
+    <h1 class="st">Tell us what you <em>need built or run.</em></h1>
+    <p class="sd">A website, a dashboard, an automation, your books, your marketing, or you are just not sure where to start. Free, no commitment. Tell us below and we will send back a short, specific plan, with where we would begin and what it would cost, within two business days.</p>
+
+    <form id="bf" onsubmit="send(event)">
+      <input type="hidden" name="access_key" value="cf120aea-0079-49a1-996c-3650cd37c056">
+      <input type="hidden" name="subject" value="New free audit request from novaonline.net">
+      <input type="hidden" name="from_name" value="NOVA Website">
+      <input type="checkbox" name="botcheck" style="display:none">
+      <div class="fg2"><label class="fl2">Your name</label><input class="fi" type="text" name="name" required placeholder="Jane Smith"></div>
+      <div class="fg2"><label class="fl2">Email</label><input class="fi" type="email" name="email" required placeholder="jane@company.com"></div>
+      <div class="fg2"><label class="fl2">Your website</label><input class="fi" type="text" name="website" required placeholder="yourbusiness.com"></div>
+      <div class="fg2"><label class="fl2">What do you need? (optional)</label><textarea class="ft2" name="details" placeholder="A new website, a dashboard to see your numbers, an automation for a manual task, help with the books, more customers, or you are not sure yet. A sentence is plenty."></textarea></div>
+      <button type="submit" class="fb" id="sb">Request my free audit &rarr;</button>
+      <p class="fn">A personal response within 2 business days.</p>
+    </form>
+    <div class="or-divider">or prefer to talk first</div>
+
+    <div class="book-call">
+      <h3>Schedule a 20-minute call</h3>
+      <p>You will speak directly with NOVA. The agenda is simple: where you are, where you want to take the company, and where a managed team can get you there faster than a hire. If we are not the right match, you will leave with a clearer plan regardless.</p>
+      <a class="btn ba" href="https://calendly.com/thinknova-co/30min" target="_blank" rel="noopener">Select a time &rarr;</a>
+    </div>
+    <div id="form-success" style="display:none;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;text-align:center;margin-top:8px">
+      <div style="font-family:var(--serif);font-size:1.55rem;font-weight:500;margin-bottom:10px">Audit request received.</div>
+      <p style="color:var(--fg2);font-size:1.06rem;line-height:1.65">You will hear from NOVA within 2 business days.</p>
+    </div>
+
+    <div class="direct-line">
+      <p>Or by email</p>
+      <a href="mailto:thinknova.co@gmail.com">thinknova.co@gmail.com</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="fti">
+    <div class="ftt">
+      <div class="ftl">N<span style="color:var(--accent)">&#10022;</span>VA</div>
+      <div class="ftk">
+        <button onclick="go('services')">What We Do</button>
+        <button onclick="go('about')">Our Approach</button>
+        <button onclick="go('pricing')">Pricing</button>
+        <a href="/contact.html" style="color:var(--fg2);font-size:1rem;cursor:pointer;background:none;border:none;font-family:inherit;transition:color .3s;text-decoration:none" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--fg2)'">Contact</a>
+        <a href="/blog/" style="color:var(--fg2);font-size:1rem;text-decoration:none;font-family:inherit;transition:color .3s" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--fg2)'">Insights</a>
+      </div>
+    </div>
+    <div class="ftb">
+      <div class="fte">&copy; 2026 Nova Limited Liability Co. All rights reserved.</div>
+      <div class="ftm"><a href="mailto:thinknova.co@gmail.com">thinknova.co@gmail.com</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function go(id){
+  document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('show')});
+  document.querySelectorAll('.nl[data-t]').forEach(function(l){l.classList.remove('on')});
+  if(id==='home'){window.scrollTo({top:0,behavior:'smooth'});cl();return}
+  var el=document.getElementById('s-'+id);
+  if(el){
+    el.classList.add('show');
+    var heroH=document.querySelector('.hero').offsetHeight;
+    var manH=document.querySelector('.manifesto').offsetHeight;
+    window.scrollTo({top:heroH+manH-60,behavior:'smooth'})
+  }
+  var nl=document.querySelector('[data-t="'+id+'"]');
+  if(nl)nl.classList.add('on');
+  if(id==='software'||id==='data'||id==='automation'||id==='bookkeeping'||id==='marketing'){var sn=document.querySelector('[data-t="services"]');if(sn)sn.classList.add('on')}
+  cl()
+}
+function toggleFaq(btn){var item=btn.parentElement;item.classList.toggle('open')}
+function cl(){document.getElementById('nr').classList.remove('open')}
+function flip(){
+  var n=document.body.getAttribute('data-theme')==='light'?'dark':'light';
+  document.body.setAttribute('data-theme',n);
+  try{localStorage.setItem('nova-theme',n)}catch(e){}
+}
+
+document.getElementById('hb').addEventListener('click',function(){document.getElementById('nr').classList.toggle('open')});
+
+/* ===== HERO: cycling word + video rotation ===== */
+var words=["dashboards","website","books","automations","growth","internal tools"];
+var wi=0,el=document.getElementById('rot');
+if(el){setInterval(function(){wi=(wi+1)%words.length;el.style.opacity=0;setTimeout(function(){el.textContent=words[wi];el.style.opacity=1;},200);},2100);}
+var clips=["https://videos.pexels.com/video-files/20065494/20065494-uhd_2560_1440_30fps.mp4","https://videos.pexels.com/video-files/10374960/10374960-uhd_2560_1440_24fps.mp4","https://videos.pexels.com/video-files/6889677/6889677-hd_1920_1080_25fps.mp4"];
+var va=document.getElementById('va'),vb=document.getElementById('vb'),ci=0,showA=true;
+if(va){va.src=clips[0];va.play().catch(function(){});setInterval(function(){var nxt=showA?vb:va,cur=showA?va:vb;ci=(ci+1)%clips.length;nxt.src=clips[ci];nxt.play().catch(function(){});nxt.classList.add('show');cur.classList.remove('show');showA=!showA;},5000);}
+
+function send(e){
+  e.preventDefault();
+  var form=e.target;
+  var b=document.getElementById('sb');
+  b.disabled=true;
+  b.textContent='Sending\u2026';
+  fetch('https://api.web3forms.com/submit',{
+    method:'POST',
+    headers:{'Accept':'application/json'},
+    body:new FormData(form)
+  })
+  .then(function(r){return r.json()})
+  .then(function(json){
+    if(json.success){
+      form.style.display='none';
+      document.getElementById('form-success').style.display='block';
+    }else{
+      b.disabled=false;
+      b.textContent='Request my free audit \u2192';
+      alert('Something went wrong sending that. Please email thinknova.co@gmail.com directly and we will get right back to you.');
+    }
+  })
+  .catch(function(){
+    b.disabled=false;
+    b.textContent='Request my free audit \u2192';
+    alert('Network issue, your request did not send. Please email thinknova.co@gmail.com directly and we will get right back to you.');
+  });
+}
+
+var navEl=document.querySelector('.nav');
+function navScroll(){navEl.classList.toggle('scrolled',window.scrollY>40)}
+window.addEventListener('scroll',navScroll);navScroll();
+</script>
+</body>
+</html>
