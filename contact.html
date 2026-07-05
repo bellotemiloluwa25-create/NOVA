@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact NOVA | Start with a free audit</title>
+<meta name="description" content="Tell NOVA what you need built or run. Start with a free audit, schedule a 20-minute call, or send a service brief. A response within 24 hours.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://novaonline.net/contact.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NOVA">
+<meta property="og:title" content="Contact NOVA | Start with a free audit">
+<meta property="og:description" content="Tell NOVA what you need built or run. Free audit first, no commitment. A response within 24 hours.">
+<meta property="og:url" content="https://novaonline.net/contact.html">
+<meta property="og:image" content="https://novaonline.net/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0A;--bg2:#111;--card:#161616;
+  --fg:#F5F0EB;--fg2:rgba(255,255,255,.62);--fg3:rgba(255,255,255,.42);
+  --border:rgba(255,255,255,.10);--border-h:rgba(255,255,255,.18);
+  --accent:#E8572A;--accent-glow:rgba(232,87,42,.20);--accent-soft:rgba(232,87,42,.12);
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 5vw;background:rgba(10,10,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--fg);text-decoration:none;letter-spacing:.04em}
+.nav-logo span{color:var(--accent)}
+.nr{display:flex;gap:26px;align-items:center}
+.nl{color:var(--fg2);text-decoration:none;font-size:.92rem;transition:color .2s}
+.nl:hover{color:var(--fg)}
+.nc{background:var(--accent);color:#fff;text-decoration:none;font-size:.9rem;font-weight:600;padding:10px 20px;border-radius:100px;transition:opacity .2s}
+.nc:hover{opacity:.88}
+.wrap{max-width:1080px;margin:0 auto;padding:72px 5vw 96px}
+.sl{display:block;font-size:.8rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+h1{font-family:var(--serif);font-size:clamp(2.4rem,5vw,3.6rem);font-weight:500;line-height:1.12;margin-bottom:16px}
+h1 em{color:var(--accent);font-style:italic}
+.lede{color:var(--fg2);font-size:1.08rem;max-width:640px;margin-bottom:56px}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:start}
+@media(max-width:860px){.grid{grid-template-columns:1fr}.nr .nl{display:none}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:34px}
+.card h2{font-family:var(--serif);font-size:1.7rem;font-weight:500;margin-bottom:8px}
+.card .sub{color:var(--fg2);font-size:.98rem;margin-bottom:26px}
+label{display:block;font-size:.85rem;font-weight:600;color:var(--fg2);margin:18px 0 6px}
+input,textarea{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--fg);font-family:var(--sans);font-size:.95rem}
+input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+textarea{min-height:110px;resize:vertical}
+.btn{display:inline-block;width:100%;margin-top:24px;background:var(--accent);color:#fff;border:none;border-radius:100px;padding:14px 26px;font-family:var(--sans);font-size:1rem;font-weight:600;cursor:pointer;text-align:center;transition:opacity .2s}
+.btn:hover{opacity:.88}
+.note{color:var(--fg3);font-size:.83rem;margin-top:12px;text-align:center}
+.alt{display:flex;flex-direction:column;gap:22px}
+.alt .card h3{font-family:var(--serif);font-size:1.35rem;font-weight:500;margin-bottom:8px}
+.alt .card p{color:var(--fg2);font-size:.95rem;margin-bottom:16px}
+.alink{display:inline-block;color:var(--accent);font-weight:600;font-size:.95rem;text-decoration:none}
+.alink:hover{text-decoration:underline}
+.meta{display:flex;flex-wrap:wrap;gap:28px;margin-top:44px;padding-top:28px;border-top:1px solid var(--border)}
+.meta div{font-size:.9rem}
+.meta .k{color:var(--fg3);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:4px}
+.success{display:none;text-align:center;padding:40px 20px}
+.success h3{font-family:var(--serif);font-size:1.8rem;font-weight:500;margin-bottom:10px}
+.success p{color:var(--fg2)}
+footer{border-top:1px solid var(--border);padding:28px 5vw;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;color:var(--fg3);font-size:.85rem}
+footer a{color:var(--fg2);text-decoration:none;margin-right:18px}
+footer a:hover{color:var(--fg)}
+</style>
+<body>
+<nav class="nav">
+  <a class="nav-logo" href="/">N<span>&#10022;</span>VA</a>
+  <div class="nr">
+    <a class="nl" href="/">Home</a>
+    <a class="nl" href="/blog/">Insights</a>
+    <a class="nc" href="https://calendly.com/thinknova-co/30min" target="_blank" rel="noopener">Schedule a call</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <span class="sl">Contact</span>
+  <h1>Tell us what you need <em>built or run.</em></h1>
+  <p class="lede">A website, a dashboard, an automation, your books, your marketing, or you are not sure where to start. Begin with a free audit: NOVA looks at where you are losing time and money, then sends back a short, specific plan with where we would begin and what it would cost. Free, no commitment, within two business days.</p>
+
+  <div class="grid">
+    <div class="card" id="formcard">
+      <h2>Start with a free audit</h2>
+      <p class="sub">The fastest way to see exactly what NOVA would do for your business, before you spend anything.</p>
+      <form id="auditform">
+        <input type="hidden" name="access_key" value="cf120aea-0079-49a1-996c-3650cd37c056">
+        <input type="hidden" name="subject" value="Free audit request (contact page)">
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" required>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required>
+        <label for="website">Your website</label>
+        <input id="website" name="website" type="text" placeholder="yourbusiness.com">
+        <label for="message">What do you need? (optional)</label>
+        <textarea id="message" name="message" placeholder="The job you want off your plate, or the thing you want built."></textarea>
+        <button class="btn" type="submit">Request my free audit &rarr;</button>
+        <p class="note">A response from NOVA within 2 business days.</p>
+      </form>
+      <div class="success" id="success">
+        <h3>Audit request received.</h3>
+        <p>You will hear from NOVA within 2 business days.</p>
+      </div>
+    </div>
+
+    <div class="alt">
+      <div class="card">
+        <h3>Prefer to talk first?</h3>
+        <p>A 20-minute call: where you are, where you want to take the company, and whether NOVA is the right fit. If we are not, you leave with a clearer plan regardless.</p>
+        <a class="alink" href="https://calendly.com/thinknova-co/30min" target="_blank" rel="noopener">Select a time &rarr;</a>
+      </div>
+      <div class="card">
+        <h3>Prefer email?</h3>
+        <p>Write a few lines about what you are working on and NOVA will reply within 24 hours.</p>
+        <a class="alink" href="mailto:thinknova.co@gmail.com">thinknova.co@gmail.com &rarr;</a>
+      </div>
+      <div class="card">
+        <h3>LinkedIn</h3>
+        <p>Follow the work, or reach out there instead.</p>
+        <a class="alink" href="https://www.linkedin.com/company/thinknova-co" target="_blank" rel="noopener">thinknova-co &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="meta">
+    <div><span class="k">Response time</span>Within 24 hours</div>
+    <div><span class="k">Service area</span>United States</div>
+    <div><span class="k">Pricing</span>Free audit, then projects from $300</div>
+  </div>
+</div>
+
+<footer>
+  <div>&copy; 2026 Nova Limited Liability Co. All rights reserved.</div>
+  <div>
+    <a href="/">Home</a>
+    <a href="/blog/">Insights</a>
+    <a href="https://www.linkedin.com/company/thinknova-co" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+document.getElementById('auditform').addEventListener('submit', async function(e){
+  e.preventDefault();
+  var f = e.target, btn = f.querySelector('.btn');
+  btn.textContent = 'Sending...'; btn.disabled = true;
+  try{
+    var r = await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(f)});
+    if(r.ok){ f.style.display='none'; document.getElementById('success').style.display='block'; }
+    else{ throw new Error(); }
+  }catch(err){
+    btn.textContent = 'Request my free audit →'; btn.disabled = false;
+    alert('Something went wrong. Please email thinknova.co@gmail.com instead.');
+  }
+});
+</script>
+</body>
+</html>
