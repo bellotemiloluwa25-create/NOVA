@@ -134,6 +134,10 @@ textarea.inp{min-height:84px;resize:vertical}
 .scorow .x:hover{color:var(--accent)}
 .addrow{display:flex;gap:8px;margin-top:12px}
 @media(max-width:760px){.scopecol{grid-template-columns:1fr}}
+.notifybtn{background:none;border:1px solid var(--border);border-radius:8px;padding:8px 13px;font-size:.82rem;
+  font-family:var(--sans);color:var(--fg3);cursor:pointer;white-space:nowrap}
+.notifybtn:hover{border-color:var(--accent);color:var(--accent)}
+.notifybtn:disabled{opacity:.5;cursor:default}
 .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--accent);color:#fff;
   padding:14px 26px;border-radius:11px;font-size:.9rem;z-index:80;transition:transform .35s cubic-bezier(.2,.8,.25,1)}
 .toast.on{transform:translateX(-50%) translateY(0)}
@@ -145,7 +149,7 @@ textarea.inp{min-height:84px;resize:vertical}
 
 <div class="top">
   <div><a class="tmark" href="index.html">N<span class="s">&#10022;</span>VA</a><span class="tag">Master</span></div>
-  <div class="who"><span id="whoName"></span><button class="out" onclick="NOVA.signOut()">Sign out</button></div>
+  <div class="who" id="whoBox"><span id="whoName"></span><button class="out" onclick="NOVA.signOut()">Sign out</button></div>
 </div>
 
 <div class="page">
@@ -343,12 +347,13 @@ textarea.inp{min-height:84px;resize:vertical}
 
 <div class="toast" id="toast"></div>
 
-<script src="nova-config.js"></script>
+<script src="nova-notify.js?v=6"></script>
+<script src="nova-config.js?v=6"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 document.write(NOVA_CONFIG.MODE === 'live'
-  ? '<scr' + 'ipt src="nova-live.js"><\/scr' + 'ipt>'
-  : '<scr' + 'ipt src="nova-data.js"><\/scr' + 'ipt>');
+  ? '<scr' + 'ipt src="nova-live.js?v=6"><\/scr' + 'ipt>'
+  : '<scr' + 'ipt src="nova-data.js?v=6"><\/scr' + 'ipt>');
 </script>
 <script>
 var me = null;
@@ -363,8 +368,37 @@ function boot(){
   paintGreet(); setInterval(paintGreet,60000);
   Promise.resolve(NOVA.signupLink()).then(function(l){ document.getElementById('signupLink').value = l; });
   renderList();
+  NOVANotify.mountButton(document.getElementById('whoBox'), 'Alerts');
+  watchForNews();
 }
 function paintGreet(){ document.getElementById('adminGreet').innerHTML = NOVA.greeting()+', <em>'+me.firstName+'</em>.'; }
+
+function nameOf(cid){
+  var c = NOVA.getClient(cid);
+  return c ? c.company : 'A client';
+}
+function watchForNews(){
+  NOVA.onChange(function(ev){
+    if(ev.event === 'DELETE'){ if(cur) renderAllPanes(); renderList(); return; }
+    var who = ev.row ? nameOf(ev.row.client_id) : 'A client';
+
+    if(ev.table === 'messages' && ev.row.sender === 'client'){
+      NOVANotify.show('Message from ' + who, String(ev.row.body).slice(0,120),
+        function(){ openClient(ev.row.client_id); tab('msg', document.querySelector('[onclick*=\'msg\']')); });
+    }
+    else if(ev.table === 'actions' && ev.row.status === 'answered'){
+      NOVANotify.show(who + ' replied', ev.row.title,
+        function(){ openClient(ev.row.client_id); });
+    }
+    else if(ev.table === 'files' && ev.row.uploaded_by === 'client'){
+      NOVANotify.show(who + ' sent a file', ev.row.name,
+        function(){ openClient(ev.row.client_id); });
+    }
+    if(cur && ev.row && ev.row.client_id === cur.id) renderAllPanes();
+    if(!cur) renderList();
+    if(cur) paintTabDots();
+  });
+}
 
 function renderList(){
   var cs=NOVA.getClients();

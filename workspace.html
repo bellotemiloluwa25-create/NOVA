@@ -278,13 +278,13 @@ body{font-family:var(--sans);background:var(--bg);color:var(--fg);line-height:1.
 
 <div class="toast" id="toast"></div>
 
-<script src="nova-notify.js"></script>
-<script src="nova-config.js"></script>
+<script src="nova-notify.js?v=6"></script>
+<script src="nova-config.js?v=6"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 document.write(NOVA_CONFIG.MODE === 'live'
-  ? '<scr' + 'ipt src="nova-live.js"><\/scr' + 'ipt>'
-  : '<scr' + 'ipt src="nova-data.js"><\/scr' + 'ipt>');
+  ? '<scr' + 'ipt src="nova-live.js?v=6"><\/scr' + 'ipt>'
+  : '<scr' + 'ipt src="nova-data.js?v=6"><\/scr' + 'ipt>');
 </script>
 <script>
 var me = null;
@@ -314,10 +314,8 @@ function boot(){
   jobs = NOVA.getJobs(me.clientId);
   paintGreeting(); setInterval(paintGreeting, 60000);
   renderAll();
-  if(!PREVIEW){
-    NOVANotify.mountButton(document.getElementById('whoBox'), 'Alerts');
-    watchForNews();
-  }
+  if(!PREVIEW){ NOVANotify.mountButton(document.getElementById('whoBox'), 'Alerts'); }
+  watchForNews();
 }
 function renderAll(){ renderHome(); renderJobSel(); renderFeed(); renderFileTabs(); renderFiles(); renderBilling(); renderAccount(); renderBadges(); }
 
@@ -638,6 +636,7 @@ function watchForNews(){
   NOVA.onChange(function(ev){
     if(ev.row && ev.row.client_id !== me.clientId) return;
     if(ev.event === 'DELETE') { renderAll(); return; }
+    if(PREVIEW){ jobs = NOVA.getJobs(me.clientId); renderAll(); return; }
 
     if(ev.table === 'messages' && ev.row.sender === 'nova'){
       NOVANotify.show('New message from NOVA',

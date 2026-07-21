@@ -14,6 +14,7 @@
    =========================================================== */
 
 var NOVA = (function () {
+  var VERSION = 6;
   var cfg = window.NOVA_CONFIG || {};
   var sb = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_KEY);
 
@@ -194,10 +195,8 @@ var NOVA = (function () {
   function startPolling() {
     if (polling) return;
     noteExisting();
-    polling = setInterval(function () {
-      if (document.hidden && Date.now() % 60000 > 20000) return;  /* ease off when nobody is looking */
-      poll();
-    }, 12000);
+    console.log('NOVA v' + VERSION + ': checking for updates every 10 seconds');
+    polling = setInterval(function () { poll(); }, 10000);
   }
 
   function startListening() {
@@ -225,7 +224,7 @@ var NOVA = (function () {
     });
     channel.subscribe(function (status) {
       if (status === 'SUBSCRIBED') {
-        console.log('NOVA: live updates connected');
+        console.log('NOVA v' + VERSION + ': live updates connected');
       } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
         console.warn('NOVA: live updates unavailable, falling back to checking every few seconds');
       }
@@ -610,6 +609,15 @@ var NOVA = (function () {
     onChange: function (fn) { handlers.push(fn); return function () { handlers = handlers.filter(function (h) { return h !== fn; }); }; },
     isPreview: function () { return !!previewOf; },
     reload: function () { return poll(); },
+    version: VERSION,
+    diagnose: function () {
+      console.log('NOVA version', VERSION, '| mode live | signed in as', me && me.role,
+                  '| preview:', !!previewOf,
+                  '| live socket:', channel ? channel.state : 'not started',
+                  '| polling:', polling ? 'on' : 'off',
+                  '| handlers listening:', handlers.length);
+      return poll().then(function () { console.log('manual check done, cached messages:', C.messages.length); });
+    },
     resetDemo: function () { location.href = 'login.html'; }
   };
 })();
