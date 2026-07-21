@@ -351,7 +351,7 @@ document.write(NOVA_CONFIG.MODE === 'live'
   : '<scr' + 'ipt src="nova-data.js"><\/scr' + 'ipt>');
 </script>
 <script>
-var me = NOVA.requireAuth('admin');
+var me = null;
 var cur = null;
 
 function toast(t){ var el=document.getElementById('toast'); el.textContent=t; el.classList.add('on');
@@ -721,7 +721,15 @@ function rotateSignup(){
   });
 }
 
-if(me) NOVA.ready().then(boot);
+NOVA.ready().then(function(){
+  me = NOVA.requireAuth('admin');
+  if(me) boot();
+}).catch(function(e){
+  console.error('NOVA startup', e);
+  document.body.innerHTML = '<div style="max-width:420px;margin:80px auto;text-align:center;font-family:DM Sans,sans-serif;color:#F5F0EB">'+
+    '<p>Could not reach the master view. Please refresh, or sign in again.</p>'+
+    '<p><a href="login.html" style="color:#E8572A">Back to sign in</a></p></div>';
+});
 </script>
 </body>
 </html>

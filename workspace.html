@@ -282,8 +282,8 @@ document.write(NOVA_CONFIG.MODE === 'live'
   : '<scr' + 'ipt src="nova-data.js"><\/scr' + 'ipt>');
 </script>
 <script>
-var me = NOVA.requireAuth('client');
-var PREVIEW = !!(me && me.preview);
+var me = null;
+var PREVIEW = false;
 function blocked(){ if(PREVIEW){ toast('Preview only. Nothing you do here is saved.'); return true; } return false; }
 var jobs = [], activeJob = null, activeFileTab = null;
 
@@ -634,7 +634,17 @@ function show(v,btn){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-if(me) NOVA.ready().then(boot);
+NOVA.ready().then(function(){
+  me = NOVA.requireAuth('client');
+  if(!me) return;
+  PREVIEW = !!me.preview;
+  boot();
+}).catch(function(e){
+  console.error('NOVA startup', e);
+  document.body.innerHTML = '<div style="max-width:420px;margin:80px auto;text-align:center;font-family:DM Sans,sans-serif">'+
+    '<p style="color:#0A0A0A">Could not reach your workspace. Please refresh, or sign in again.</p>'+
+    '<p><a href="login.html" style="color:#E8572A">Back to sign in</a></p></div>';
+});
 </script>
 </body>
 </html>

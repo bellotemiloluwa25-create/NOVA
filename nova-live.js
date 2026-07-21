@@ -187,7 +187,12 @@ var NOVA = (function () {
 
     /* ---------- session ---------- */
     ready: function () {
-      return loadProfile().then(function (p) { return p ? loadAll() : null; });
+      return loadProfile().then(function (p) {
+        if (!p) return null;
+        var pv = sessionStorage.getItem('nova_preview');
+        if (pv && p.role === 'admin') previewOf = pv;
+        return loadAll();
+      });
     },
     getSession: sessionObject,
     requireAuth: function (role) {
@@ -484,6 +489,3 @@ var NOVA = (function () {
     resetDemo: function () { location.href = 'login.html'; }
   };
 })();
-
-/* an admin arriving at the workspace page is previewing a client */
-document.addEventListener('DOMContentLoaded', function () { if (NOVA._restorePreview) NOVA._restorePreview(); });
