@@ -173,6 +173,10 @@ body{font-family:var(--sans);background:var(--bg);color:var(--fg);line-height:1.
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 #previewBar .pb-btn{background:var(--accent);color:#fff;border:none;border-radius:7px;padding:7px 15px;
   font-family:var(--sans);font-size:.83rem;font-weight:600;cursor:pointer}
+.notifybtn{background:none;border:1px solid var(--border);border-radius:8px;padding:8px 13px;font-size:.82rem;
+  font-family:var(--sans);color:var(--fg3);cursor:pointer;white-space:nowrap}
+.notifybtn:hover{border-color:var(--accent);color:var(--accent)}
+.notifybtn:disabled{opacity:.5;cursor:default}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(90px);background:#0A0A0A;color:#F5F0EB;
   padding:15px 28px;border-radius:11px;font-size:.94rem;z-index:80;transition:transform .35s cubic-bezier(.2,.8,.25,1);
   box-shadow:0 14px 34px rgba(0,0,0,.28)}
@@ -207,7 +211,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--fg);line-height:1.
     <button class="tn" data-v="billing" onclick="show('billing',this)">Billing<span class="badge" id="badge-billing" style="display:none"></span></button>
     <button class="tn" data-v="account" onclick="show('account',this)">Your plan<span class="badge" id="badge-plan" style="display:none"></span></button>
   </div>
-  <div class="who">
+  <div class="who" id="whoBox">
     <div class="nm"><b id="whoName">&nbsp;</b><span id="whoCo">&nbsp;</span></div>
     <div class="av" id="whoAv">&nbsp;</div>
     <button class="out" onclick="NOVA.signOut()">Sign out</button>
@@ -224,7 +228,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--fg);line-height:1.
 
   <div class="view" id="v-messages">
     <h1 class="greet">Messages</h1>
-    <p class="sub">Everything in one place. We reply within one business day.</p>
+    <p class="sub">Everything in one place. We get back to you as soon as possible.</p>
     <div class="chatwrap">
       <div class="chathead">
         <h3 id="chatTitle">All messages</h3>
@@ -274,6 +278,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--fg);line-height:1.
 
 <div class="toast" id="toast"></div>
 
+<script src="nova-notify.js"></script>
 <script src="nova-config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -309,6 +314,10 @@ function boot(){
   jobs = NOVA.getJobs(me.clientId);
   paintGreeting(); setInterval(paintGreeting, 60000);
   renderAll();
+  if(!PREVIEW){
+    NOVANotify.mountButton(document.getElementById('whoBox'), 'Alerts');
+    watchForNews();
+  }
 }
 function renderAll(){ renderHome(); renderJobSel(); renderFeed(); renderFileTabs(); renderFiles(); renderBilling(); renderAccount(); renderBadges(); }
 
@@ -496,7 +505,7 @@ function sendMsg(){
   var box=document.getElementById('msgBox'), t=box.value.trim();
   if(!t) return;
   NOVA.sendMessage(me.clientId, activeJob, 'client', me.firstName, t);
-  box.value=''; renderFeed(); renderHome(); toast('Sent. NOVA replies within one business day.');
+  box.value=''; renderFeed(); renderHome(); toast('Sent. NOVA will get back to you as soon as possible.');
 }
 
 /* ---------- files ---------- */
@@ -624,6 +633,34 @@ function renderBadges(){
   });
 }
 var SECTION = { messages:'messages', files:'files', billing:'billing', account:'plan' };
+/* live updates and desktop alerts */
+function watchForNews(){
+  NOVA.onChange(function(ev){
+    if(ev.row && ev.row.client_id !== me.clientId) return;
+    if(ev.event === 'DELETE') { renderAll(); return; }
+
+    if(ev.table === 'messages' && ev.row.sender === 'nova'){
+      NOVANotify.show('New message from NOVA',
+        String(ev.row.body).slice(0,120),
+        function(){ show('messages', document.querySelector('[data-v=messages]')); });
+    }
+    else if(ev.table === 'actions' && ev.row.status === 'open'){
+      NOVANotify.show('NOVA needs something from you', ev.row.title,
+        function(){ show('home', document.querySelector('[data-v=home]')); });
+    }
+    else if(ev.table === 'files' && ev.row.uploaded_by === 'nova'){
+      NOVANotify.show('NOVA delivered a file', ev.row.name,
+        function(){ show('files', document.querySelector('[data-v=files]')); });
+    }
+    else if(ev.table === 'invoices' && ev.event === 'INSERT'){
+      NOVANotify.show('New invoice', ev.row.number + ', ' + NOVA.money(ev.row.amount),
+        function(){ show('billing', document.querySelector('[data-v=billing]')); });
+    }
+    jobs = NOVA.getJobs(me.clientId);
+    renderAll();
+  });
+}
+
 function show(v,btn){
   document.querySelectorAll('.view').forEach(function(x){x.classList.remove('on')});
   document.getElementById('v-'+v).classList.add('on');

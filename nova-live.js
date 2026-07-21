@@ -156,7 +156,52 @@ var NOVA = (function () {
     if (at > -1) list[at] = row; else list.push(row);
   }
 
+  /* Realtime is the fast path. Polling is the guarantee. If the socket is
+     blocked, a network is unfriendly, or replication is not switched on,
+     the poll still finds anything new within a few seconds. */
+  var seenIds = {};
+  var polling = null;
+
+  function noteExisting() {
+    ['messages','actions','files','invoices','jobs','access'].forEach(function (k) {
+      C[k].forEach(function (r) { seenIds[k + ':' + r.id] = r.status || r.progress || 1; });
+    });
+  }
+
+  function emit(table, key, row, isNew) {
+    handlers.forEach(function (h) {
+      try { h({ table: table, event: isNew ? 'INSERT' : 'UPDATE', row: row }); } catch (e) { console.error(e); }
+    });
+  }
+
+  function poll() {
+    return loadAll().then(function () {
+      var map = { messages: 'messages', actions: 'actions', files: 'files',
+                  invoices: 'invoices', jobs: 'jobs', access_grants: 'access' };
+      Object.keys(map).forEach(function (table) {
+        var key = map[table];
+        C[key].forEach(function (row) {
+          var id = key + ':' + row.id;
+          var stamp = row.status || row.progress || 1;
+          var known = seenIds[id];
+          if (known === undefined) { seenIds[id] = stamp; emit(table, key, row, true); }
+          else if (known !== stamp) { seenIds[id] = stamp; emit(table, key, row, false); }
+        });
+      });
+    });
+  }
+
+  function startPolling() {
+    if (polling) return;
+    noteExisting();
+    polling = setInterval(function () {
+      if (document.hidden && Date.now() % 60000 > 20000) return;  /* ease off when nobody is looking */
+      poll();
+    }, 12000);
+  }
+
   function startListening() {
+    startPolling();
     if (channel || !me) return;
     channel = sb.channel('nova-changes');
     ['messages', 'actions', 'files', 'invoices', 'jobs', 'access_grants'].forEach(function (t) {
@@ -169,13 +214,22 @@ var NOVA = (function () {
           if (key) C[key] = C[key].filter(function (x) { return x.id !== row.id; });
         } else {
           mergeRow(t, row);
+          var key = { messages: 'messages', actions: 'actions', files: 'files',
+                      invoices: 'invoices', jobs: 'jobs', access_grants: 'access' }[t];
+          if (key) seenIds[key + ':' + row.id] = row.status || row.progress || 1;
         }
         handlers.forEach(function (h) {
           try { h({ table: t, event: payload.eventType, row: row }); } catch (e) { console.error(e); }
         });
       });
     });
-    channel.subscribe();
+    channel.subscribe(function (status) {
+      if (status === 'SUBSCRIBED') {
+        console.log('NOVA: live updates connected');
+      } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+        console.warn('NOVA: live updates unavailable, falling back to checking every few seconds');
+      }
+    });
   }
 
   /* ---------------- session shape the pages expect ---------------- */
@@ -555,7 +609,7 @@ var NOVA = (function () {
 
     onChange: function (fn) { handlers.push(fn); return function () { handlers = handlers.filter(function (h) { return h !== fn; }); }; },
     isPreview: function () { return !!previewOf; },
-    reload: function () { return loadAll(); },
+    reload: function () { return poll(); },
     resetDemo: function () { location.href = 'login.html'; }
   };
 })();

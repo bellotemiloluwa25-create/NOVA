@@ -45,12 +45,19 @@ var NOVANotify = (function () {
     document.title = unseen ? '(' + unseen + ') ' + baseTitle : baseTitle;
   }
 
+  /* Away means this window is not the one being looked at. Checking only
+     document.hidden misses the common case of two windows side by side,
+     where the other one is visible but not focused. */
+  function away() {
+    return document.hidden || !document.hasFocus();
+  }
+
   function show(title, body, onClick) {
     /* the tab count and sound happen whether or not they granted permission */
-    if (document.hidden) { unseen++; paintTitle(); }
+    if (away()) { unseen++; paintTitle(); }
     chime();
 
-    if (permission() !== 'granted' || !document.hidden) return;
+    if (permission() !== 'granted' || !away()) return;
     try {
       var n = new Notification(title, {
         body: body,
