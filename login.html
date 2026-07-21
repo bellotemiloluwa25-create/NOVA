@@ -300,6 +300,23 @@ document.write(NOVA_CONFIG.MODE === 'live'
   }
   window.resetPw = resetPw;
 
+
+  function fail(msg, offerSignIn){
+    var m = document.getElementById('msg');
+    m.innerHTML = msg + (offerSignIn
+      ? '<br><a href="login.html" style="color:var(--accent);font-weight:600;display:inline-block;margin-top:8px">Go to sign in &rarr;</a>'
+      : '');
+    m.className = 'msg err';
+    m.style.display = 'block';
+    var b = document.getElementById('submitBtn');
+    b.disabled = false; b.style.opacity = '1';
+    b.textContent = mode === 'signin' ? 'Sign in' : 'Create my workspace';
+  }
+  function working(t){
+    var b = document.getElementById('submitBtn');
+    b.disabled = true; b.style.opacity = '.7'; b.textContent = t;
+  }
+
   var params = new URLSearchParams(location.search);
   var inviteToken = params.get('invite');
   var joinCode = params.get('join');
@@ -366,15 +383,12 @@ document.write(NOVA_CONFIG.MODE === 'live'
 
     if(mode === 'join'){
       var g=function(id){return document.getElementById(id).value.trim()};
-      if(!g('jCompany')||!g('jContact')||!g('username')){
-        msg.textContent='Please fill in every field.'; msg.className='msg err'; msg.style.display='block'; return;
-      }
-      if(pw !== document.getElementById('confirm').value){
-        msg.textContent='Those two passwords do not match.'; msg.className='msg err'; msg.style.display='block'; return;
-      }
+      if(!g('jCompany')||!g('jContact')||!g('username')){ fail('Please fill in every field.'); return; }
+      if(pw !== document.getElementById('confirm').value){ fail('Those two passwords do not match.'); return; }
+      working('Creating your workspace...');
       NOVA.signUp(joinCode, { company:g('jCompany'), contact:g('jContact'), email:g('username'),
         firstName:g('jContact').split(' ')[0], username:g('username'), password:pw }).then(function(r){
-        if(!r.ok){ msg.textContent=r.error; msg.className='msg err'; msg.style.display='block'; return; }
+        if(!r.ok){ fail(r.error, true); return; }
         msg.textContent='Setting up your workspace...'; msg.className='msg'; msg.style.display='block';
         setTimeout(function(){ location.href='workspace.html'; }, 550);
       });
@@ -382,19 +396,19 @@ document.write(NOVA_CONFIG.MODE === 'live'
     }
 
     if(mode === 'invite'){
-      if(pw !== document.getElementById('confirm').value){
-        msg.textContent = 'Those two passwords do not match.'; msg.className='msg err'; msg.style.display='block'; return;
-      }
+      if(pw !== document.getElementById('confirm').value){ fail('Those two passwords do not match.'); return; }
+      working('Setting up your workspace...');
       NOVA.acceptInvite(inviteToken, pw, document.getElementById('username').value.trim()).then(function(r){
-        if(!r.ok){ msg.textContent = r.error; msg.className='msg err'; msg.style.display='block'; return; }
+        if(!r.ok){ fail(r.error, true); return; }
         msg.textContent = 'Setting up your workspace...'; msg.className='msg'; msg.style.display='block';
         setTimeout(function(){ location.href='workspace.html'; }, 500);
       });
       return;
     }
 
+    working('Signing you in...');
     NOVA.signIn(document.getElementById('username').value, pw).then(function(r){
-      if(!r.ok){ msg.textContent = r.error; msg.className='msg err'; msg.style.display='block'; return; }
+      if(!r.ok){ fail(r.error); return; }
       msg.textContent = 'Signing you in...'; msg.className='msg'; msg.style.display='block';
       setTimeout(function(){ location.href = (r.user.role==='admin') ? 'admin.html' : 'workspace.html'; }, 420);
     });

@@ -110,6 +110,34 @@ var NOVA = (function () {
     });
   }
 
+
+  /* Create the account, or if the email already has one, sign into it with
+     the password they just typed. This is what makes an invitation link
+     survive being clicked twice, or a client who already has a workspace
+     being invited to a second one. */
+  function ensureSession(email, password) {
+    var e = String(email).trim();
+    return sb.auth.signUp({ email: e, password: password }).then(function (r) {
+      if (!r.error) {
+        if (r.data && r.data.session) return { ok: true, created: true };
+        /* no session means email confirmation is switched on in Supabase */
+        return sb.auth.signInWithPassword({ email: e, password: password }).then(function (s2) {
+          if (!s2.error) return { ok: true, created: true };
+          return { ok: false, error: 'Your account was created. Please confirm your email address, then open this link again.' };
+        });
+      }
+      var m = (r.error.message || '').toLowerCase();
+      var exists = m.indexOf('already') > -1 || m.indexOf('registered') > -1 || r.error.status === 422;
+      if (!exists) return { ok: false, error: r.error.message };
+
+      return sb.auth.signInWithPassword({ email: e, password: password }).then(function (s2) {
+        if (!s2.error) return { ok: true, created: false };
+        return { ok: false, needsSignIn: true,
+          error: 'This email already has a NOVA account. Sign in with your existing password, or use Forgot password to reset it.' };
+      });
+    });
+  }
+
   /* ---------------- session shape the pages expect ---------------- */
   function sessionObject() {
     if (!me) return null;
@@ -244,8 +272,8 @@ var NOVA = (function () {
     },
     acceptInvite: function (token, password, email) {
       if (String(password).length < 8) return Promise.resolve({ ok: false, error: 'Use at least 8 characters.' });
-      return sb.auth.signUp({ email: String(email).trim(), password: password }).then(function (r) {
-        if (r.error) return { ok: false, error: r.error.message };
+      return ensureSession(email, password).then(function (s) {
+        if (!s.ok) return s;
         return sb.rpc('redeem_invite', { p_token: token }).then(function (x) {
           if (x.error) return { ok: false, error: x.error.message };
           return loadProfile().then(loadAll).then(function () { return { ok: true, user: sessionObject() }; });
@@ -277,11 +305,11 @@ var NOVA = (function () {
     },
     signUp: function (code, info) {
       if (String(info.password).length < 8) return Promise.resolve({ ok: false, error: 'Use at least 8 characters for the password.' });
-      return sb.auth.signUp({ email: String(info.email).trim(), password: info.password }).then(function (r) {
-        if (r.error) return { ok: false, error: r.error.message };
+      return ensureSession(info.email, info.password).then(function (s) {
+        if (!s.ok) return s;
         return sb.rpc('redeem_signup', { p_code: code, p_company: info.company,
           p_contact: info.contact, p_email: info.email, p_first: info.firstName }).then(function (x) {
-          if (x.error) return { ok: false, error: x.error.message };
+          if (x.error) return { ok: false, error: x.error.message, existing: true };
           return loadProfile().then(loadAll).then(function () { return { ok: true, user: sessionObject() }; });
         });
       });
