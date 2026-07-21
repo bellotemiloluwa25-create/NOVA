@@ -138,6 +138,46 @@ var NOVA = (function () {
     });
   }
 
+
+  /* ---------------- live updates ----------------
+     Subscribes to changes and merges them into the cache, then
+     tells the page. Row level security still applies, so a client
+     is only ever sent rows belonging to their own workspace. */
+  var handlers = [];
+  var channel = null;
+
+  function mergeRow(table, row) {
+    var key = { messages: 'messages', actions: 'actions', files: 'files',
+                invoices: 'invoices', jobs: 'jobs', access_grants: 'access' }[table];
+    if (!key) return;
+    var list = C[key];
+    var at = -1;
+    for (var i = 0; i < list.length; i++) { if (list[i].id === row.id) { at = i; break; } }
+    if (at > -1) list[at] = row; else list.push(row);
+  }
+
+  function startListening() {
+    if (channel || !me) return;
+    channel = sb.channel('nova-changes');
+    ['messages', 'actions', 'files', 'invoices', 'jobs', 'access_grants'].forEach(function (t) {
+      channel.on('postgres_changes', { event: '*', schema: 'public', table: t }, function (payload) {
+        var row = payload.new || payload.old;
+        if (!row) return;
+        if (payload.eventType === 'DELETE') {
+          var key = { messages: 'messages', actions: 'actions', files: 'files',
+                      invoices: 'invoices', jobs: 'jobs', access_grants: 'access' }[t];
+          if (key) C[key] = C[key].filter(function (x) { return x.id !== row.id; });
+        } else {
+          mergeRow(t, row);
+        }
+        handlers.forEach(function (h) {
+          try { h({ table: t, event: payload.eventType, row: row }); } catch (e) { console.error(e); }
+        });
+      });
+    });
+    channel.subscribe();
+  }
+
   /* ---------------- session shape the pages expect ---------------- */
   function sessionObject() {
     if (!me) return null;
@@ -219,7 +259,7 @@ var NOVA = (function () {
         if (!p) return null;
         var pv = sessionStorage.getItem('nova_preview');
         if (pv && p.role === 'admin') previewOf = pv;
-        return loadAll();
+        return loadAll().then(function () { startListening(); });
       });
     },
     getSession: sessionObject,
@@ -513,6 +553,8 @@ var NOVA = (function () {
       if (p && isAdmin()) previewOf = p;
     },
 
+    onChange: function (fn) { handlers.push(fn); return function () { handlers = handlers.filter(function (h) { return h !== fn; }); }; },
+    isPreview: function () { return !!previewOf; },
     reload: function () { return loadAll(); },
     resetDemo: function () { location.href = 'login.html'; }
   };
