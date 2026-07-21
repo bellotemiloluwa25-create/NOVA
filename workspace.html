@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Workspace · NOVA</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAFAF6;--bg2:#EFEBE3;--card:#FFFFFF;
+  --fg:#0A0A0A;--fg2:rgba(0,0,0,.70);--fg3:rgba(0,0,0,.45);
+  --border:rgba(0,0,0,.13);--border-h:rgba(0,0,0,.30);
+  --accent:#E8572A;--accent-soft:rgba(232,87,42,.10);
+  --green:#10B981;--blue:#3B82F6;
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--fg);line-height:1.6;min-height:100vh;font-size:16.5px}
+.wash{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(1000px 560px at 6% -8%, rgba(232,87,42,.055), transparent 60%)}
+
+.top{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.93);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:16px 36px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.tmark{font-weight:700;letter-spacing:.18em;font-size:1.05rem;text-decoration:none;color:var(--fg)}
+.tmark .s{color:var(--accent)}
+.tnav{display:flex;gap:5px}
+.tn{padding:10px 19px;border-radius:9px;font-size:.95rem;font-weight:500;color:var(--fg3);
+  background:none;border:none;font-family:var(--sans);cursor:pointer;transition:.15s;position:relative}
+.tn:hover{color:var(--fg);background:var(--bg2)}
+.tn.on{color:var(--fg);font-weight:600;background:var(--bg2)}
+.tn .badge{position:absolute;top:5px;right:7px;min-width:17px;height:17px;border-radius:9px;background:var(--accent);
+  color:#fff;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 5px}
+.who{display:flex;align-items:center;gap:13px}
+.who .nm{font-size:.86rem;color:var(--fg3);text-align:right;line-height:1.25}
+.who .nm b{display:block;color:var(--fg);font-size:.92rem}
+.av{width:38px;height:38px;border-radius:50%;background:var(--accent-soft);color:var(--accent);
+  display:flex;align-items:center;justify-content:center;font-size:.86rem;font-weight:700}
+.out{background:none;border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:.84rem;
+  font-family:var(--sans);color:var(--fg3);cursor:pointer}
+.out:hover{border-color:var(--accent);color:var(--accent)}
+
+.page{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:46px 36px 100px}
+.view{display:none}
+.view.on{display:block;animation:fade .35s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+
+.greet{font-family:var(--serif);font-size:3.1rem;font-weight:400;line-height:1.08;margin-bottom:8px;letter-spacing:-.01em}
+.greet em{font-style:italic;color:var(--accent)}
+.sub{color:var(--fg2);font-size:1.12rem;margin-bottom:40px}
+
+.lab{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--fg3);font-weight:600;
+  margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.lab::before{content:'';width:20px;height:1px;background:var(--accent)}
+
+/* waiting on you, the loudest thing on the page */
+.needs{background:var(--card);border:1.5px solid rgba(232,87,42,.45);border-radius:20px;padding:12px 12px 8px;
+  margin-bottom:38px;box-shadow:0 14px 40px rgba(232,87,42,.10)}
+.needs .nh{display:flex;align-items:center;gap:14px;padding:16px 20px 18px}
+.needs .nb{width:44px;height:44px;border-radius:12px;background:var(--accent);color:#fff;display:flex;
+  align-items:center;justify-content:center;font-size:1.3rem;font-weight:700;flex-shrink:0}
+.needs .nt{font-family:var(--serif);font-size:1.6rem;font-weight:500;line-height:1.2}
+.needs .ns{font-size:.92rem;color:var(--fg3)}
+.act{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin:0 8px 8px}
+.act:last-child{margin-bottom:10px}
+.act .ah{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:8px;flex-wrap:wrap}
+.act h4{font-size:1.08rem;font-weight:600}
+.act .due{font-size:.82rem;font-weight:600;color:var(--accent);white-space:nowrap;padding-top:3px}
+.act p{font-size:.97rem;color:var(--fg2);margin-bottom:14px}
+.act .meta{font-size:.8rem;color:var(--fg3);margin-bottom:12px}
+.act textarea{width:100%;border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:var(--sans);
+  font-size:.96rem;min-height:76px;resize:vertical;background:var(--card);margin-bottom:12px}
+.act textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.arow{display:flex;gap:10px;flex-wrap:wrap}
+.done{display:flex;align-items:center;gap:11px;font-size:.94rem;color:var(--fg3);padding:6px 0}
+.tick{width:26px;height:26px;border-radius:50%;background:rgba(16,185,129,.14);color:#0a7f5c;display:flex;
+  align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0}
+
+.btn{padding:11px 22px;border-radius:10px;font-size:.94rem;font-weight:600;border:1px solid var(--border);
+  background:var(--card);cursor:pointer;font-family:var(--sans);color:var(--fg2);transition:.15s}
+.btn:hover{border-color:var(--border-h)}
+.btn.p{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.p:hover{box-shadow:0 8px 22px rgba(232,87,42,.28)}
+.btn.wide{width:100%}
+
+/* job cards, large */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:40px}
+.jc{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px 30px;cursor:pointer;
+  transition:.18s;text-align:left;font-family:var(--sans);color:var(--fg)}
+.jc:hover{border-color:var(--border-h);transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.09)}
+.jc .ico{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;margin-bottom:18px}
+.jc h4{font-family:var(--serif);font-size:1.5rem;font-weight:500;margin-bottom:4px}
+.jc p{font-size:.94rem;color:var(--fg3)}
+.track{height:8px;background:var(--bg2);border-radius:6px;overflow:hidden;margin-top:18px}
+.fill{height:100%;border-radius:6px;transition:width .6s ease}
+.jc .st{margin-top:14px;font-size:.92rem;font-weight:600;color:var(--fg2)}
+.jc{position:relative}
+.jc.urgent{border-color:rgba(232,87,42,.5)}
+.jc.attn{border-color:rgba(245,158,11,.5)}
+.flag{position:absolute;top:18px;right:18px;color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;padding:5px 11px;border-radius:20px}
+
+.two{display:grid;grid-template-columns:1.3fr 1fr;gap:18px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px 28px}
+.panel h4{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--fg3);margin-bottom:18px;font-weight:600}
+.li{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);font-size:.97rem}
+.li:last-child{border-bottom:none}
+.li.clickable{cursor:pointer;border-radius:10px;margin:0 -12px;padding-left:12px;padding-right:12px;transition:.14s}
+.li.clickable:hover{background:var(--bg2)}
+.ic{width:38px;height:38px;border-radius:10px;background:var(--bg2);color:var(--fg3);display:flex;align-items:center;
+  justify-content:center;font-size:.66rem;font-weight:700;flex-shrink:0}
+.ic.a{background:var(--accent-soft);color:var(--accent)}
+.li .nmw{min-width:0;flex:1}
+.li .fname{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.li .fsub{font-size:.82rem;color:var(--fg3)}
+.li .meta{margin-left:auto;font-size:.84rem;color:var(--fg3);white-space:nowrap;text-align:right}
+.li .open{color:var(--accent);font-weight:600;font-size:.85rem}
+.quote{font-size:1.02rem;color:var(--fg2);font-style:italic;margin-bottom:16px;line-height:1.62}
+
+/* messages */
+.chatwrap{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.chathead{padding:20px 26px;border-bottom:1px solid var(--border);display:flex;align-items:center;
+  justify-content:space-between;gap:14px;flex-wrap:wrap}
+.chathead h3{font-family:var(--serif);font-size:1.4rem;font-weight:500}
+.jobsel{display:flex;gap:7px;flex-wrap:wrap}
+.js{padding:8px 15px;border-radius:20px;border:1px solid var(--border);background:var(--bg);font-size:.86rem;
+  font-family:var(--sans);color:var(--fg3);cursor:pointer}
+.js.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.feed{padding:26px;display:flex;flex-direction:column;gap:16px;max-height:520px;overflow-y:auto}
+.ev{display:flex;gap:14px;animation:fade .35s ease both}
+.evi{width:38px;height:38px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:.88rem;font-weight:700}
+.evi.n{background:var(--accent-soft);color:var(--accent)}
+.evi.y{background:rgba(0,0,0,.06);color:var(--fg3)}
+.evc{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:16px 19px;max-width:80%}
+.evc.mine{background:var(--bg2);border-color:transparent}
+.evh{display:flex;align-items:baseline;gap:10px;margin-bottom:5px}
+.evh b{font-size:.94rem}
+.evh span{font-size:.79rem;color:var(--fg3)}
+.evc p{font-size:.99rem;color:var(--fg2);white-space:pre-wrap}
+.comp{border-top:1px solid var(--border);padding:20px 26px;background:var(--bg)}
+.comp textarea{width:100%;border:1px solid var(--border);border-radius:12px;padding:15px 17px;font-family:var(--sans);
+  font-size:1rem;resize:vertical;min-height:92px;background:var(--card);color:var(--fg)}
+.comp textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.crow{display:flex;align-items:center;justify-content:space-between;margin-top:14px;gap:12px;flex-wrap:wrap}
+
+/* files */
+.drop{border:2px dashed var(--border-h);border-radius:20px;padding:56px 30px;text-align:center;background:var(--card);
+  margin-bottom:26px;transition:.2s;cursor:pointer}
+.drop.hot{border-color:var(--accent);background:var(--accent-soft);transform:scale(1.01)}
+.drop .g{font-size:2.3rem;color:var(--accent);margin-bottom:14px}
+.drop h4{font-family:var(--serif);font-size:1.7rem;font-weight:500;margin-bottom:7px}
+.drop p{font-size:1rem;color:var(--fg3);max-width:460px;margin:0 auto}
+.ftab{display:flex;gap:7px;margin-bottom:18px;flex-wrap:wrap}
+
+.chip{font-size:.76rem;font-weight:700;padding:6px 13px;border-radius:20px;white-space:nowrap}
+.chip.paid{background:rgba(16,185,129,.14);color:#0a7f5c}
+.chip.due{background:var(--accent-soft);color:var(--accent)}
+.chip.over{background:var(--accent);color:#fff}
+
+.empty{text-align:center;padding:70px 24px;background:var(--card);border:1px solid var(--border);border-radius:20px}
+.empty .g{font-size:2.4rem;color:var(--accent);margin-bottom:16px}
+.empty h3{font-family:var(--serif);font-size:2rem;font-weight:500;margin-bottom:10px}
+.empty p{color:var(--fg2);max-width:470px;margin:0 auto 24px;font-size:1.03rem}
+
+#previewBar{position:sticky;top:0;z-index:40;background:#0A0A0A;color:#F5F0EB;padding:11px 24px;display:flex;
+  align-items:center;gap:12px;font-size:.88rem;justify-content:center;flex-wrap:wrap}
+#previewBar .pb-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+#previewBar .pb-btn{background:var(--accent);color:#fff;border:none;border-radius:7px;padding:7px 15px;
+  font-family:var(--sans);font-size:.83rem;font-weight:600;cursor:pointer}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(90px);background:#0A0A0A;color:#F5F0EB;
+  padding:15px 28px;border-radius:11px;font-size:.94rem;z-index:80;transition:transform .35s cubic-bezier(.2,.8,.25,1);
+  box-shadow:0 14px 34px rgba(0,0,0,.28)}
+.toast.on{transform:translateX(-50%) translateY(0)}
+
+@media(max-width:860px){
+  body{font-size:16px}
+  .top{padding:13px 18px;flex-wrap:wrap}
+  .page{padding:30px 18px 80px}
+  .two{grid-template-columns:1fr}
+  .who .nm{display:none}
+  .greet{font-size:2.1rem}
+  .tn{padding:9px 13px;font-size:.88rem}
+}
+</style>
+</head>
+<body>
+<div class="wash"></div>
+
+<div id="previewBar" style="display:none">
+  <span class="pb-dot"></span>
+  <span class="pb-txt"></span>
+  <button class="pb-btn" onclick="NOVA.endPreview()">Back to master &rarr;</button>
+</div>
+
+<div class="top">
+  <a class="tmark" href="index.html">N<span class="s">&#10022;</span>VA</a>
+  <div class="tnav">
+    <button class="tn on" data-v="home" onclick="show('home',this)">Overview</button>
+    <button class="tn" data-v="messages" onclick="show('messages',this)">Messages<span class="badge" id="badge-messages" style="display:none"></span></button>
+    <button class="tn" data-v="files" onclick="show('files',this)">Files<span class="badge" id="badge-files" style="display:none"></span></button>
+    <button class="tn" data-v="billing" onclick="show('billing',this)">Billing<span class="badge" id="badge-billing" style="display:none"></span></button>
+    <button class="tn" data-v="account" onclick="show('account',this)">Your plan<span class="badge" id="badge-plan" style="display:none"></span></button>
+  </div>
+  <div class="who">
+    <div class="nm"><b id="whoName">&nbsp;</b><span id="whoCo">&nbsp;</span></div>
+    <div class="av" id="whoAv">&nbsp;</div>
+    <button class="out" onclick="NOVA.signOut()">Sign out</button>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="view on" id="v-home">
+    <h1 class="greet" id="greetLine">&nbsp;</h1>
+    <p class="sub" id="greetSub">&nbsp;</p>
+    <div id="homeBody"></div>
+  </div>
+
+  <div class="view" id="v-messages">
+    <h1 class="greet">Messages</h1>
+    <p class="sub">Everything in one place. We reply within one business day.</p>
+    <div class="chatwrap">
+      <div class="chathead">
+        <h3 id="chatTitle">All messages</h3>
+        <div class="jobsel" id="jobSel"></div>
+      </div>
+      <div class="feed" id="feed"></div>
+      <div class="comp">
+        <textarea id="msgBox" placeholder="Write a message. Attach anything you need to send us."></textarea>
+        <div class="crow">
+          <div style="display:flex;gap:10px;align-items:center">
+            <button class="btn" onclick="document.getElementById('chatFile').click()">Attach a file</button>
+            <input type="file" id="chatFile" style="display:none" multiple>
+            <span style="font-size:.85rem;color:var(--fg3)" id="attNote"></span>
+          </div>
+          <button class="btn p" onclick="sendMsg()">Send message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="view" id="v-files">
+    <h1 class="greet">Files</h1>
+    <p class="sub">Everything we have delivered, and everything you have sent us.</p>
+    <div class="drop" id="drop">
+      <div class="g">&#10022;</div>
+      <h4>Drop files here</h4>
+      <p>Or click to choose. Exports, statements, photos, anything we have asked you for.</p>
+      <input type="file" id="dropFile" style="display:none" multiple>
+    </div>
+    <div class="ftab" id="fileTabs"></div>
+    <div class="panel" id="fileList"></div>
+  </div>
+
+  <div class="view" id="v-billing">
+    <h1 class="greet">Billing</h1>
+    <p class="sub">Your invoices. Click any one to open it.</p>
+    <div id="billBody"></div>
+  </div>
+
+  <div class="view" id="v-account">
+    <h1 class="greet">Your plan</h1>
+    <p class="sub">What we cover, what we do not, and what we can see.</p>
+    <div class="two" id="accountBody"></div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="nova-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+document.write(NOVA_CONFIG.MODE === 'live'
+  ? '<scr' + 'ipt src="nova-live.js"><\/scr' + 'ipt>'
+  : '<scr' + 'ipt src="nova-data.js"><\/scr' + 'ipt>');
+</script>
+<script>
+var me = NOVA.requireAuth('client');
+var PREVIEW = !!(me && me.preview);
+function blocked(){ if(PREVIEW){ toast('Preview only. Nothing you do here is saved.'); return true; } return false; }
+var jobs = [], activeJob = null, activeFileTab = null;
+
+function initials(n){ return (n||'').split(' ').map(function(w){return w[0]||''}).join('').slice(0,2).toUpperCase(); }
+function toast(t){ var el=document.getElementById('toast'); el.textContent=t; el.classList.add('on');
+  clearTimeout(el._t); el._t=setTimeout(function(){el.classList.remove('on')},2800); }
+function esc(s){ return String(s).replace(/</g,'&lt;'); }
+
+function paintGreeting(){
+  document.getElementById('greetLine').innerHTML = NOVA.greeting()+', <em>'+me.firstName+'</em>.';
+}
+
+function boot(){
+  if(PREVIEW){
+    var bar=document.getElementById('previewBar');
+    bar.style.display='flex';
+    bar.querySelector('.pb-txt').innerHTML='You are seeing exactly what <b>'+me.firstName+'</b> at '+(me.company||'this client')+' sees. Nothing you do here is saved.';
+    document.querySelector('.out').style.display='none';
+  }
+  document.getElementById('whoName').textContent = me.firstName;
+  document.getElementById('whoCo').textContent = me.company || '';
+  document.getElementById('whoAv').textContent = initials(me.firstName+' '+(me.company||''));
+  jobs = NOVA.getJobs(me.clientId);
+  paintGreeting(); setInterval(paintGreeting, 60000);
+  renderAll();
+}
+function renderAll(){ renderHome(); renderJobSel(); renderFeed(); renderFileTabs(); renderFiles(); renderBilling(); renderAccount(); renderBadges(); }
+
+/* ---------- open any file, whatever the size ---------- */
+function openFile(id, name){
+  NOVA.fileURL(id).then(function(url){
+    if(!url){ toast('This is a sample file, so there is nothing behind it yet.'); return; }
+    var w = window.open(url,'_blank');
+    if(!w){ var a=document.createElement('a'); a.href=url; a.download=name; a.click(); }
+  });
+}
+function downloadFile(id, name, e){
+  if(e) e.stopPropagation();
+  NOVA.fileURL(id).then(function(url){
+    if(!url){ toast('Sample file, nothing to download yet.'); return; }
+    var a=document.createElement('a'); a.href=url; a.download=name; a.click();
+  });
+}
+
+/* ---------- overview ---------- */
+function renderHome(){
+  var open = NOVA.getActions(me.clientId, true);
+  var recent = NOVA.getActions(me.clientId).filter(function(a){ return a.status!=='open'; }).slice(0,2);
+  var h = '';
+
+  if(open.length){
+    h += '<div class="needs"><div class="nh"><div class="nb">'+open.length+'</div><div>'+
+         '<div class="nt">Waiting on you</div>'+
+         '<div class="ns">'+(open.length===1?'One thing':open.length+' things')+' we need before we can carry on.</div></div></div>';
+    open.forEach(function(a){
+      var label = a.type==='question' ? 'Question' : a.type==='approval' ? 'Approval' : a.type==='access' ? 'Access needed' : 'File needed';
+      h += '<div class="act"><div class="ah"><div><div class="meta">'+label+
+           (a.jobId?' &middot; '+(NOVA.getJob(a.jobId)||{}).name:'')+'</div><h4>'+esc(a.title)+'</h4></div>'+
+           '<div class="due">Due '+NOVA.dueIn(a.due)+'</div></div>'+
+           '<p>'+esc(a.detail)+'</p>';
+      if(a.type==='question'){
+        h += '<textarea id="ans-'+a.id+'" placeholder="Type your answer. A sentence is plenty."></textarea>'+
+             '<div class="arow"><button class="btn p" onclick="answer(\''+a.id+'\')">Send answer</button></div>';
+      } else if(a.type==='approval'){
+        h += '<div class="arow"><button class="btn p" onclick="approve(\''+a.id+'\')">Approve</button>'+
+             '<button class="btn" onclick="changes(\''+a.id+'\')">Request changes</button></div>'+
+             '<textarea id="ans-'+a.id+'" style="margin-top:12px;display:none" placeholder="What would you like changed?"></textarea>';
+      } else if(a.type==='access'){
+        h += '<div class="arow"><button class="btn p" onclick="answerAccess(\''+a.id+'\')">I have invited NOVA</button>'+
+             '<button class="btn" onclick="show(\'account\',document.querySelector(\'[data-v=account]\'))">See what we asked for</button></div>';
+      } else {
+        h += '<div class="arow"><button class="btn p" onclick="requestUpload(\''+a.id+'\')">Upload the file</button></div>';
+      }
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+
+  if(recent.length){
+    h += '<div class="panel" style="margin-bottom:38px"><h4>Recently handled</h4>';
+    recent.forEach(function(a){
+      h += '<div class="done"><span class="tick">&#10003;</span><div><b style="color:var(--fg2)">'+esc(a.title)+'</b>'+
+           (a.response?'<div style="font-size:.87rem">You said: '+esc(a.response)+'</div>':'')+'</div></div>';
+    });
+    h += '</div>';
+  }
+
+  var needs = open.length;
+  document.getElementById('greetSub').textContent =
+    jobs.length===0 ? 'Nothing has started yet.'
+    : jobs.length+(jobs.length===1?' job running. ':' jobs running. ')+(needs?'':'Nothing needs you right now.');
+
+  if(jobs.length===0){
+    document.getElementById('homeBody').innerHTML = h +
+      '<div class="empty"><div class="g">&#10022;</div><h3>Welcome to your workspace</h3>'+
+      '<p>This is where your work, your files and every conversation with NOVA will live. Nothing has started yet, so there is one thing to do.</p>'+
+      '<button class="btn p" onclick="show(\'messages\',document.querySelector(\'[data-v=messages]\'))">Send us your first brief</button></div>';
+    return;
+  }
+
+  var c0 = NOVA.getClient(me.clientId);
+  if(c0 && c0.siteLink){
+    h += '<div class="panel" style="margin-bottom:26px;border-color:rgba(232,87,42,.35)">'+
+      '<h4>Your private preview</h4>'+
+      '<div class="li clickable" onclick="window.open(\''+c0.siteLink+'\',\'_blank\')">'+
+      '<span class="ic a">&#10022;</span><div class="nmw"><div class="fname">Open your build in progress</div>'+
+      '<div class="fsub">A private link, shared only with you. Not listed anywhere public.</div></div>'+
+      '<span class="meta"><span class="open">Open</span></span></div></div>';
+  }
+  h += '<div class="lab">Your work</div><div class="grid">';
+  jobs.forEach(function(j){
+    var L = NOVA.lane(j.lane);
+    var urgent = j.priority === 'urgent', attn = j.priority === 'attention';
+    h += '<button class="jc'+(urgent?' urgent':attn?' attn':'')+'" style="'+(urgent||attn?'':'')+'" onclick="openJob(\''+j.id+'\')">'+
+      '<div class="ico" style="background:'+L.soft+';color:'+L.color+'">'+L.glyph+'</div>'+
+      (urgent||attn ? '<div class="flag" style="background:'+(urgent?'var(--accent)':'#F59E0B')+'">'+(urgent?'Urgent':'Needs attention')+'</div>' : '')+
+      '<h4>'+j.name+'</h4><p>'+L.label+' &middot; '+j.stage+'</p>'+
+      '<div class="track"><div class="fill" style="width:'+j.progress+'%;background:'+(j.progress===100?'var(--green)':L.color)+'"></div></div>'+
+      '<div class="st">'+j.next+'</div></button>';
+  });
+  h += '</div>';
+
+  var files = NOVA.getFiles(me.clientId).filter(function(f){return f.by==='nova'}).slice(0,4);
+  var msgs = NOVA.getMessages(me.clientId);
+  var last = msgs[msgs.length-1];
+
+  h += '<div class="two"><div class="panel"><h4>Recently delivered</h4>';
+  if(!files.length) h += '<p style="color:var(--fg3)">Nothing yet.</p>';
+  files.forEach(function(f){
+    h += '<div class="li clickable" onclick="openFile(\''+f.id+'\',\''+f.name+'\')">'+
+      '<span class="ic a">'+f.kind+'</span><div class="nmw"><div class="fname">'+f.name+'</div>'+
+      '<div class="fsub">'+(f.tag==='walkthrough'?'Recorded walkthrough':f.tag==='report'?'Monthly report':'Delivered work')+'</div></div>'+
+      '<span class="meta">'+NOVA.timeAgo(f.at)+'<br><span class="open">Open</span></span></div>';
+  });
+  h += '<button class="btn wide" style="margin-top:16px" onclick="show(\'files\',document.querySelector(\'[data-v=files]\'))">See all files</button></div>';
+
+  h += '<div class="panel"><h4>Latest from NOVA</h4>';
+  if(last) h += '<p class="quote">"'+esc(last.body).slice(0,170)+(last.body.length>170?'...':'')+'"</p>'+
+    '<div class="li" style="border:none;padding-top:0"><span class="ic a">&#10022;</span>'+
+    '<div class="nmw"><div class="fname">'+last.author+'</div><div class="fsub">'+NOVA.timeAgo(last.at)+'</div></div></div>';
+  h += '<button class="btn p wide" style="margin-top:14px" onclick="show(\'messages\',document.querySelector(\'[data-v=messages]\'))">Open messages</button></div></div>';
+
+  document.getElementById('homeBody').innerHTML = h;
+}
+
+/* ---------- action handlers ---------- */
+function answer(id){
+  if(blocked()) return;
+  var v = document.getElementById('ans-'+id).value.trim();
+  if(!v){ toast('Type an answer first.'); return; }
+  var a = NOVA.getActions(me.clientId).filter(function(x){return x.id===id})[0];
+  Promise.all([
+    NOVA.resolveAction(id, v, 'answered'),
+    NOVA.sendMessage(me.clientId, a?a.jobId:null, 'client', me.firstName, 'Re: '+a.title+'\n\n'+v)
+  ]).then(renderAll);
+  renderAll(); toast('Answer sent. Thank you, that unblocks us.');
+}
+function approve(id){
+  if(blocked()) return;
+  var a = NOVA.getActions(me.clientId).filter(function(x){return x.id===id})[0];
+  NOVA.resolveAction(id, 'Approved', 'answered');
+  NOVA.sendMessage(me.clientId, a?a.jobId:null, 'client', me.firstName, 'Approved: '+a.title);
+  renderAll(); toast('Approved. We will carry on.');
+}
+function changes(id){
+  if(blocked()) return;
+  var box = document.getElementById('ans-'+id);
+  if(box.style.display==='none'){ box.style.display='block'; box.focus(); return; }
+  var v = box.value.trim();
+  if(!v){ toast('Tell us what to change first.'); return; }
+  var a = NOVA.getActions(me.clientId).filter(function(x){return x.id===id})[0];
+  NOVA.resolveAction(id, v, 'answered');
+  NOVA.sendMessage(me.clientId, a?a.jobId:null, 'client', me.firstName, 'Changes requested on '+a.title+'\n\n'+v);
+  renderAll(); toast('Sent. We will make those changes.');
+}
+function answerAccess(id){
+  if(blocked()) return;
+  var a = NOVA.getActions(me.clientId).filter(function(x){return x.id===id})[0];
+  NOVA.resolveAction(id,'Access granted','answered');
+  NOVA.sendMessage(me.clientId,null,'client',me.firstName,'Done: '+a.title);
+  renderAll(); toast('Thank you. We will confirm once we are in.');
+}
+var pendingUpload = null;
+function requestUpload(id){ pendingUpload = id; document.getElementById('dropFile').click(); }
+
+/* ---------- messages ---------- */
+function openJob(id){ activeJob=id; show('messages', document.querySelector('[data-v=messages]')); renderJobSel(); renderFeed(); }
+function renderJobSel(){
+  var h='<button class="js'+(!activeJob?' on':'')+'" onclick="setJob(null)">All</button>';
+  jobs.forEach(function(j){ h+='<button class="js'+(activeJob===j.id?' on':'')+'" onclick="setJob(\''+j.id+'\')">'+j.name+'</button>'; });
+  document.getElementById('jobSel').innerHTML=h;
+  var j=jobs.filter(function(x){return x.id===activeJob})[0];
+  document.getElementById('chatTitle').textContent = j?j.name:'All messages';
+}
+function setJob(id){ activeJob=id; renderJobSel(); renderFeed(); }
+function renderFeed(){
+  var msgs=NOVA.getMessages(me.clientId, activeJob), f=document.getElementById('feed');
+  if(!msgs.length){ f.innerHTML='<p style="color:var(--fg3);text-align:center;padding:30px">No messages yet. Say hello.</p>'; return; }
+  f.innerHTML = msgs.map(function(m){
+    var mine = m.from==='client';
+    return '<div class="ev"'+(mine?' style="flex-direction:row-reverse"':'')+'>'+
+      '<div class="evi '+(mine?'y':'n')+'">'+(mine?initials(me.firstName):'&#10022;')+'</div>'+
+      '<div class="evc'+(mine?' mine':'')+'"><div class="evh"><b>'+(mine?'You':m.author)+'</b>'+
+      '<span>'+NOVA.timeAgo(m.at)+'</span></div><p>'+esc(m.body)+'</p></div></div>';
+  }).join('');
+  f.scrollTop=f.scrollHeight;
+}
+function sendMsg(){
+  if(blocked()) return;
+  var box=document.getElementById('msgBox'), t=box.value.trim();
+  if(!t) return;
+  NOVA.sendMessage(me.clientId, activeJob, 'client', me.firstName, t);
+  box.value=''; renderFeed(); renderHome(); toast('Sent. NOVA replies within one business day.');
+}
+
+/* ---------- files ---------- */
+function ingest(list, jobId, tag){
+  if(blocked()) return;
+  if(!list || !list.length) return;
+  var n = list.length, done = 0;
+  Array.prototype.forEach.call(list, function(file){
+    Promise.resolve(NOVA.addFile(me.clientId, jobId||null, file, 'client', tag)).then(function(){
+      if(++done===n){
+        if(pendingUpload){
+          var a=NOVA.getActions(me.clientId).filter(function(x){return x.id===pendingUpload})[0];
+          NOVA.resolveAction(pendingUpload, n+(n===1?' file uploaded':' files uploaded'), 'answered');
+          NOVA.sendMessage(me.clientId, a?a.jobId:null, 'client', me.firstName, 'Uploaded for: '+a.title);
+          pendingUpload=null;
+        }
+        renderAll();
+        toast(n+(n===1?' file uploaded.':' files uploaded.'));
+      }
+    });
+  });
+}
+var drop=document.getElementById('drop');
+drop.onclick=function(){ document.getElementById('dropFile').click(); };
+document.getElementById('dropFile').onchange=function(e){ ingest(e.target.files, activeJob); e.target.value=''; };
+['dragenter','dragover'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add('hot'); }); });
+['dragleave','drop'].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.remove('hot'); }); });
+drop.addEventListener('drop',function(e){ ingest(e.dataTransfer.files, activeJob); });
+document.getElementById('chatFile').onchange=function(e){
+  var n=e.target.files.length; ingest(e.target.files, activeJob);
+  document.getElementById('attNote').textContent=n+' attached';
+  setTimeout(function(){ document.getElementById('attNote').textContent=''; },3000);
+  e.target.value='';
+};
+window.addEventListener('dragover',function(e){ e.preventDefault(); });
+window.addEventListener('drop',function(e){ e.preventDefault(); });
+
+function renderFileTabs(){
+  var tabs=[['','All files'],['deliverable','Delivered'],['report','Reports'],['walkthrough','Walkthroughs'],['input','You sent']];
+  document.getElementById('fileTabs').innerHTML = tabs.map(function(t){
+    return '<button class="js'+((activeFileTab||'')===t[0]?' on':'')+'" onclick="setFileTab(\''+t[0]+'\')">'+t[1]+'</button>';
+  }).join('');
+}
+function setFileTab(t){ activeFileTab=t||null; renderFileTabs(); renderFiles(); }
+function renderFiles(){
+  var fs=NOVA.getFiles(me.clientId,null,activeFileTab||null), el=document.getElementById('fileList');
+  if(!fs.length){ el.innerHTML='<p style="color:var(--fg3);text-align:center;padding:26px">Nothing here yet.</p>'; return; }
+  el.innerHTML='<h4>'+fs.length+(fs.length===1?' file':' files')+'</h4>'+fs.map(function(f){
+    var job=jobs.filter(function(j){return j.id===f.jobId})[0];
+    return '<div class="li clickable" onclick="openFile(\''+f.id+'\',\''+f.name+'\')">'+
+      '<span class="ic'+(f.by==='nova'?' a':'')+'">'+f.kind+'</span>'+
+      '<div class="nmw"><div class="fname">'+f.name+'</div><div class="fsub">'+
+      (f.by==='nova'?'From NOVA':'You sent this')+(job?' &middot; '+job.name:'')+' &middot; '+f.size+'</div></div>'+
+      '<span class="meta">'+NOVA.timeAgo(f.at)+'<br>'+
+      '<span class="open" onclick="downloadFile(\''+f.id+'\',\''+f.name+'\',event)">Download</span></span></div>';
+  }).join('');
+}
+
+/* ---------- billing ---------- */
+function renderBilling(){
+  var inv=NOVA.getInvoices(me.clientId), c=NOVA.getClient(me.clientId);
+  var outstanding=inv.filter(function(i){return i.status!=='paid'});
+
+  var h='<div class="two" style="margin-bottom:22px"><div class="panel"><h4>Current plan</h4>'+
+    '<div style="font-family:var(--serif);font-size:2.1rem;font-weight:500">'+c.plan+'</div>'+
+    '<div style="font-size:1.15rem;color:var(--accent);font-weight:600;margin-top:4px">'+NOVA.money(c.rate)+' a month</div>'+
+    '<p style="color:var(--fg3);margin-top:8px">Client since '+new Date(c.since).toLocaleDateString(undefined,{month:'long',year:'numeric'})+'</p></div>'+
+    '<div class="panel"><h4>Outstanding</h4>'+
+    (outstanding.length
+      ? '<div style="font-family:var(--serif);font-size:2.1rem;font-weight:500">'+NOVA.money(outstanding.reduce(function(a,i){return a+i.amount},0))+'</div>'+
+        '<p style="color:var(--fg3);margin-top:4px">'+outstanding.length+(outstanding.length===1?' invoice':' invoices')+' to pay</p>'+
+        (outstanding[0] && outstanding[0].payLink
+           ? '<a class="btn p wide" style="margin-top:18px;display:block;text-align:center;text-decoration:none" href="'+outstanding[0].payLink+'" target="_blank" rel="noopener">Pay '+NOVA.money(outstanding[0].amount)+' now</a>'
+           : '<button class="btn wide" style="margin-top:18px" onclick="toast(\'A payment link has not been attached to this invoice yet.\')">Pay now</button>')
+      : '<div style="font-family:var(--serif);font-size:2.1rem;font-weight:500">Nothing due</div><p style="color:var(--fg3)">You are all paid up.</p>')+
+    '</div></div>';
+
+  h+='<div class="panel"><h4>All invoices</h4>';
+  if(!inv.length) h+='<p style="color:var(--fg3)">No invoices yet.</p>';
+  inv.forEach(function(i){
+    var over = i.status!=='paid' && new Date(i.due)<Date.now();
+    h+='<div class="li clickable" onclick="openInvoice(\''+i.id+'\')">'+
+      '<span class="ic'+(i.status==='paid'?'':' a')+'">PDF</span>'+
+      '<div class="nmw"><div class="fname">'+i.number+' &middot; '+i.period+'</div>'+
+      '<div class="fsub">'+NOVA.money(i.amount)+' &middot; '+(i.status==='paid'?'Paid':'Due '+NOVA.dueIn(i.due))+'</div></div>'+
+      '<span class="meta"><span class="chip '+(i.status==='paid'?'paid':over?'over':'due')+'">'+
+      (i.status==='paid'?'Paid':over?'Overdue':'Due')+'</span></span></div>';
+  });
+  h+='</div>';
+  document.getElementById('billBody').innerHTML=h;
+}
+function openInvoice(id){
+  var i=NOVA.getInvoices(me.clientId).filter(function(x){return x.id===id})[0];
+  if(i && i.fileId){ openFile(i.fileId, i.number+'.pdf'); return; }
+  toast('Invoice '+i.number+' for '+NOVA.money(i.amount)+'. No PDF attached to this one yet.');
+}
+
+/* ---------- plan and access ---------- */
+function renderAccount(){
+  var scope=NOVA.getScope(me.clientId), access=NOVA.getAccess(me.clientId);
+  var h='<div class="panel"><h4>What your plan covers</h4>';
+  scope.included.forEach(function(s){ h+='<div class="li"><span class="ic a">&#10003;</span><div class="nmw">'+s+'</div></div>'; });
+  h+='<h4 style="margin-top:26px">Not included</h4>';
+  scope.excluded.forEach(function(s){ h+='<div class="li"><span class="ic">&mdash;</span><div class="nmw" style="color:var(--fg3)">'+s+'</div></div>'; });
+  h+='<p style="font-size:.88rem;color:var(--fg3);margin-top:18px">Anything outside this is quoted as a fixed price project before any work starts.</p></div>';
+
+  h+='<div class="panel"><h4>What NOVA can see</h4>'+
+     '<p style="font-size:.92rem;color:var(--fg2);margin-bottom:16px">We are invited by email into each tool. We never hold your passwords, and you can remove our access in one click at any time.</p>';
+  access.forEach(function(a){
+    h+='<div class="li"><span class="ic'+(a.status==='granted'?' a':'')+'">'+(a.status==='granted'?'&#10003;':'!')+'</span>'+
+      '<div class="nmw"><div class="fname">'+a.tool+'</div><div class="fsub">'+a.level+'</div></div>'+
+      '<span class="meta">'+(a.status==='granted'?'Granted':'<span style="color:var(--accent);font-weight:600">Waiting on you</span>')+'</span></div>';
+  });
+  h+='</div>';
+  document.getElementById('accountBody').innerHTML=h;
+}
+
+function renderBadges(){
+  var c = NOVA.clientCounts(me.username, me.clientId);
+  [['messages',c.messages],['files',c.files],['billing',c.billing],['plan',c.plan]].forEach(function(p){
+    var el = document.getElementById('badge-'+p[0]);
+    if(!el) return;
+    el.style.display = p[1] ? 'flex' : 'none';
+    el.textContent = p[1] > 9 ? '9+' : p[1];
+  });
+}
+var SECTION = { messages:'messages', files:'files', billing:'billing', account:'plan' };
+function show(v,btn){
+  document.querySelectorAll('.view').forEach(function(x){x.classList.remove('on')});
+  document.getElementById('v-'+v).classList.add('on');
+  document.querySelectorAll('.tn').forEach(function(b){b.classList.remove('on')});
+  if(btn) btn.classList.add('on');
+  if(SECTION[v] && !PREVIEW){ NOVA.markSeen(me.username, me.clientId, SECTION[v]); }
+  renderBadges();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+if(me) NOVA.ready().then(boot);
+</script>
+</body>
+</html>

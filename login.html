@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Login · NOVA</title>
+<meta name="description" content="Sign in to your NOVA client workspace.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAFAF6;
+  --bg2:#EFEBE3;
+  --card:#FFFFFF;
+  --fg:#0A0A0A;
+  --fg2:rgba(0,0,0,.70);
+  --fg3:rgba(0,0,0,.45);
+  --border:rgba(0,0,0,.18);
+  --border-h:rgba(0,0,0,.32);
+  --accent:#E8572A;
+  --accent-soft:rgba(232,87,42,.10);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--fg);
+  line-height:1.6;
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* faint starfield, very subtle on white */
+.field{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0;transition:opacity 1.6s ease .3s}
+.field.on{opacity:1}
+.field i{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(0,0,0,.16);animation:tw 4s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:.7;transform:scale(1.35)}}
+
+/* soft warm wash so the page does not feel flat */
+.wash{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(900px 520px at 12% 8%, rgba(232,87,42,.055), transparent 62%),
+    radial-gradient(760px 480px at 88% 92%, rgba(232,87,42,.035), transparent 60%);
+}
+
+/* header */
+.top{position:relative;z-index:3;padding:30px 40px;display:flex;align-items:center;justify-content:space-between}
+.mark{font-weight:700;letter-spacing:.18em;font-size:1.3rem;color:var(--fg);text-decoration:none;display:inline-flex;align-items:baseline}
+.mark .s{color:var(--accent);opacity:0;transform:scale(.4);display:inline-block;transition:none}
+.mark .s.landed{animation:land .9s cubic-bezier(.2,.9,.25,1) forwards}
+@keyframes land{
+  0%{opacity:1;transform:scale(2.1) rotate(-40deg);filter:drop-shadow(0 0 14px rgba(232,87,42,.85))}
+  55%{opacity:1;transform:scale(.82) rotate(6deg);filter:drop-shadow(0 0 7px rgba(232,87,42,.5))}
+  100%{opacity:1;transform:scale(1) rotate(0);filter:drop-shadow(0 0 0 rgba(232,87,42,0))}
+}
+.back{font-size:.86rem;color:var(--fg3);text-decoration:none;letter-spacing:.02em;opacity:0;transition:opacity .8s ease 1.5s,color .2s}
+.back.in{opacity:1}
+.back:hover{color:var(--accent)}
+
+/* the flying star */
+.comet{position:fixed;top:0;left:0;z-index:5;pointer-events:none;will-change:transform,opacity}
+.comet .glyph{font-size:1.5rem;color:var(--accent);line-height:1;display:block;
+  filter:drop-shadow(0 0 18px rgba(232,87,42,.95)) drop-shadow(0 0 44px rgba(232,87,42,.55))}
+.comet .halo{position:absolute;top:50%;left:50%;width:70px;height:70px;transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle, rgba(232,87,42,.34), rgba(232,87,42,.10) 42%, transparent 70%);filter:blur(2px)}
+.comet .tail{position:absolute;top:50%;left:58%;height:3px;width:340px;transform:translateY(-50%);
+  background:linear-gradient(90deg, rgba(232,87,42,.95) 0%, rgba(232,87,42,.55) 34%, rgba(232,87,42,0) 100%);
+  border-radius:3px;filter:blur(.6px)}
+.comet .tail.thin{height:1px;width:460px;opacity:.5;filter:blur(1.4px)}
+
+/* main */
+main{position:relative;z-index:2;flex:1;display:flex;align-items:center;justify-content:center;padding:20px 24px 60px}
+.box{width:100%;max-width:396px;opacity:0;transform:translateY(16px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.25,1)}
+.box.in{opacity:1;transform:none}
+
+.eyebrow{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fg3);font-weight:600;text-align:center;margin-bottom:14px}
+.box h1{font-family:var(--serif);font-size:2.1rem;font-weight:400;line-height:1.15;text-align:center;margin-bottom:8px}
+.box h1 em{font-style:italic;color:var(--accent)}
+.sub{text-align:center;color:var(--fg2);font-size:.93rem;margin-bottom:30px}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:34px 32px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 34px rgba(0,0,0,.07)}
+.f{margin-bottom:18px}
+label{display:block;font-size:.76rem;letter-spacing:.09em;text-transform:uppercase;font-weight:600;color:var(--fg3);margin-bottom:8px}
+input[type=text],input[type=password]{
+  width:100%;padding:13px 15px;font-family:var(--sans);font-size:.97rem;color:var(--fg);
+  background:var(--bg);border:1px solid var(--border);border-radius:9px;transition:border-color .2s,box-shadow .2s,background .2s}
+input:focus{outline:none;border-color:var(--accent);background:#fff;box-shadow:0 0 0 3px var(--accent-soft)}
+input::placeholder{color:rgba(0,0,0,.3)}
+
+.row{display:flex;align-items:center;justify-content:space-between;margin:6px 0 24px;font-size:.85rem}
+.remember{display:inline-flex;align-items:center;gap:8px;color:var(--fg2);cursor:pointer;user-select:none}
+.remember input{accent-color:var(--accent);width:15px;height:15px}
+.forgot{color:var(--fg3);text-decoration:none}
+.forgot:hover{color:var(--accent)}
+
+.submit{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:9px;
+  font-family:var(--sans);font-weight:600;font-size:.97rem;letter-spacing:.01em;cursor:pointer;transition:transform .15s,box-shadow .2s,opacity .2s}
+.submit:hover{box-shadow:0 8px 22px rgba(232,87,42,.28);transform:translateY(-1px)}
+.submit:active{transform:translateY(0)}
+
+.mini-resume{display:block;width:100%;margin-top:14px;padding:11px;border-radius:9px;border:1px solid var(--border);background:var(--card);font-family:var(--sans);font-weight:600;font-size:.88rem;color:var(--fg2);cursor:pointer}
+.mini-resume:hover{border-color:var(--accent);color:var(--accent)}
+.pwhint{font-size:.78rem;color:var(--fg3);margin-top:7px}
+.note{text-align:center;font-size:.84rem;color:var(--fg3);margin-top:22px}
+.note a{color:var(--accent);text-decoration:none}
+.demo-keys{margin-top:20px;padding:14px 16px;background:var(--bg2);border:1px dashed var(--border-h);border-radius:10px;text-align:center;font-size:.8rem;color:var(--fg3);line-height:1.9}
+.demo-keys b{display:block;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3);margin-bottom:5px}
+.demo-keys span{display:block}
+.demo-keys i{font-style:normal;font-weight:700;color:var(--accent)}
+.msg.err{background:rgba(232,87,42,.10);border-color:rgba(232,87,42,.5)}
+.msg{display:none;margin-top:16px;padding:12px 14px;border-radius:9px;background:var(--accent-soft);border:1px solid rgba(232,87,42,.35);
+  font-size:.87rem;color:var(--fg2);text-align:center}
+
+footer{position:relative;z-index:2;text-align:center;padding:0 24px 34px;font-size:.79rem;color:var(--fg3);opacity:0;transition:opacity .8s ease 1.7s}
+footer.in{opacity:1}
+footer a{color:var(--fg3);text-decoration:none}
+footer a:hover{color:var(--accent)}
+
+@media (max-width:520px){
+  .top{padding:22px 24px}
+  .card{padding:28px 22px}
+  .box h1{font-size:1.8rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .comet{display:none!important}
+  .mark .s{opacity:1;transform:none}
+  .box,.back,footer,.field{opacity:1!important;transform:none!important;transition:none!important}
+}
+</style>
+<script src="nova-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+document.write(NOVA_CONFIG.MODE === 'live'
+  ? '<scr' + 'ipt src="nova-live.js"><\/scr' + 'ipt>'
+  : '<scr' + 'ipt src="nova-data.js"><\/scr' + 'ipt>');
+</script>
+</head>
+<body>
+
+<div class="wash"></div>
+<div class="field" id="field"></div>
+
+<header class="top">
+  <a class="mark" href="index.html" id="mark">N<span class="s" id="star">&#10022;</span>VA</a>
+  <a class="back" href="index.html" id="back">&larr; Back to site</a>
+</header>
+
+<main>
+  <div class="box" id="box">
+    <div class="eyebrow">Client Workspace</div>
+    <h1>Welcome <em>back</em></h1>
+    <p class="sub">Sign in to see your work, your files, and where everything stands.</p>
+
+    <form class="card" id="form" autocomplete="on">
+      <div class="f join" style="display:none">
+        <label for="jCompany">Business name</label>
+        <input type="text" id="jCompany" placeholder="Ember &amp; Oak Candle Co.">
+      </div>
+      <div class="f join" style="display:none">
+        <label for="jContact">Your full name</label>
+        <input type="text" id="jContact" placeholder="Sarah Lindqvist">
+      </div>
+      <div class="f">
+        <label for="username" id="userLabel">Email</label>
+        <input type="email" id="username" name="username" placeholder="you@yourbusiness.com" required autocomplete="username">
+      </div>
+      <div class="f">
+        <label for="password" id="pwLabel">Password</label>
+        <input type="password" id="password" name="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required autocomplete="current-password">
+      </div>
+      <div class="f" id="confirmWrap" style="display:none">
+        <label for="confirm">Confirm password</label>
+        <input type="password" id="confirm" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="new-password">
+        <p class="pwhint">At least 8 characters. Use something you do not use anywhere else.</p>
+      </div>
+      <div class="row" id="rowOpts">
+        <label class="remember"><input type="checkbox" id="remember"> Keep me signed in</label>
+        <a class="forgot" href="#" onclick="resetPw();return false">Forgot password?</a>
+      </div>
+      <button type="submit" class="submit" id="submitBtn">Sign in</button>
+      <div class="msg" id="msg"></div>
+    </form>
+
+    <p class="note" id="noteLine">Not a client yet? <a href="index.html">See what we do</a></p>
+    <div class="demo-keys" id="demokeys">
+      <b>Preview accounts</b>
+      <span><i>sarah</i> / nova &middot; client workspace</span>
+      <span><i>temi</i> / nova &middot; your master view</span>
+    </div>
+  </div>
+</main>
+
+
+<footer id="foot">
+  &#10022; NOVA &middot; <a href="mailto:thinknova.co@gmail.com">thinknova.co@gmail.com</a>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var star = document.getElementById('star');
+  var box  = document.getElementById('box');
+  var back = document.getElementById('back');
+  var foot = document.getElementById('foot');
+  var field= document.getElementById('field');
+
+  /* scatter a few faint stars, avoiding the middle where the card sits */
+  for(var i=0;i<26;i++){
+    var s=document.createElement('i');
+    var x=Math.random()*100, y=Math.random()*100;
+    if(x>26&&x<74&&y>22&&y<80){ x = x<50 ? x-24 : x+24; }
+    s.style.left=x+'%'; s.style.top=y+'%';
+    s.style.animationDelay=(Math.random()*4).toFixed(2)+'s';
+    field.appendChild(s);
+  }
+
+  function reveal(){
+    star.classList.add('landed');
+    box.classList.add('in');
+    back.classList.add('in');
+    foot.classList.add('in');
+    field.classList.add('on');
+  }
+
+  if(reduce){ reveal(); return; }
+
+  /* build the comet and fly it into the wordmark star */
+  var comet=document.createElement('div');
+  comet.className='comet';
+  comet.innerHTML='<span class="tail thin"></span><span class="tail"></span><span class="halo"></span><span class="glyph">&#10022;</span>';
+  document.body.appendChild(comet);
+
+  requestAnimationFrame(function(){
+    var r = star.getBoundingClientRect();
+    var endX = r.left + r.width/2 - 9;
+    var endY = r.top  + r.height/2 - 9;
+    var startX = window.innerWidth + 160;
+    var startY = -80;
+
+    var midY = startY + window.innerHeight*0.34;
+
+    var anim = comet.animate([
+      /* streaks in, already large */
+      { transform:'translate('+startX+'px,'+startY+'px) rotate(22deg) scale(2.9)', opacity:0 },
+      { transform:'translate('+(startX*0.74)+'px,'+(startY+window.innerHeight*0.16)+'px) rotate(22deg) scale(2.9)', opacity:1, offset:.14 },
+      /* crosses the open middle of the screen at full size, slowly enough to be read */
+      { transform:'translate('+(window.innerWidth*0.52)+'px,'+midY+'px) rotate(21deg) scale(2.75)', opacity:1, offset:.42 },
+      { transform:'translate('+(window.innerWidth*0.30)+'px,'+(midY+30)+'px) rotate(19deg) scale(2.55)', opacity:1, offset:.60 },
+      /* turns up toward the corner and begins to draw in */
+      { transform:'translate('+(endX+190)+'px,'+(endY+96)+'px) rotate(10deg) scale(1.7)', opacity:1, offset:.82 },
+      { transform:'translate('+endX+'px,'+endY+'px) rotate(0deg) scale(.5)', opacity:1 }
+    ], { duration:2500, easing:'cubic-bezier(.24,.04,.22,1)', fill:'forwards' });
+
+    /* tails hold while it crosses, then pull in behind it */
+    comet.querySelectorAll('.tail').forEach(function(t){
+      t.animate([{opacity:1,offset:0},{opacity:1,offset:.62},{opacity:.45,offset:.84},{opacity:0,offset:1}],
+        {duration:2500, easing:'ease-out', fill:'forwards'});
+    });
+    comet.querySelector('.halo').animate(
+      [{opacity:.9,offset:0},{opacity:1,offset:.5},{opacity:.35,offset:.9},{opacity:0,offset:1}],
+      {duration:2500, easing:'ease-out', fill:'forwards'});
+
+    anim.onfinish = function(){
+      comet.remove();
+      reveal();
+    };
+    setTimeout(function(){ if(document.body.contains(comet)){ comet.remove(); reveal(); } }, 3400);
+  });
+
+  if (window.NOVA_CONFIG && NOVA_CONFIG.MODE === 'live') {
+    var dk = document.getElementById('demokeys');
+    if (dk) dk.style.display = 'none';
+  }
+
+  function resetPw(){
+    var email = document.getElementById('username').value.trim();
+    var msg = document.getElementById('msg');
+    if(!email){ msg.textContent='Type your email above first, then click this again.'; msg.className='msg err'; msg.style.display='block'; return; }
+    if(!NOVA.resetPassword){ msg.textContent='Email NOVA and we will reset it for you.'; msg.className='msg'; msg.style.display='block'; return; }
+    NOVA.resetPassword(email).then(function(){
+      msg.textContent='If that email has an account, a reset link is on its way.';
+      msg.className='msg'; msg.style.display='block';
+    });
+  }
+  window.resetPw = resetPw;
+
+  var params = new URLSearchParams(location.search);
+  var inviteToken = params.get('invite');
+  var joinCode = params.get('join');
+  var mode = 'signin';
+
+  if(joinCode){
+    NOVA.ready().then(function(){
+      var msg = document.getElementById('msg');
+      Promise.resolve(NOVA.checkSignupCode(joinCode)).then(function(valid){
+      if(!valid){
+        msg.textContent = 'This sign up link is no longer valid. Ask NOVA for a new one.';
+        msg.className='msg err'; msg.style.display='block';
+        return;
+      }
+      mode = 'join';
+      document.querySelector('.eyebrow').textContent = 'Create your account';
+      document.querySelector('.box h1').innerHTML = 'Welcome to <em>NOVA</em>';
+      document.querySelector('.sub').textContent = 'A few details and your workspace is ready.';
+      document.querySelectorAll('.join').forEach(function(el){ el.style.display='block'; });
+      document.getElementById('userLabel').textContent = 'Your email';
+      document.getElementById('username').placeholder = 'you@yourbusiness.com';
+      document.getElementById('pwLabel').textContent = 'Choose a password';
+      document.getElementById('password').setAttribute('autocomplete','new-password');
+      document.getElementById('confirmWrap').style.display = 'block';
+      document.getElementById('rowOpts').style.display = 'none';
+      document.getElementById('submitBtn').textContent = 'Create my workspace';
+      document.getElementById('noteLine').style.display = 'none';
+      document.getElementById('demokeys').style.display = 'none';
+      });
+    });
+  }
+
+  if(inviteToken){
+    NOVA.ready().then(function(){
+      Promise.resolve(NOVA.getInvite(inviteToken)).then(function(r){
+      var msg = document.getElementById('msg');
+      if(!r.ok){
+        mode = 'signin';
+        msg.textContent = r.error; msg.className='msg err'; msg.style.display='block';
+        return;
+      }
+      mode = 'invite';
+      document.querySelector('.eyebrow').textContent = 'Set your password';
+      document.querySelector('.box h1').innerHTML = 'Welcome to <em>NOVA</em>';
+      document.querySelector('.sub').textContent = 'Create a password for your ' + r.company + ' workspace.';
+      var u = document.getElementById('username');
+      u.value = r.invite.email || r.invite.username; u.readOnly = true; u.style.opacity = '.65';
+      document.getElementById('userLabel').textContent = 'Your email';
+      document.getElementById('password').setAttribute('autocomplete','new-password');
+      document.getElementById('pwLabel').textContent = 'Choose a password';
+      document.getElementById('confirmWrap').style.display = 'block';
+      document.getElementById('rowOpts').style.display = 'none';
+      document.getElementById('submitBtn').textContent = 'Create my workspace';
+      document.getElementById('noteLine').style.display = 'none';
+      document.getElementById('demokeys').style.display = 'none';
+      });
+    });
+  }
+
+  document.getElementById('form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var msg = document.getElementById('msg');
+    var pw  = document.getElementById('password').value;
+
+    if(mode === 'join'){
+      var g=function(id){return document.getElementById(id).value.trim()};
+      if(!g('jCompany')||!g('jContact')||!g('username')){
+        msg.textContent='Please fill in every field.'; msg.className='msg err'; msg.style.display='block'; return;
+      }
+      if(pw !== document.getElementById('confirm').value){
+        msg.textContent='Those two passwords do not match.'; msg.className='msg err'; msg.style.display='block'; return;
+      }
+      NOVA.signUp(joinCode, { company:g('jCompany'), contact:g('jContact'), email:g('username'),
+        firstName:g('jContact').split(' ')[0], username:g('username'), password:pw }).then(function(r){
+        if(!r.ok){ msg.textContent=r.error; msg.className='msg err'; msg.style.display='block'; return; }
+        msg.textContent='Setting up your workspace...'; msg.className='msg'; msg.style.display='block';
+        setTimeout(function(){ location.href='workspace.html'; }, 550);
+      });
+      return;
+    }
+
+    if(mode === 'invite'){
+      if(pw !== document.getElementById('confirm').value){
+        msg.textContent = 'Those two passwords do not match.'; msg.className='msg err'; msg.style.display='block'; return;
+      }
+      NOVA.acceptInvite(inviteToken, pw, document.getElementById('username').value.trim()).then(function(r){
+        if(!r.ok){ msg.textContent = r.error; msg.className='msg err'; msg.style.display='block'; return; }
+        msg.textContent = 'Setting up your workspace...'; msg.className='msg'; msg.style.display='block';
+        setTimeout(function(){ location.href='workspace.html'; }, 500);
+      });
+      return;
+    }
+
+    NOVA.signIn(document.getElementById('username').value, pw).then(function(r){
+      if(!r.ok){ msg.textContent = r.error; msg.className='msg err'; msg.style.display='block'; return; }
+      msg.textContent = 'Signing you in...'; msg.className='msg'; msg.style.display='block';
+      setTimeout(function(){ location.href = (r.user.role==='admin') ? 'admin.html' : 'workspace.html'; }, 420);
+    });
+  });
+
+  if(!inviteToken && !joinCode){
+    var existing = NOVA.getSession();
+    if(existing){
+      var b=document.createElement('button');
+      b.type='button'; b.className='mini-resume';
+      b.textContent='Continue as '+existing.firstName+' \u2192';
+      b.onclick=function(){ location.href = existing.role==='admin' ? 'admin.html' : 'workspace.html'; };
+      document.getElementById('noteLine').before(b);
+    }
+  }
+})();
+</script>
+</body>
+</html>

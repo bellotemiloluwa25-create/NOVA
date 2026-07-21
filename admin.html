@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Master · NOVA</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0A;--bg2:#141414;--card:#161616;
+  --fg:#F5F0EB;--fg2:rgba(245,240,235,.66);--fg3:rgba(245,240,235,.44);
+  --border:rgba(245,240,235,.10);--border-h:rgba(245,240,235,.22);
+  --accent:#E8572A;--accent-soft:rgba(232,87,42,.14);
+  --green:#10B981;--blue:#3B82F6;
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:#050505;color:var(--fg);line-height:1.6;min-height:100vh}
+
+.top{position:sticky;top:0;z-index:30;background:rgba(10,10,10,.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:16px 34px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.tmark{font-weight:700;letter-spacing:.18em;font-size:1.02rem;text-decoration:none;color:var(--fg)}
+.tmark .s{color:var(--accent)}
+.tag{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;padding:4px 10px;
+  border-radius:5px;background:var(--accent);color:#fff;margin-left:12px;vertical-align:middle}
+.who{display:flex;align-items:center;gap:12px;font-size:.88rem;color:var(--fg3)}
+.out{background:none;border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:.83rem;
+  font-family:var(--sans);color:var(--fg3);cursor:pointer}
+.out:hover{border-color:var(--accent);color:var(--accent)}
+
+.page{max-width:1220px;margin:0 auto;padding:34px 34px 90px}
+.head{margin-bottom:26px}
+.head h1{font-family:var(--serif);font-size:2.4rem;font-weight:400;line-height:1.12;margin-bottom:5px}
+.head h1 em{font-style:italic;color:var(--accent)}
+.head p{color:var(--fg3);font-size:.98rem}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:13px;margin-bottom:28px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 21px}
+.stat .n{font-family:var(--serif);font-size:2.1rem;font-weight:500;line-height:1}
+.stat .l{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3);font-weight:600;margin-top:7px}
+.stat.hot .n{color:var(--accent)}
+
+.lab{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--fg3);font-weight:600;
+  margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.lab::before{content:'';width:18px;height:1px;background:var(--accent)}
+
+.clients{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:15px}
+.cc{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 24px;cursor:pointer;
+  transition:.18s;text-align:left;font-family:var(--sans);color:var(--fg)}
+.cc:hover{border-color:var(--border-h);transform:translateY(-2px)}
+.cc.alert{border-color:rgba(232,87,42,.5)}
+.cc .row1{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:9px}
+.cc h3{font-family:var(--serif);font-size:1.4rem;font-weight:500;line-height:1.2}
+.cc .contact{font-size:.86rem;color:var(--fg3)}
+.chip{font-size:.68rem;font-weight:700;padding:5px 11px;border-radius:20px;white-space:nowrap;
+  background:rgba(16,185,129,.14);color:#37d6a5}
+.chip.w{background:var(--accent);color:#fff}
+.chip.due{background:var(--accent-soft);color:var(--accent)}
+.cc .meta{display:flex;gap:16px;margin-top:15px;padding-top:14px;border-top:1px solid var(--border);
+  font-size:.8rem;color:var(--fg3);flex-wrap:wrap}
+.cc .meta b{color:var(--fg);font-weight:600}
+
+.back{background:none;border:none;color:var(--fg3);font-family:var(--sans);font-size:.9rem;cursor:pointer;margin-bottom:16px;padding:0}
+.back:hover{color:var(--accent)}
+.tabs{display:flex;gap:6px;margin-bottom:22px;flex-wrap:wrap}
+.tb{padding:10px 18px;border-radius:9px;border:1px solid var(--border);background:var(--card);font-size:.88rem;
+  font-family:var(--sans);font-weight:500;color:var(--fg3);cursor:pointer}
+.tb.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.pane{display:none}
+.pane.on{display:block;animation:fade .3s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+
+.panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 24px;margin-bottom:15px}
+.panel h4{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--fg3);margin-bottom:16px;font-weight:600}
+.li{display:flex;align-items:center;gap:13px;padding:13px 0;border-bottom:1px solid var(--border);font-size:.92rem;color:var(--fg2)}
+.li:last-child{border-bottom:none}
+.li.clickable{cursor:pointer;border-radius:10px;margin:0 -10px;padding-left:10px;padding-right:10px}
+.li.clickable:hover{background:var(--bg2)}
+.ic{width:36px;height:36px;border-radius:10px;background:rgba(245,240,235,.06);color:var(--fg3);display:flex;
+  align-items:center;justify-content:center;font-size:.64rem;font-weight:700;flex-shrink:0}
+.ic.a{background:var(--accent-soft);color:var(--accent)}
+.li .nmw{min-width:0;flex:1}
+.li .fname{font-weight:500;color:var(--fg)}
+.li .fsub{font-size:.79rem;color:var(--fg3)}
+.li .meta{margin-left:auto;font-size:.79rem;color:var(--fg3);white-space:nowrap;text-align:right}
+.li .open{color:var(--accent);font-weight:600;cursor:pointer}
+
+.jrow{display:flex;align-items:center;gap:14px;padding:15px 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.jrow:last-child{border-bottom:none}
+.jrow .nmw{min-width:170px;flex:1}
+.jrow .nm{font-weight:600;font-size:.98rem}
+.jrow .sg{font-size:.8rem;color:var(--fg3)}
+.track{height:7px;background:rgba(245,240,235,.08);border-radius:5px;overflow:hidden;width:140px}
+.fill{height:100%;background:var(--accent);border-radius:5px;transition:width .5s ease}
+
+.inp,select.inp,textarea.inp{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:10px 13px;
+  color:var(--fg);font-family:var(--sans);font-size:.88rem;width:100%}
+.inp:focus{outline:none;border-color:var(--accent)}
+textarea.inp{min-height:84px;resize:vertical}
+.frow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px;margin-bottom:12px}
+.fl{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fg3);font-weight:600;margin-bottom:6px;display:block}
+.sm{padding:9px 17px;border-radius:9px;font-size:.85rem;font-weight:600;border:1px solid var(--border);
+  background:var(--bg2);color:var(--fg2);cursor:pointer;font-family:var(--sans)}
+.sm:hover{border-color:var(--border-h)}
+.sm.p{background:var(--accent);color:#fff;border-color:var(--accent)}
+.crow{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:11px;flex-wrap:wrap}
+
+.feed{display:flex;flex-direction:column;gap:13px;max-height:420px;overflow-y:auto;margin-bottom:16px}
+.ev{display:flex;gap:12px}
+.evi{width:33px;height:33px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700}
+.evi.n{background:var(--accent-soft);color:var(--accent)}
+.evi.y{background:rgba(245,240,235,.07);color:var(--fg3)}
+.evc{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:13px;padding:13px 16px;max-width:84%}
+.evc.mine{background:var(--accent-soft);border-color:rgba(232,87,42,.3)}
+.evh{display:flex;align-items:baseline;gap:9px;margin-bottom:4px}
+.evh b{font-size:.88rem;color:var(--fg)}
+.evh span{font-size:.74rem;color:var(--fg3)}
+.evc p{font-size:.92rem;color:var(--fg2);white-space:pre-wrap}
+
+.awaiting{border-left:2px solid var(--accent);padding-left:14px;margin-bottom:12px}
+.awaiting .t{font-weight:600;font-size:.94rem;color:var(--fg)}
+.awaiting .r{font-size:.88rem;color:var(--fg2);margin-top:3px}
+.awaiting .m{font-size:.76rem;color:var(--fg3);margin-top:3px}
+
+.scopecol{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.scohead{display:flex;align-items:center;gap:9px;font-size:.8rem;font-weight:600;color:var(--fg2);margin-bottom:10px}
+.scorow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.89rem;color:var(--fg2)}
+.scorow:last-of-type{border-bottom:none}
+.scorow .x{margin-left:auto;color:var(--fg3);cursor:pointer;font-size:.8rem}
+.scorow .x:hover{color:var(--accent)}
+.addrow{display:flex;gap:8px;margin-top:12px}
+@media(max-width:760px){.scopecol{grid-template-columns:1fr}}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--accent);color:#fff;
+  padding:14px 26px;border-radius:11px;font-size:.9rem;z-index:80;transition:transform .35s cubic-bezier(.2,.8,.25,1)}
+.toast.on{transform:translateX(-50%) translateY(0)}
+
+@media(max-width:780px){ .top,.page{padding-left:18px;padding-right:18px} .head h1{font-size:1.8rem} }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div><a class="tmark" href="index.html">N<span class="s">&#10022;</span>VA</a><span class="tag">Master</span></div>
+  <div class="who"><span id="whoName"></span><button class="out" onclick="NOVA.signOut()">Sign out</button></div>
+</div>
+
+<div class="page">
+
+  <div id="listView">
+    <div class="head"><h1 id="adminGreet">&nbsp;</h1><p id="adminSub">&nbsp;</p></div>
+    <div class="stats" id="stats"></div>
+    <div class="lab">Clients</div>
+    <div class="clients" id="clients"></div>
+
+    <div class="panel" style="margin-top:26px">
+      <h4>Take on a new client</h4>
+      <div class="frow">
+        <div><span class="fl">Company</span><input class="inp" id="ncCompany" placeholder="Ember &amp; Oak Candle Co."></div>
+        <div><span class="fl">Contact name</span><input class="inp" id="ncContact" placeholder="Sarah Lindqvist"></div>
+        <div><span class="fl">Email</span><input class="inp" id="ncEmail" type="email" placeholder="sarah@emberoak.com"></div>
+      </div>
+      <div class="frow">
+        <div><span class="fl">Their first name</span><input class="inp" id="ncFirst" placeholder="Sarah"></div>
+        <div><span class="fl">They sign in with this email</span><input class="inp" id="ncUser" type="email" placeholder="sarah@emberoak.com"></div>
+        <div><span class="fl">Plan</span><input class="inp" id="ncPlan" placeholder="Your numbers"></div>
+        <div><span class="fl">Monthly rate</span><input class="inp" id="ncRate" type="number" placeholder="350"></div>
+      </div>
+      <div class="crow">
+        <span style="font-size:.8rem;color:var(--fg3)">Creates their workspace and a private invitation link for them to set a password.</span>
+        <button class="sm p" onclick="createClient()">Create client</button>
+      </div>
+      <div id="inviteOut"></div>
+    </div>
+
+    <div class="panel">
+      <h4>Open sign up link</h4>
+      <p style="font-size:.87rem;color:var(--fg3);margin-bottom:14px">One link you can send to anyone, any time. They choose their own username and password and land in a fresh, empty workspace, which shows up here as a new client. It keeps working until you replace it.</p>
+      <input class="inp" id="signupLink" readonly onclick="this.select()">
+      <div class="crow">
+        <span style="font-size:.8rem;color:var(--fg3)">Replacing it stops the old link working immediately.</span>
+        <span style="display:flex;gap:8px"><button class="sm" onclick="copySignup()">Copy link</button>
+        <button class="sm" onclick="rotateSignup()">Replace link</button></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="detailView" style="display:none">
+    <button class="back" onclick="closeClient()">&larr; All clients</button>
+    <div class="head"><h1 id="dCompany">&nbsp;</h1><p id="dContact">&nbsp;</p></div>
+    <div class="tabs">
+      <button class="tb on" onclick="tab('jobs',this)">Jobs</button>
+      <button class="tb" onclick="tab('asks',this)">Waiting on them</button>
+      <button class="tb" onclick="tab('msg',this)">Messages</button>
+      <button class="tb" onclick="tab('files',this)">Files</button>
+      <button class="tb" onclick="tab('bill',this)">Invoices</button>
+      <button class="tb" onclick="tab('access',this)">Access</button>
+      <button class="tb" onclick="tab('setup',this)">Setup</button>
+    </div>
+
+    <div class="pane on" id="p-jobs">
+      <div class="panel"><h4>Jobs and progress</h4><div id="jobRows"></div></div>
+      <div class="panel">
+        <h4>Add a job</h4>
+        <div class="frow">
+          <div><span class="fl">Name</span><input class="inp" id="njName" placeholder="Sales dashboard"></div>
+          <div><span class="fl">Lane</span><select class="inp" id="njLane"></select></div>
+          <div><span class="fl">Stage</span><input class="inp" id="njStage" placeholder="Getting started"></div>
+          <div><span class="fl">Next step</span><input class="inp" id="njNext" placeholder="Kick off"></div>
+        </div>
+        <div class="crow"><span style="font-size:.8rem;color:var(--fg3)">The lane sets its colour and shape for the client.</span>
+          <button class="sm p" onclick="createJob()">Add job</button></div>
+      </div>
+    </div>
+
+    <div class="pane" id="p-asks">
+      <div class="panel"><h4>Open with the client</h4><div id="askList"></div></div>
+      <div class="panel">
+        <h4>Ask them for something</h4>
+        <div class="frow">
+          <div><span class="fl">Type</span>
+            <select class="inp" id="askType">
+              <option value="question">Question</option>
+              <option value="approval">Approval</option>
+              <option value="file">File request</option>
+            </select></div>
+          <div><span class="fl">Job</span><select class="inp" id="askJob"></select></div>
+          <div><span class="fl">Due</span><input class="inp" type="date" id="askDue"></div>
+        </div>
+        <div style="margin-bottom:11px"><span class="fl">Title</span><input class="inp" id="askTitle" placeholder="Three Amazon codes have no match"></div>
+        <div><span class="fl">Detail</span><textarea class="inp" id="askDetail" placeholder="Explain exactly what you need and why. This is what they read."></textarea></div>
+        <div class="crow"><span style="font-size:.8rem;color:var(--fg3)">This appears at the top of their overview.</span>
+          <button class="sm p" onclick="createAsk()">Send request</button></div>
+      </div>
+    </div>
+
+    <div class="pane" id="p-msg">
+      <div class="panel">
+        <h4>Conversation</h4>
+        <div class="feed" id="aFeed"></div>
+        <textarea class="inp" id="aMsg" placeholder="Reply to the client. This appears in their workspace immediately."></textarea>
+        <div class="crow">
+          <select class="inp" id="aJob" style="width:auto;min-width:190px"></select>
+          <button class="sm p" onclick="adminSend()">Send to client</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pane" id="p-files">
+      <div class="panel">
+        <h4>Deliver work</h4>
+        <div class="frow">
+          <div><span class="fl">Job</span><select class="inp" id="upJob"></select></div>
+          <div><span class="fl">Type</span>
+            <select class="inp" id="upTag">
+              <option value="deliverable">Delivered work</option>
+              <option value="report">Monthly report</option>
+              <option value="walkthrough">Recorded walkthrough</option>
+            </select></div>
+          <div><span class="fl">File</span><input class="inp" type="file" id="aUp" multiple></div>
+        </div>
+        <p style="font-size:.81rem;color:var(--fg3)">Uploads land in their workspace immediately and they can open them.</p>
+      </div>
+      <div class="panel"><h4>All files</h4><div id="aFiles"></div></div>
+    </div>
+
+    <div class="pane" id="p-bill">
+      <div class="panel">
+        <h4>Raise an invoice</h4>
+        <div class="frow">
+          <div><span class="fl">Number</span><input class="inp" id="invNo"></div>
+          <div><span class="fl">Period</span><input class="inp" id="invPeriod" placeholder="July 2026"></div>
+          <div><span class="fl">Amount</span><input class="inp" type="number" id="invAmt"></div>
+          <div><span class="fl">Due</span><input class="inp" type="date" id="invDue"></div>
+        </div>
+        <div class="frow">
+          <div><span class="fl">Payment link, optional</span><input class="inp" id="invLink" placeholder="https://buy.stripe.com/..."></div>
+          <div><span class="fl">Invoice PDF, optional</span><input class="inp" type="file" id="invFile" accept=".pdf"></div>
+        </div>
+        <div class="crow"><span style="font-size:.8rem;color:var(--fg3)">They see it under Billing and can open the PDF.</span>
+          <button class="sm p" onclick="createInvoice()">Send invoice</button></div>
+      </div>
+      <div class="panel"><h4>Invoices</h4><div id="aInv"></div></div>
+    </div>
+
+    <div class="pane" id="p-access">
+      <div class="panel"><h4>Access to their systems</h4><div id="aAccess"></div></div>
+      <div class="panel">
+        <h4>Request access to a tool</h4>
+        <div class="frow">
+          <div><span class="fl">Tool</span><input class="inp" id="acTool" placeholder="Faire"></div>
+          <div><span class="fl">Level we need</span><input class="inp" id="acLevel" placeholder="Reports, view only"></div>
+        </div>
+        <div class="crow"><span style="font-size:.8rem;color:var(--fg3)">Shows on their plan page as waiting on them.</span>
+          <button class="sm p" onclick="createAccess()">Request access</button></div>
+      </div>
+    </div>
+    <div class="pane" id="p-setup">
+      <div class="panel">
+        <h4>Their login</h4>
+        <div id="acctState"></div>
+      </div>
+      <div class="panel">
+        <h4>See their side</h4>
+        <p style="font-size:.87rem;color:var(--fg3);margin-bottom:14px">Opens their workspace exactly as they see it, with their name, their jobs and their files. Nothing you click there is saved.</p>
+        <button class="sm p" onclick="NOVA.startPreview(cur.id)">Open their workspace &rarr;</button>
+      </div>
+      <div class="panel">
+        <h4>Private build link</h4>
+        <p style="font-size:.87rem;color:var(--fg3);margin-bottom:12px">A link only you hand out. Use it for a site or tool you are building for them. It stays out of the menus and is not listed anywhere public.</p>
+        <div class="frow">
+          <div style="grid-column:1/-1"><span class="fl">Link</span><input class="inp" id="siteLink" placeholder="https://preview.novaonline.net/emberoak-a83f2"></div>
+        </div>
+        <div class="crow"><span style="font-size:.8rem;color:var(--fg3)">Appears on their overview once set.</span>
+          <button class="sm p" onclick="saveSite()">Save link</button></div>
+      </div>
+      <div class="panel">
+        <h4>Scope, what the plan covers</h4>
+        <p style="font-size:.85rem;color:var(--fg3);margin-bottom:16px">Each line becomes a row on their plan page. Keep them short and concrete.</p>
+        <div class="scopecol">
+          <div>
+            <div class="scohead"><span class="ic a" style="width:26px;height:26px">&#10003;</span> Included</div>
+            <div id="scInList"></div>
+            <div class="addrow"><input class="inp" id="scInNew" placeholder="Bookkeeping kept current, closed by the 10th" onkeydown="if(event.key==='Enter'){addScope('in');return false}">
+              <button class="sm" onclick="addScope('in')">Add</button></div>
+          </div>
+          <div>
+            <div class="scohead"><span class="ic" style="width:26px;height:26px">&mdash;</span> Not included</div>
+            <div id="scExList"></div>
+            <div class="addrow"><input class="inp" id="scExNew" placeholder="Tax filing" onkeydown="if(event.key==='Enter'){addScope('ex');return false}">
+              <button class="sm" onclick="addScope('ex')">Add</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="nova-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+document.write(NOVA_CONFIG.MODE === 'live'
+  ? '<scr' + 'ipt src="nova-live.js"><\/scr' + 'ipt>'
+  : '<scr' + 'ipt src="nova-data.js"><\/scr' + 'ipt>');
+</script>
+<script>
+var me = NOVA.requireAuth('admin');
+var cur = null;
+
+function toast(t){ var el=document.getElementById('toast'); el.textContent=t; el.classList.add('on');
+  clearTimeout(el._t); el._t=setTimeout(function(){el.classList.remove('on')},2600); }
+function esc(s){ return String(s).replace(/</g,'&lt;'); }
+
+function boot(){
+  document.getElementById('whoName').textContent = me.firstName;
+  paintGreet(); setInterval(paintGreet,60000);
+  Promise.resolve(NOVA.signupLink()).then(function(l){ document.getElementById('signupLink').value = l; });
+  renderList();
+}
+function paintGreet(){ document.getElementById('adminGreet').innerHTML = NOVA.greeting()+', <em>'+me.firstName+'</em>.'; }
+
+function renderList(){
+  var cs=NOVA.getClients();
+  var totalNew=cs.reduce(function(a,c){return a+c.totalNew},0);
+  var jobs=cs.reduce(function(a,c){return a+c.jobCount},0);
+  var owed=NOVA.getInvoices().filter(function(i){return i.status!=='paid'}).reduce(function(a,i){return a+i.amount},0);
+
+  document.getElementById('adminSub').textContent =
+    cs.length+(cs.length===1?' client. ':' clients. ')+(totalNew ? totalNew+' new since you last looked.' : 'Nothing new.');
+
+  document.getElementById('stats').innerHTML =
+    '<div class="stat"><div class="n">'+cs.length+'</div><div class="l">Clients</div></div>'+
+    '<div class="stat"><div class="n">'+jobs+'</div><div class="l">Active jobs</div></div>'+
+    '<div class="stat'+(totalNew?' hot':'')+'"><div class="n">'+totalNew+'</div><div class="l">New for you</div></div>'+
+    '<div class="stat'+(owed?' hot':'')+'"><div class="n">'+NOVA.money(owed)+'</div><div class="l">Outstanding</div></div>';
+
+  document.getElementById('clients').innerHTML = cs.map(function(c){
+    var chip = !c.hasAccount ? '<span class="chip due">Not signed up</span>'
+             : c.totalNew ? '<span class="chip w">'+c.totalNew+' new</span>'
+             : c.overdue ? '<span class="chip w">'+c.overdue+' overdue</span>'
+             : c.openActions ? '<span class="chip due">'+c.openActions+' with them</span>'
+             : '<span class="chip">All clear</span>';
+    var bits=[];
+    if(c.newMsgs) bits.push(c.newMsgs+' message'+(c.newMsgs>1?'s':''));
+    if(c.newFiles) bits.push(c.newFiles+' file'+(c.newFiles>1?'s':''));
+    if(c.replied) bits.push(c.replied+' reply');
+    return '<button class="cc'+(c.totalNew||c.overdue?' alert':'')+'" onclick="openClient(\''+c.id+'\')">'+
+      '<div class="row1"><div><h3>'+c.company+'</h3><div class="contact">'+c.contact+'</div></div>'+chip+'</div>'+
+      (bits.length?'<div style="font-size:.82rem;color:var(--accent);margin-top:6px;font-weight:600">'+bits.join(', ')+'</div>':'')+
+      '<div class="meta"><span><b>'+c.jobCount+'</b> jobs</span><span>'+c.plan+'</span>'+
+      '<span>'+NOVA.money(c.rate)+'/mo</span><span>'+NOVA.timeAgo(c.lastActivity)+'</span></div></button>';
+  }).join('');
+}
+
+function createClient(){
+  var g=function(id){return document.getElementById(id).value.trim()};
+  var co=g('ncCompany'), ct=g('ncContact'), em=g('ncEmail'), fn=g('ncFirst'), un=g('ncUser');
+  if(!co||!ct||!em||!fn||!un){ toast('Company, contact, email, first name and username are all needed.'); return; }
+  Promise.resolve(NOVA.createClient(co, ct, em, g('ncPlan')||'Your numbers', g('ncRate')||350, fn, un.toLowerCase()))
+    .then(function(r){
+      ['ncCompany','ncContact','ncEmail','ncFirst','ncUser','ncPlan','ncRate'].forEach(function(id){document.getElementById(id).value=''});
+      showInvite(r.link, fn, em, em);
+      renderList();
+    })
+    .catch(function(e){ toast(e.message || 'Could not create that client.'); });
+}
+function showInvite(link, first, user, email){
+  var body = 'Hi '+first+',%0D%0A%0D%0AYour NOVA workspace is ready. Everything we do for you lives there: progress, files, invoices and every message.%0D%0A%0D%0AYour username is '+user+'%0D%0ASet your password here: '+link+'%0D%0A%0D%0AThe link works once and expires in seven days.%0D%0A%0D%0ANOVA';
+  document.getElementById('inviteOut').innerHTML =
+    '<div style="margin-top:16px;padding:18px 20px;border:1px solid var(--accent);border-radius:12px;background:var(--accent-soft)">'+
+    '<div style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px">Invitation link, send this to them</div>'+
+    '<input class="inp" readonly value="'+link+'" onclick="this.select()" style="margin-bottom:10px">'+
+    '<div class="crow"><span style="font-size:.8rem;color:var(--fg3)">Works once. Expires in seven days.</span>'+
+    '<a class="sm p" style="text-decoration:none" href="mailto:'+email+'?subject=Your%20NOVA%20workspace&body='+body+'">Open the email</a></div></div>';
+}
+
+function openClient(id){
+  cur=NOVA.getClient(id);
+  document.getElementById('listView').style.display='none';
+  document.getElementById('detailView').style.display='block';
+  document.getElementById('dCompany').textContent=cur.company;
+  document.getElementById('dContact').textContent=cur.contact+' · '+cur.plan+' · '+NOVA.money(cur.rate)+' a month';
+  renderAllPanes(); paintTabDots(); window.scrollTo({top:0});
+}
+function renderAllPanes(){ renderJobs(); renderAsks(); renderFeed(); renderFiles(); renderInv(); renderAccess(); renderSetup(); fillJobSelects(); fillLanes(); }
+var TABSEC={msg:'messages',files:'files',asks:'asks'};
+function closeClient(){ cur=null;
+  document.getElementById('detailView').style.display='none';
+  document.getElementById('listView').style.display='block'; renderList(); }
+function tab(n,btn){
+  document.querySelectorAll('.pane').forEach(function(p){p.classList.remove('on')});
+  document.getElementById('p-'+n).classList.add('on');
+  document.querySelectorAll('.tb').forEach(function(b){b.classList.remove('on')});
+  btn.classList.add('on');
+  if(TABSEC[n]) NOVA.markSeen('temi', cur.id, TABSEC[n]);
+  paintTabDots();
+}
+function paintTabDots(){
+  var c = NOVA.adminCounts(cur.id);
+  var map = {msg:c.messages, files:c.files, asks:c.asks};
+  document.querySelectorAll('.tb').forEach(function(b){
+    var m = (b.getAttribute('onclick')||'').match(/tab\('(\w+)'/);
+    if(!m) return;
+    b.querySelectorAll('.tdot').forEach(function(d){d.remove()});
+    var n = map[m[1]];
+    if(n){ var sp=document.createElement('span'); sp.className='tdot';
+      sp.style.cssText='display:inline-flex;align-items:center;justify-content:center;min-width:17px;height:17px;border-radius:9px;background:var(--accent);color:#fff;font-size:.64rem;font-weight:700;margin-left:8px;padding:0 5px';
+      sp.textContent=n>9?'9+':n; b.appendChild(sp); }
+  });
+}
+function fillJobSelects(){
+  var jobs=NOVA.getJobs(cur.id);
+  var opts='<option value="">General</option>'+jobs.map(function(j){return '<option value="'+j.id+'">'+j.name+'</option>'}).join('');
+  ['aJob','askJob','upJob'].forEach(function(id){ document.getElementById(id).innerHTML=opts; });
+}
+
+/* files, openable from here too */
+function openFile(id,name){
+  NOVA.fileURL(id).then(function(url){
+    if(!url){ toast('Sample file, nothing behind it yet.'); return; }
+    var w=window.open(url,'_blank');
+    if(!w){ var a=document.createElement('a'); a.href=url; a.download=name; a.click(); }
+  });
+}
+function downloadFile(id,name,e){ if(e) e.stopPropagation();
+  NOVA.fileURL(id).then(function(url){
+    if(!url){ toast('Sample file, nothing to download.'); return; }
+    var a=document.createElement('a'); a.href=url; a.download=name; a.click();
+  });
+}
+
+function fillLanes(){
+  var el=document.getElementById('njLane'); if(!el) return;
+  el.innerHTML = Object.keys(NOVA.LANES).map(function(k){
+    return '<option value="'+k+'">'+NOVA.LANES[k].label+'</option>';
+  }).join('');
+}
+function renderJobs(){
+  var jobs=NOVA.getJobs(cur.id);
+  document.getElementById('jobRows').innerHTML = jobs.map(function(j){
+    var L=NOVA.lane(j.lane);
+    var lanes = Object.keys(NOVA.LANES).map(function(k){
+      return '<option value="'+k+'"'+(k===j.lane?' selected':'')+'>'+NOVA.LANES[k].label+'</option>'; }).join('');
+    var prio = [['normal','Normal'],['attention','Needs attention'],['urgent','Urgent']].map(function(p){
+      return '<option value="'+p[0]+'"'+(p[0]===(j.priority||'normal')?' selected':'')+'>'+p[1]+'</option>'; }).join('');
+    return '<div class="jrow">'+
+      '<span class="ic" style="background:'+L.soft+';color:'+L.color+';font-size:1rem">'+L.glyph+'</span>'+
+      '<div class="nmw"><div class="nm">'+j.name+'</div><div class="sg">'+j.stage+' &middot; next: '+j.next+'</div></div>'+
+      '<div class="track"><div class="fill" style="width:'+j.progress+'%;background:'+L.color+'"></div></div>'+
+      '<input class="inp" type="number" min="0" max="100" value="'+j.progress+'" style="width:76px" onchange="setJobField(\''+j.id+'\',\'progress\',this.value)">'+
+      '<select class="inp" style="width:auto;min-width:150px" onchange="setJobField(\''+j.id+'\',\'lane\',this.value)">'+lanes+'</select>'+
+      '<select class="inp" style="width:auto;min-width:150px" onchange="setJobField(\''+j.id+'\',\'priority\',this.value)">'+prio+'</select>'+
+      '<input class="inp" value="'+j.next+'" style="max-width:220px" onchange="setJobField(\''+j.id+'\',\'next\',this.value)">'+
+      '<span class="open" onclick="dropJob(\''+j.id+'\')">Remove</span></div>';
+  }).join('') || '<p style="color:var(--fg3)">No jobs yet. Add the first one below.</p>';
+}
+function setJobField(id,field,v){
+  var patch={}; patch[field] = field==='progress' ? Math.max(0,Math.min(100,+v)) : v;
+  NOVA.updateJob(id,patch); renderJobs();
+  toast(field==='priority' ? 'Priority updated. This changes what they see.' : 'Updated. They see this.');
+}
+function dropJob(id){ NOVA.removeJob(id); renderJobs(); fillJobSelects(); toast('Job removed.'); }
+function createJob(){
+  var n=document.getElementById('njName').value.trim();
+  if(!n){ toast('Give the job a name.'); return; }
+  Promise.resolve(NOVA.addJob(cur.id,n,document.getElementById('njLane').value,
+    document.getElementById('njStage').value.trim(),document.getElementById('njNext').value.trim()))
+    .then(function(){ renderJobs(); fillJobSelects(); toast('Job added to their workspace.'); });
+  ['njName','njStage','njNext'].forEach(function(i){document.getElementById(i).value=''});
+}
+
+function renderAsks(){
+  var acts=NOVA.getActions(cur.id), jobs=NOVA.getJobs(cur.id);
+  var open=acts.filter(function(a){return a.status==='open'});
+  var answered=acts.filter(function(a){return a.status==='answered'});
+  var h='';
+  if(answered.length){
+    h+='<div style="margin-bottom:18px"><div style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:12px">They replied</div>';
+    answered.forEach(function(a){
+      h+='<div class="awaiting"><div class="t">'+esc(a.title)+'</div>'+
+        '<div class="r">'+esc(a.response||'')+'</div>'+
+        '<div class="m">'+NOVA.timeAgo(a.resolvedAt||a.at)+' &middot; <span class="open" onclick="closeAsk(\''+a.id+'\')">Mark as handled</span></div></div>';
+    });
+    h+='</div>';
+  }
+  if(open.length){
+    h+='<div style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3);font-weight:700;margin-bottom:12px">Still open with them</div>';
+    open.forEach(function(a){
+      var job=jobs.filter(function(j){return j.id===a.jobId})[0];
+      h+='<div class="li"><span class="ic a">'+(a.type==='question'?'?':a.type==='approval'?'&#10003;':'&#8595;')+'</span>'+
+        '<div class="nmw"><div class="fname">'+esc(a.title)+'</div>'+
+        '<div class="fsub">'+a.type+(job?' &middot; '+job.name:'')+' &middot; due '+NOVA.dueIn(a.due)+'</div></div>'+
+        '<span class="meta">'+NOVA.timeAgo(a.at)+'</span></div>';
+    });
+  }
+  if(!h) h='<p style="color:var(--fg3)">Nothing outstanding with this client.</p>';
+  document.getElementById('askList').innerHTML=h;
+}
+function createAsk(){
+  var t=document.getElementById('askTitle').value.trim();
+  var d=document.getElementById('askDetail').value.trim();
+  if(!t||!d){ toast('Give it a title and a detail.'); return; }
+  var due=document.getElementById('askDue').value;
+  Promise.resolve(NOVA.addAction(cur.id, document.getElementById('askJob').value||null,
+    document.getElementById('askType').value, t, d, due?new Date(due).toISOString():null))
+    .then(function(){ renderAsks(); toast('Sent. It is at the top of their overview now.'); });
+  document.getElementById('askTitle').value=''; document.getElementById('askDetail').value='';
+}
+function closeAsk(id){ NOVA.closeAction(id); renderAsks(); renderList(); toast('Handled.'); }
+
+function renderFeed(){
+  var msgs=NOVA.getMessages(cur.id), jobs=NOVA.getJobs(cur.id);
+  document.getElementById('aFeed').innerHTML = msgs.map(function(m){
+    var mine=m.from==='nova', job=jobs.filter(function(j){return j.id===m.jobId})[0];
+    return '<div class="ev"'+(mine?' style="flex-direction:row-reverse"':'')+'>'+
+      '<div class="evi '+(mine?'n':'y')+'">'+(mine?'&#10022;':(cur.contact[0]||'C'))+'</div>'+
+      '<div class="evc'+(mine?' mine':'')+'"><div class="evh"><b>'+(mine?'NOVA':m.author)+'</b>'+
+      '<span>'+NOVA.timeAgo(m.at)+(job?' &middot; '+job.name:'')+'</span></div><p>'+esc(m.body)+'</p></div></div>';
+  }).join('') || '<p style="color:var(--fg3)">No messages yet.</p>';
+  var f=document.getElementById('aFeed'); f.scrollTop=f.scrollHeight;
+}
+function adminSend(){
+  var box=document.getElementById('aMsg'), t=box.value.trim(); if(!t) return;
+  NOVA.sendMessage(cur.id, document.getElementById('aJob').value||null, 'nova','NOVA',t);
+  box.value=''; renderFeed(); toast('Sent. It is in their workspace now.');
+}
+
+function renderFiles(){
+  var fs=NOVA.getFiles(cur.id), jobs=NOVA.getJobs(cur.id);
+  document.getElementById('aFiles').innerHTML = fs.map(function(f){
+    var job=jobs.filter(function(j){return j.id===f.jobId})[0];
+    return '<div class="li clickable" onclick="openFile(\''+f.id+'\',\''+f.name+'\')">'+
+      '<span class="ic'+(f.by==='nova'?' a':'')+'">'+f.kind+'</span>'+
+      '<div class="nmw"><div class="fname">'+f.name+'</div><div class="fsub">'+
+      (f.by==='nova'?'Sent by NOVA':'From the client')+(job?' &middot; '+job.name:'')+' &middot; '+f.size+' &middot; '+f.tag+'</div></div>'+
+      '<span class="meta">'+NOVA.timeAgo(f.at)+'<br><span class="open" onclick="downloadFile(\''+f.id+'\',\''+f.name+'\',event)">Download</span></span></div>';
+  }).join('') || '<p style="color:var(--fg3)">No files yet.</p>';
+}
+document.getElementById('aUp').onchange=function(e){
+  var list=e.target.files, n=list.length, done=0;
+  var job=document.getElementById('upJob').value||null, tag=document.getElementById('upTag').value;
+  Array.prototype.forEach.call(list,function(file){
+    Promise.resolve(NOVA.addFile(cur.id, job, file, 'nova', tag)).then(function(){
+      if(++done===n){ renderFiles(); toast('Delivered. They can open it now.'); }
+    }).catch(function(e){ toast('Upload failed: '+(e.message||e)); });
+  });
+  e.target.value='';
+};
+
+function renderInv(){
+  var inv=NOVA.getInvoices(cur.id);
+  document.getElementById('aInv').innerHTML = inv.map(function(i){
+    var over = i.status!=='paid' && new Date(i.due)<Date.now();
+    return '<div class="li'+(i.fileId?' clickable':'')+'"'+(i.fileId?' onclick="openFile(\''+i.fileId+'\',\''+i.number+'.pdf\')"':'')+'>'+
+      '<span class="ic'+(i.status==='paid'?'':' a')+'">PDF</span>'+
+      '<div class="nmw"><div class="fname">'+i.number+' &middot; '+i.period+'</div>'+
+      '<div class="fsub">'+NOVA.money(i.amount)+' &middot; '+(i.status==='paid'?'Paid':'due '+NOVA.dueIn(i.due))+
+      (i.fileId?' &middot; PDF attached':' &middot; no PDF')+'</div></div>'+
+      '<span class="meta"><span class="chip '+(i.status==='paid'?'':over?'w':'due')+'">'+(i.status==='paid'?'Paid':over?'Overdue':'Due')+'</span><br>'+
+      '<span class="open" onclick="togglePaid(\''+i.id+'\',event)">'+(i.status==='paid'?'Mark unpaid':'Mark paid')+'</span></span></div>';
+  }).join('') || '<p style="color:var(--fg3)">No invoices yet.</p>';
+}
+function togglePaid(id,e){
+  if(e) e.stopPropagation();
+  var i=NOVA.getInvoices(cur.id).filter(function(x){return x.id===id})[0];
+  NOVA.setInvoiceStatus(id, i.status==='paid'?'due':'paid');
+  renderInv(); toast('Invoice updated.');
+}
+function createInvoice(){
+  var no=document.getElementById('invNo').value.trim();
+  var per=document.getElementById('invPeriod').value.trim();
+  var amt=document.getElementById('invAmt').value;
+  var due=document.getElementById('invDue').value;
+  if(!no||!per||!amt){ toast('Number, period and amount are needed.'); return; }
+  var f=document.getElementById('invFile').files[0]||null;
+  NOVA.addInvoice(cur.id,no,per,amt,due?new Date(due).toISOString():new Date(Date.now()+12096e5).toISOString(),
+    document.getElementById('invLink').value.trim(),f)
+    .then(function(){ renderInv(); toast('Invoice sent to their Billing page.'); });
+  document.getElementById('invNo').value=''; document.getElementById('invPeriod').value='';
+  document.getElementById('invAmt').value=''; document.getElementById('invFile').value='';
+  document.getElementById('invLink').value='';
+}
+
+function renderAccess(){
+  var ac=NOVA.getAccess(cur.id);
+  document.getElementById('aAccess').innerHTML = ac.map(function(a){
+    return '<div class="li"><span class="ic'+(a.status==='granted'?' a':'')+'">'+(a.status==='granted'?'&#10003;':'!')+'</span>'+
+      '<div class="nmw"><div class="fname">'+a.tool+'</div><div class="fsub">'+a.level+'</div></div>'+
+      '<span class="meta">'+(a.status==='granted'?'Granted '+NOVA.timeAgo(a.at):'<span style="color:var(--accent)">Requested</span>')+'<br>'+
+      '<span class="open" onclick="toggleAccess(\''+a.id+'\',\''+a.status+'\')">'+(a.status==='granted'?'Mark revoked':'Mark granted')+'</span></span></div>';
+  }).join('') || '<p style="color:var(--fg3)">No access recorded.</p>';
+}
+function toggleAccess(id,s){ NOVA.setAccessStatus(id, s==='granted'?'requested':'granted'); renderAccess(); toast('Access record updated.'); }
+function createAccess(){
+  var t=document.getElementById('acTool').value.trim(), l=document.getElementById('acLevel').value.trim();
+  if(!t||!l){ toast('Tool and level are needed.'); return; }
+  Promise.resolve(NOVA.addAccess(cur.id,t,l)).then(function(){ renderAccess(); renderAsks(); });
+  document.getElementById('acTool').value=''; document.getElementById('acLevel').value='';
+  renderAccess(); renderAsks(); toast('Requested. It is now at the top of their overview.');
+}
+
+function renderSetup(){
+  var invites=NOVA.getInvitesFor ? (NOVA.getInvitesFor(cur.id)||[]) : [];
+  var cs=NOVA.getClients().filter(function(c){return c.id===cur.id})[0]||{hasAccount:false};
+  var h='';
+  if(cs.hasAccount){
+    h='<div class="li"><span class="ic a">&#10003;</span><div class="nmw"><div class="fname">Account active</div>'+
+      '<div class="fsub">'+cur.contact+' has set a password and can sign in.</div></div></div>';
+  } else {
+    var live=invites.filter(function(i){return !i.used && new Date(i.expires)>Date.now()})[0];
+    h='<div class="li"><span class="ic">!</span><div class="nmw"><div class="fname">No account yet</div>'+
+      '<div class="fsub">'+(live?'An invitation is open and expires '+NOVA.timeAgo(live.expires).replace(' ago',' from now')+'.':'No open invitation.')+'</div></div></div>';
+  }
+  h+='<div class="crow"><span style="font-size:.8rem;color:var(--fg3)">Send a fresh link if they lost the first one.</span>'+
+     '<button class="sm" onclick="newInvite()">Send a new invitation</button></div><div id="setupInvite"></div>';
+  document.getElementById('acctState').innerHTML=h;
+  document.getElementById('siteLink').value = cur.siteLink || '';
+  renderScope();
+}
+function newInvite(){
+  var email = prompt('Email for '+cur.contact, cur.email || '');
+  if(!email) return;
+  Promise.resolve(NOVA.reissueInvite(cur.id, email, cur.contact.split(' ')[0], email)).then(function(r){
+    document.getElementById('setupInvite').innerHTML =
+      '<div style="margin-top:14px;padding:16px 18px;border:1px solid var(--accent);border-radius:12px;background:var(--accent-soft)">'+
+      '<input class="inp" readonly value="'+r.link+'" onclick="this.select()"></div>';
+    toast('New invitation created.');
+  });
+}
+function saveSite(){
+  NOVA.updateClient(cur.id,{siteLink:document.getElementById('siteLink').value.trim()});
+  cur=NOVA.getClient(cur.id); toast('Private link saved. Only they and you can see it.');
+}
+function renderScope(){
+  var sc=NOVA.getScope(cur.id);
+  function rows(list,which){
+    if(!list.length) return '<p style="color:var(--fg3);font-size:.85rem;padding:8px 0">Nothing listed yet.</p>';
+    return list.map(function(t,i){
+      return '<div class="scorow"><span>'+t+'</span><span class="x" onclick="dropScope(\''+which+'\','+i+')">Remove</span></div>';
+    }).join('');
+  }
+  document.getElementById('scInList').innerHTML=rows(sc.included||[],'in');
+  document.getElementById('scExList').innerHTML=rows(sc.excluded||[],'ex');
+}
+function addScope(which){
+  var id = which==='in' ? 'scInNew' : 'scExNew';
+  var v = document.getElementById(id).value.trim();
+  if(!v) return;
+  var sc=NOVA.getScope(cur.id);
+  var inc=(sc.included||[]).slice(), exc=(sc.excluded||[]).slice();
+  if(which==='in') inc.push(v); else exc.push(v);
+  Promise.resolve(NOVA.setScope(cur.id, inc, exc)).then(function(){ renderScope(); });
+  document.getElementById(id).value='';
+  renderScope(); toast('Added to their plan page.');
+}
+function dropScope(which,i){
+  var sc=NOVA.getScope(cur.id);
+  var inc=(sc.included||[]).slice(), exc=(sc.excluded||[]).slice();
+  if(which==='in') inc.splice(i,1); else exc.splice(i,1);
+  Promise.resolve(NOVA.setScope(cur.id, inc, exc)).then(function(){ renderScope(); });
+  renderScope(); toast('Removed.');
+}
+function copySignup(){
+  var el=document.getElementById('signupLink'); el.select();
+  navigator.clipboard.writeText(el.value).then(function(){ toast('Link copied.'); },function(){ toast('Select and copy it.'); });
+}
+function rotateSignup(){
+  if(!confirm('Replace the sign up link? Anyone holding the old one will not be able to use it.')) return;
+  Promise.resolve(NOVA.rotateSignupCode()).then(function(){
+    return Promise.resolve(NOVA.signupLink());
+  }).then(function(l){
+    document.getElementById('signupLink').value=l;
+    toast('New link created. The old one is dead.');
+  });
+}
+
+if(me) NOVA.ready().then(boot);
+</script>
+</body>
+</html>
