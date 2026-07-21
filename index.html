@@ -349,6 +349,9 @@ h2.sub{font-family:var(--serif);font-size:1.6rem;font-weight:500;margin:56px 0 2
 .scrollcue.show{opacity:.85}
 .scrollcue .a{font-size:1.05rem;line-height:1;color:var(--accent);animation:scb 1.5s infinite}
 @keyframes scb{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+.nl-client{position:relative;padding-left:20px!important}
+.nl-client::before{content:'\2726';position:absolute;left:2px;top:50%;transform:translateY(-50%);
+  color:var(--accent);font-size:.8em;opacity:.85}
 </style>
 <script type="application/ld+json">
 {
@@ -398,8 +401,8 @@ h2.sub{font-family:var(--serif);font-size:1.6rem;font-weight:500;margin:56px 0 2
       <div class="ttr"><div class="ttk"></div></div>
       <svg viewBox="0 0 16 16"><path d="M13.5 8.5a5.5 5.5 0 01-6-6 5.5 5.5 0 106 6z" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
-    <a class="nl" href="/blog/" style="text-decoration:none">Insights</a>
     <a class="nl" href="/contact.html" style="text-decoration:none">Contact</a>
+    <a class="nl nl-client" href="/login.html" style="text-decoration:none">Client login</a>
     <a class="nc" href="https://calendly.com/thinknova-co/30min" target="_blank" rel="noopener">Schedule a call</a>
   </div>
   <button class="hb" id="hb" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -412,7 +415,7 @@ h2.sub{font-family:var(--serif);font-size:1.6rem;font-weight:500;margin:56px 0 2
   <div class="veil"></div><div class="veil2"></div><div class="glowtop"></div>
   <div class="hin">
     <span class="pill"><span class="dot"></span>The right team for every job</span>
-    <h1>We build &amp; run your<br><span class="line2"><span class="rot" id="rot">dashboards</span><span class="cur"></span></span></h1>
+    <h1>We build &amp; run your<br><span class="line2"><span class="rot" id="rot">books</span><span class="cur"></span></span></h1>
     <p class="hsub">NOVA does the jobs you don't have time for: your website, your numbers, your books, your busywork, your marketing. You describe the work. We deliver it, done and checked, for less than one hire.</p>
     <div class="hb2" style="justify-content:center">
       <a class="btn ba" href="#" onclick="go('brief');return false;">Start a project &rarr;</a>
@@ -753,6 +756,7 @@ h2.sub{font-family:var(--serif);font-size:1.6rem;font-weight:500;margin:56px 0 2
         <button onclick="go('pricing')">Pricing</button>
         <a href="/contact.html" style="color:var(--fg2);font-size:1rem;cursor:pointer;background:none;border:none;font-family:inherit;transition:color .3s;text-decoration:none" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--fg2)'">Contact</a>
         <a href="/blog/" style="color:var(--fg2);font-size:1rem;text-decoration:none;font-family:inherit;transition:color .3s" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--fg2)'">Insights</a>
+        <a href="/login.html" style="color:var(--fg2);font-size:1rem;text-decoration:none;font-family:inherit;transition:color .3s" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--fg2)'">Client login</a>
       </div>
     </div>
     <div class="ftb">
@@ -790,7 +794,7 @@ function flip(){
 document.getElementById('hb').addEventListener('click',function(){document.getElementById('nr').classList.toggle('open')});
 
 /* ===== HERO: cycling word + video rotation ===== */
-var words=["dashboards","website","books","automations","growth","internal tools"];
+var words=["books","numbers","automations","website","internal tools","marketing"];
 var wi=0,el=document.getElementById('rot');
 if(el){setInterval(function(){wi=(wi+1)%words.length;el.style.opacity=0;setTimeout(function(){el.textContent=words[wi];el.style.opacity=1;},200);},2100);}
 var clips=["https://videos.pexels.com/video-files/20065494/20065494-uhd_2560_1440_30fps.mp4","https://videos.pexels.com/video-files/10374960/10374960-uhd_2560_1440_24fps.mp4","https://videos.pexels.com/video-files/6889677/6889677-hd_1920_1080_25fps.mp4"];
